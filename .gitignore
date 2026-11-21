@@ -1,0 +1,13 @@
+# Backups de estado de Active Stack
+*.bak
+*.tmp
+
+# Secretos y entorno local
+.env
+.env.*
+!.env.example
+
+# Build
+backend/target/
+frontend/node_modules/
+frontend/dist/

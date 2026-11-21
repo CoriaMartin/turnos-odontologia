@@ -1,0 +1,71 @@
+/* Turnos Odontología — design tokens. Revision 1.
+   Valores visuales únicos del proyecto: cambiar acá, no en cada pantalla. */
+:root {
+  /* Marca */
+  --color-brand-900: #0b3b3a;
+  --color-brand-700: #115e59;
+  --color-brand-600: #0f766e;
+  --color-brand-500: #14918a;
+  --color-brand-100: #d5f0ec;
+  --color-brand-50:  #edf8f6;
+
+  /* Neutros cálidos */
+  --color-ink-900: #1c1f23;
+  --color-ink-700: #3d434a;
+  --color-ink-500: #69717a;
+  --color-ink-300: #b9bec4;
+  --color-line:    #e3e1dc;
+  --color-surface: #ffffff;
+  --color-canvas:  #f6f5f2;
+  --color-sunken:  #efede8;
+
+  /* Semánticos */
+  --color-success-700: #1f6f3f; --color-success-100: #dcf1e3;
+  --color-warning-700: #8a5a00; --color-warning-100: #fbeccb;
+  --color-danger-700:  #b42318; --color-danger-100:  #fde3e0;
+  --color-info-700:    #1d4f91; --color-info-100:    #dde9f9;
+
+  /* Estados del turno (RN-ES) */
+  --estado-programado-fg: var(--color-brand-700);   --estado-programado-bg: var(--color-brand-100);
+  --estado-atendido-fg:   var(--color-success-700); --estado-atendido-bg:   var(--color-success-100);
+  --estado-ausente-fg:    var(--color-warning-700); --estado-ausente-bg:    var(--color-warning-100);
+  --estado-cancelado-fg:  var(--color-ink-500);     --estado-cancelado-bg:  var(--color-sunken);
+  --estado-tardio-fg:     var(--color-danger-700);  --estado-tardio-bg:     var(--color-danger-100);
+
+  /* Tipografía: pila del sistema, sin fuentes remotas */
+  --font-sans: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --text-xs: 0.75rem;   --text-sm: 0.875rem; --text-md: 1rem;
+  --text-lg: 1.125rem;  --text-xl: 1.375rem; --text-2xl: 1.75rem;
+  --leading-tight: 1.25; --leading-normal: 1.5;
+  --weight-regular: 400; --weight-medium: 500; --weight-semibold: 600; --weight-bold: 700;
+
+  /* Espaciado (base 4px) */
+  --space-1: 4px;  --space-2: 8px;  --space-3: 12px; --space-4: 16px;
+  --space-5: 20px; --space-6: 24px; --space-8: 32px; --space-10: 40px; --space-12: 48px;
+
+  /* Radios */
+  --radius-sm: 6px; --radius-md: 10px; --radius-lg: 14px; --radius-pill: 999px;
+
+  /* Sombras */
+  --shadow-1: 0 1px 2px rgba(28, 31, 35, 0.06), 0 1px 1px rgba(28, 31, 35, 0.04);
+  --shadow-2: 0 4px 12px rgba(28, 31, 35, 0.08), 0 1px 3px rgba(28, 31, 35, 0.06);
+  --shadow-3: 0 16px 40px rgba(28, 31, 35, 0.16);
+
+  /* Foco accesible */
+  --focus-ring: 0 0 0 3px var(--color-surface), 0 0 0 5px var(--color-brand-500);
+
+  /* Movimiento */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --duration-fast: 120ms; --duration-base: 180ms; --duration-slow: 260ms;
+
+  /* Layout */
+  --hit-target: 44px;
+  --agenda-slot-height: 56px; /* 30 minutos */
+  --sidebar-width: 232px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --duration-fast: 0ms; --duration-base: 0ms; --duration-slow: 0ms; }
+  *, *::before, *::after { animation-duration: 0ms !important; transition-duration: 0ms !important; }
+}

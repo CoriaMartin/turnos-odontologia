@@ -1,0 +1,460 @@
+{
+  "version": 5,
+  "step": "done",
+  "owner": "active-orchestrator",
+  "foundation": {
+    "version": 1,
+    "approval": {
+      "status": "approved",
+      "date": "2026-11-21",
+      "by": "user"
+    },
+    "order": [
+      "discovery",
+      "kb",
+      "visual-design",
+      "roadmap",
+      "task-management",
+      "find-skill",
+      "registry",
+      "agents"
+    ],
+    "phases": {
+      "discovery": {
+        "variant": "interview",
+        "status": "done",
+        "requires": [],
+        "outputs": [
+          "discovery/discovery.md"
+        ],
+        "completed_at": "2026-11-21"
+      },
+      "kb": {
+        "variant": "interview",
+        "status": "done",
+        "requires": [
+          "discovery"
+        ],
+        "outputs": [
+          "knowledge-base/"
+        ],
+        "completed_at": "2026-11-21"
+      },
+      "visual-design": {
+        "variant": "system-and-mockups",
+        "status": "done",
+        "requires": [
+          "kb"
+        ],
+        "outputs": [
+          "design-system/README.md",
+          "design-system/brand.md",
+          "design-system/brand.js",
+          "design-system/tokens.css",
+          "design-system/components.html",
+          "design-system/assets/",
+          "design-system/previews/"
+        ],
+        "completed_at": "2026-11-21"
+      },
+      "roadmap": {
+        "variant": "local-markdown",
+        "status": "done",
+        "requires": [
+          "kb",
+          "visual-design"
+        ],
+        "outputs": [
+          "CHANGES.md"
+        ],
+        "completed_at": "2026-11-21"
+      },
+      "task-management": {
+        "variant": "local",
+        "status": "done",
+        "requires": [
+          "roadmap"
+        ],
+        "outputs": [
+          ".active-stack/roadmap.json"
+        ],
+        "completed_at": "2026-11-21"
+      },
+      "find-skill": {
+        "variant": "install-selected",
+        "status": "done",
+        "requires": [
+          "kb"
+        ],
+        "outputs": [],
+        "installation_requires_explicit_selection": true,
+        "completed_at": "2026-11-21"
+      },
+      "registry": {
+        "variant": "index",
+        "status": "done",
+        "requires": [
+          "find-skill"
+        ],
+        "outputs": [
+          ".atl/skill-registry.md"
+        ],
+        "completed_at": "2026-11-21"
+      },
+      "agents": {
+        "variant": "generate",
+        "status": "done",
+        "requires": [
+          "kb",
+          "roadmap",
+          "registry"
+        ],
+        "outputs": [
+          "AGENTS.md"
+        ],
+        "completed_at": "2026-11-21"
+      }
+    }
+  },
+  "discovery": {
+    "created_by": "discovery-research",
+    "variant": "interview",
+    "completed_at": "2026-11-21",
+    "output": "discovery/discovery.md",
+    "report": "discovery/informe-competitivo.md",
+    "sources": [],
+    "competitors": [
+      {
+        "name": "Bilog",
+        "notes_file": "discovery/research/argentina.md"
+      },
+      {
+        "name": "DentalSoft",
+        "notes_file": "discovery/research/argentina.md"
+      },
+      {
+        "name": "Odonthia",
+        "notes_file": "discovery/research/argentina.md"
+      },
+      {
+        "name": "OdontoSoft Millennium",
+        "notes_file": "discovery/research/argentina.md"
+      },
+      {
+        "name": "Dentalink",
+        "notes_file": "discovery/research/argentina.md"
+      },
+      {
+        "name": "Dentidesk",
+        "notes_file": "discovery/research/argentina.md"
+      },
+      {
+        "name": "Dentis365",
+        "notes_file": "discovery/research/latinoamerica.md"
+      },
+      {
+        "name": "Simples Dental",
+        "notes_file": "discovery/research/latinoamerica.md"
+      },
+      {
+        "name": "Codental",
+        "notes_file": "discovery/research/latinoamerica.md"
+      },
+      {
+        "name": "Clinicorp",
+        "notes_file": "discovery/research/latinoamerica.md"
+      },
+      {
+        "name": "Dental Office",
+        "notes_file": "discovery/research/latinoamerica.md"
+      },
+      {
+        "name": "Open Dental",
+        "notes_file": "discovery/research/internacional.md"
+      },
+      {
+        "name": "Dentally",
+        "notes_file": "discovery/research/internacional.md"
+      },
+      {
+        "name": "CareStack",
+        "notes_file": "discovery/research/internacional.md"
+      },
+      {
+        "name": "tab32",
+        "notes_file": "discovery/research/internacional.md"
+      },
+      {
+        "name": "Curve Dental",
+        "notes_file": "discovery/research/internacional.md"
+      }
+    ],
+    "problema": "El odontólogo independiente argentino gestiona su agenda a mano (papel, WhatsApp, planilla), con turnos superpuestos, ausencias sin aviso y tiempo clínico perdido en coordinar.",
+    "usuarios": [
+      "Odontólogo: único usuario; gestiona turnos, pacientes y prestaciones",
+      "Paciente: no usa el sistema en el MVP; recibe recordatorios por email"
+    ],
+    "casos_de_uso": [
+      "Crear turno con paciente y prestación sin solapamiento",
+      "Ver agenda diaria y semanal",
+      "Reprogramar o cancelar turno liberando el horario",
+      "Alta y búsqueda de pacientes",
+      "Recordatorio por email al paciente"
+    ],
+    "funcionalidades_necesarias": [
+      "Agenda día/semana",
+      "Alta, reprogramación y cancelación de turnos con estados",
+      "Catálogo de prestaciones con duración",
+      "Pacientes con datos básicos",
+      "Recordatorio automático por email"
+    ],
+    "funcionalidades_opcionales": [
+      "Reserva/solicitud online del paciente",
+      "Ficha clínica y odontograma",
+      "WhatsApp Business API",
+      "Mercado Pago y señas",
+      "ARCA",
+      "Obras sociales y liquidaciones",
+      "Lista de espera",
+      "Multi-profesional y multi-sillón",
+      "Asistente con permisos",
+      "Sobreturnos autorizados",
+      "Exportación completa con adjuntos"
+    ],
+    "reglas_de_negocio": [
+      "Sin solapamiento por profesional ni por sillón; sobreturnos prohibidos",
+      "Intervalos semiabiertos: inicio igual a fin de otro no solapa",
+      "Duración propuesta por la prestación, editable",
+      "Cancelación con menos de 24 h (configurable) = cancelación tardía; el horario se libera",
+      "Sin restricción por horario de atención ni bloqueos en el MVP"
+    ],
+    "integraciones": [
+      "Servicio de email (SMTP o proveedor transaccional)"
+    ],
+    "restricciones": [
+      "Integrador académico, 4 integrantes autorizados por la cátedra, rama y commits por integrante",
+      "Primer change con reglas verificables y tests por escenario; sin UI obligatoria",
+      "Sin datos reales ni secretos en el repo",
+      "Leyes 26.529 y 25.326",
+      "MVP: un profesional y un sillón modelados como recursos"
+    ],
+    "riesgos": [
+      "Supuesto: adopción por el odontólogo independiente",
+      "Supuesto: eficacia del email frente a WhatsApp",
+      "Deuda de modelo si escala a clínica",
+      "Concurrencia en la regla de no solapamiento"
+    ],
+    "preguntas_abiertas": [
+      "Turnos en el pasado (supuesto: no)",
+      "Remitente y anticipación del recordatorio (supuesto: 24 h)",
+      "Datos mínimos del paciente",
+      "Consentimiento para recordatorios (Ley 25.326)",
+      "Puntos No evidenciado del informe",
+      "Ubicación de entregables docs/discovery vs discovery/"
+    ]
+  },
+  "kb": {
+    "created_by": "kb-creator",
+    "source": "interactive",
+    "discovery": {
+      "problem": "El odontólogo independiente argentino gestiona su agenda a mano (papel, WhatsApp, planilla), con turnos superpuestos, ausencias sin aviso y tiempo clínico perdido en coordinar.",
+      "system_type": "web_app",
+      "domain": "salud / odontología (agenda de turnos)",
+      "scale": "single_user",
+      "stack": "Java 21 + Spring Boot 3 + PostgreSQL + React/TypeScript (Vite)",
+      "needs_infra": true
+    },
+    "files": [
+      "knowledge-base/01_vision_y_objetivos.md",
+      "knowledge-base/02_descripcion_general.md",
+      "knowledge-base/03_actores_y_roles.md",
+      "knowledge-base/04_modelo_de_datos.md",
+      "knowledge-base/05_reglas_de_negocio.md",
+      "knowledge-base/06_funcionalidades.md",
+      "knowledge-base/07_flujos_principales.md",
+      "knowledge-base/08_arquitectura_propuesta.md",
+      "knowledge-base/09_decisiones_y_supuestos.md",
+      "knowledge-base/10_preguntas_abiertas.md",
+      "knowledge-base/11_cumplimiento_y_datos_sensibles.md"
+    ]
+  },
+  "visual_design": {
+    "created_by": "design-system",
+    "mode": "system-and-mockups",
+    "status": "approved",
+    "revision": 1,
+    "path": "design-system/README.md",
+    "previews": [
+      "design-system/previews/components-desktop-1440x900.png",
+      "design-system/previews/components-mobile-390x844.png"
+    ],
+    "approved_at": "2026-11-21"
+  },
+  "roadmap": {
+    "created_by": "roadmap-generator",
+    "source": "CHANGES.md",
+    "changes_file": "CHANGES.md",
+    "changes": [
+      "C-01",
+      "C-02",
+      "C-19",
+      "C-03",
+      "C-04",
+      "C-05",
+      "C-06",
+      "C-12",
+      "C-07",
+      "C-08",
+      "C-09",
+      "C-10",
+      "C-11",
+      "C-13",
+      "C-14",
+      "C-15",
+      "C-16",
+      "C-17",
+      "C-18",
+      "C-20"
+    ]
+  },
+  "skills": {
+    "recommended": [
+      {
+        "name": "github/awesome-copilot@java-springboot",
+        "installs": "22.2K",
+        "fit": "alta",
+        "source": "skills.sh (2026-11-21)"
+      },
+      {
+        "name": "affaan-m/ecc@springboot-tdd",
+        "installs": "13.2K",
+        "fit": "alta",
+        "source": "skills.sh (2026-11-21)"
+      },
+      {
+        "name": "affaan-m/ecc@springboot-security",
+        "installs": "14K",
+        "fit": "alta",
+        "source": "skills.sh (2026-11-21)"
+      },
+      {
+        "name": "wshobson/agents@postgresql-table-design",
+        "installs": "29.3K",
+        "fit": "media-alta",
+        "source": "skills.sh (2026-11-21)"
+      },
+      {
+        "name": "vercel-labs/agent-skills@vercel-react-best-practices",
+        "installs": "920.8K",
+        "fit": "media",
+        "source": "skills.sh (2026-11-21)"
+      },
+      {
+        "name": "affaan-m/ecc@react-testing",
+        "installs": "8.3K",
+        "fit": "media",
+        "source": "skills.sh (2026-11-21)"
+      },
+      {
+        "name": "addyosmani/web-quality-skills@accessibility",
+        "installs": "72.8K",
+        "fit": "media",
+        "source": "skills.sh (2026-11-21)"
+      },
+      {
+        "name": "mattpocock/skills@tdd",
+        "installs": "1.3M",
+        "fit": "media",
+        "source": "skills.sh (2026-11-21)"
+      }
+    ],
+    "installed": [
+      {
+        "name": "java-springboot",
+        "source": "github/awesome-copilot",
+        "scope": "global",
+        "path": "~/.agents/skills/java-springboot",
+        "justificacion": "Convenciones Spring Boot para todo el backend",
+        "installed_at": "2026-11-21"
+      },
+      {
+        "name": "springboot-tdd",
+        "source": "affaan-m/ecc",
+        "scope": "global",
+        "path": "~/.agents/skills/springboot-tdd",
+        "justificacion": "Tests JUnit/MockMvc por escenario del spec (sin Testcontainers: Postgres local)",
+        "installed_at": "2026-11-21"
+      },
+      {
+        "name": "springboot-security",
+        "source": "affaan-m/ecc",
+        "scope": "global",
+        "path": "~/.agents/skills/springboot-security",
+        "justificacion": "Spring Security + JWT para C-04",
+        "installed_at": "2026-11-21"
+      },
+      {
+        "name": "postgresql-table-design",
+        "source": "wshobson/agents",
+        "scope": "global",
+        "path": "~/.agents/skills/postgresql-table-design",
+        "justificacion": "Restricciones de exclusión y diseño de tablas (C-03, C-07)",
+        "installed_at": "2026-11-21"
+      },
+      {
+        "name": "react-testing",
+        "source": "affaan-m/ecc",
+        "scope": "global",
+        "path": "~/.agents/skills/react-testing",
+        "justificacion": "Vitest + Testing Library para C-14..C-18",
+        "installed_at": "2026-11-21"
+      },
+      {
+        "name": "accessibility",
+        "source": "addyosmani/web-quality-skills",
+        "scope": "global",
+        "path": "~/.agents/skills/accessibility",
+        "justificacion": "Accesibilidad WCAG del frontend",
+        "installed_at": "2026-11-21"
+      },
+      {
+        "name": "vercel-react-best-practices",
+        "source": "vercel-labs/agent-skills",
+        "scope": "global",
+        "path": "~/.agents/skills/vercel-react-best-practices",
+        "justificacion": "Buenas prácticas React (ignorar partes Next.js)",
+        "installed_at": "2026-11-21"
+      },
+      {
+        "name": "tdd",
+        "source": "mattpocock/skills",
+        "scope": "global",
+        "path": "~/.agents/skills/tdd",
+        "justificacion": "Ciclo red-green-refactor general",
+        "installed_at": "2026-11-21"
+      }
+    ]
+  },
+  "registry": {
+    "created_by": "skill-registry",
+    "path": ".atl/skill-registry.md",
+    "skills_count": 44,
+    "updated_at": "2026-11-21"
+  },
+  "agents": {
+    "created_by": "agent-instruction",
+    "files": [
+      "AGENTS.md",
+      "CLAUDE.md"
+    ],
+    "reglas_applied": [
+      "No relajar el no-solapamiento ni agregar sobreturnos sin change OPSX",
+      "DTOs + ProblemDetail con codigo de negocio",
+      "Nunca emails reales en tests",
+      "Un test por escenario; integración contra Postgres local turnos_test; mvnw verify verde",
+      "Solo tokens de design-system/tokens.css",
+      "Textos en español rioplatense sin códigos técnicos",
+      "Marcar [x] en CHANGES.md al archivar"
+    ]
+  }
+}
