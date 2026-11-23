@@ -24,36 +24,38 @@ configuracion (fila única)
 
 Todas las fechas y horas se guardan como `timestamptz` (UTC) y se presentan en `America/Argentina/Buenos_Aires`. Todas las tablas tienen `id` (bigint identity), `creado_en` y `actualizado_en`.
 
+**Convención de texto** (decidida en C-03, 2026-11-23): las cadenas se declaran como `text` con `CHECK (length(col) <= n)` en lugar de `varchar(n)`. Mismo límite, pero ampliarlo es solo cambiar el `CHECK`. En JPA se mapean con `@Column(columnDefinition = "text")`. Abajo, `text (≤ n)` indica ese límite.
+
 ### usuario
-- `email` varchar(254), único, no nulo
-- `password_hash` varchar(100), no nulo (BCrypt)
-- `rol` varchar(30), no nulo, valores: `ODONTOLOGO`
+- `email` text (≤ 254), no nulo, único sin distinguir mayúsculas (índice único sobre `lower(email)`)
+- `password_hash` text (≤ 100), no nulo (BCrypt)
+- `rol` text, no nulo, `CHECK (rol IN ('ODONTOLOGO'))`
 - `activo` boolean, por defecto `true`
 
 ### profesional
-- `usuario_id` FK → usuario, único
-- `nombre` varchar(100), `apellido` varchar(100), `matricula` varchar(30) nulo
+- `usuario_id` FK → usuario, único, `ON DELETE RESTRICT`
+- `nombre` text (≤ 100), `apellido` text (≤ 100), `matricula` text (≤ 30) nulo
 - Relación: 1 profesional tiene N turnos
 
 ### sillon
-- `nombre` varchar(50), único (ej. "Sillón 1")
+- `nombre` text (≤ 50), único (ej. "Sillón 1")
 - `activo` boolean
 - Relación: 1 sillón tiene N turnos
 
 ### paciente
-- `nombre` varchar(100), `apellido` varchar(100), no nulos
-- `dni` varchar(10), único, no nulo (solo dígitos)
+- `nombre` text (≤ 100), `apellido` text (≤ 100), no nulos
+- `dni` text (≤ 10), único, no nulo (solo dígitos)
 - `fecha_nacimiento` date, nulo
-- `telefono` varchar(30), nulo
-- `email` varchar(254), nulo
-- `obra_social` varchar(100), nulo (texto libre en el MVP)
-- `numero_afiliado` varchar(50), nulo
+- `telefono` text (≤ 30), nulo
+- `email` text (≤ 254), nulo
+- `obra_social` text (≤ 100), nulo (texto libre en el MVP)
+- `numero_afiliado` text (≤ 50), nulo
 - `acepta_recordatorios` boolean, por defecto `false`
 - `activo` boolean, por defecto `true` (baja lógica)
 - Índices: `dni` único; índice sobre `lower(apellido)`, `lower(nombre)` para búsqueda
 
 ### prestacion
-- `nombre` varchar(100), único, no nulo
+- `nombre` text (≤ 100), único, no nulo
 - `duracion_minutos` integer, no nulo, `CHECK (duracion_minutos BETWEEN 5 AND 480)`
 - `activa` boolean, por defecto `true`
 
@@ -64,10 +66,10 @@ Todas las fechas y horas se guardan como `timestamptz` (UTC) y se presentan en `
 - `prestacion_id` FK → prestacion, no nulo
 - `inicio` timestamptz, no nulo
 - `fin` timestamptz, no nulo, `CHECK (fin > inicio)`
-- `estado` varchar(20), no nulo: `PROGRAMADO | ATENDIDO | AUSENTE | CANCELADO | CANCELADO_TARDIO`
-- `motivo_cancelacion` varchar(255), nulo
+- `estado` text (≤ 20), no nulo: `PROGRAMADO | ATENDIDO | AUSENTE | CANCELADO | CANCELADO_TARDIO`
+- `motivo_cancelacion` text (≤ 255), nulo
 - `cancelado_en` timestamptz, nulo
-- `observaciones` varchar(500), nulo (no clínicas)
+- `observaciones` text (≤ 500), nulo (no clínicas)
 - `version` integer (bloqueo optimista)
 - **Restricciones de exclusión** (requieren `CREATE EXTENSION btree_gist`):
   ```sql
@@ -81,18 +83,19 @@ Todas las fechas y horas se guardan como `timestamptz` (UTC) y se presentan en `
 
 ### notificacion
 - `turno_id` FK → turno, no nulo
-- `canal` varchar(10): `EMAIL`
-- `tipo` varchar(20): `RECORDATORIO`
-- `estado` varchar(10): `ENVIADA | FALLIDA`
+- `canal` text (≤ 10): `EMAIL`
+- `tipo` text (≤ 20): `RECORDATORIO`
+- `estado` text (≤ 10): `ENVIADA | FALLIDA`
 - `intentos` integer
-- `destinatario` varchar(254)
-- `enviada_en` timestamptz, nulo; `error` varchar(500), nulo
+- `destinatario` text (≤ 254)
+- `enviada_en` timestamptz, nulo; `error` text (≤ 500), nulo
 - Restricción: único `(turno_id, tipo)` para no duplicar recordatorios
 
 ### configuracion (fila única)
+- `id` smallint, `CHECK (id = 1)`: garantiza una sola fila
 - `horas_cancelacion_tardia` integer, por defecto 24, `CHECK (>= 0)`
 - `horas_anticipacion_recordatorio` integer, por defecto 24, `CHECK (> 0)`
-- `zona_horaria` varchar(50), por defecto `America/Argentina/Buenos_Aires`
+- `zona_horaria` text (≤ 50), por defecto `America/Argentina/Buenos_Aires`
 
 ## Seed data inicial
 

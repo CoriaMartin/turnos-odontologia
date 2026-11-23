@@ -216,7 +216,7 @@ C-14 (ui-login) corre en paralelo y debe estar listo antes de C-16. C-13 → C-1
 ## FASE 1 — Dominio core y acceso
 
 ### [C-03] `core-models`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (2026-11-23, change archivado `openspec/changes/archive/2026-11-23-core-models`)
 - **Responsable**: Líder · tanda 2
 - **Scope**:
   - Migración `V2__core.sql`: tablas `usuario`, `profesional`, `sillon`, `configuracion` (fila única con `CHECK`) con columnas de auditoría `creado_en`, `actualizado_en`.
