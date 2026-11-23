@@ -44,7 +44,7 @@ La fuente de verdad del dominio vive en `knowledge-base/`. **Leé el archivo rel
 
 > ⚠️ Resolver las preguntas de prioridad **Alta** de `10_preguntas_abiertas.md` antes de arrancar el change que bloquean (SMTP y consentimiento → C-13). Turnos en el pasado: resuelto, no se permiten ([DD-12](knowledge-base/09_decisiones_y_supuestos.md)).
 
-Diseño visual: [design-system/README.md](design-system/README.md) (revisión 1 aprobada, política `system-and-mockups`).
+Diseño visual: [design-system/README.md](design-system/README.md) (revisión 2 aprobada, política `system-and-mockups`).
 
 ---
 
