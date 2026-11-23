@@ -11,3 +11,6 @@
 backend/target/
 frontend/node_modules/
 frontend/dist/
+
+# Maven Wrapper (only-script no usa jar)
+backend/.mvn/wrapper/maven-wrapper.jar
