@@ -42,7 +42,7 @@ La fuente de verdad del dominio vive en `knowledge-base/`. **Leé el archivo rel
 | [10_preguntas_abiertas.md](knowledge-base/10_preguntas_abiertas.md) | ⚠️ Inconsistencias a resolver ANTES de codear |
 | [11_cumplimiento_y_datos_sensibles.md](knowledge-base/11_cumplimiento_y_datos_sensibles.md) | Leyes 25.326 y 26.529 |
 
-> ⚠️ Resolver las preguntas de prioridad **Alta** de `10_preguntas_abiertas.md` antes de arrancar el change que bloquean (turnos en el pasado → C-07; SMTP y consentimiento → C-13).
+> ⚠️ Resolver las preguntas de prioridad **Alta** de `10_preguntas_abiertas.md` antes de arrancar el change que bloquean (SMTP y consentimiento → C-13). Turnos en el pasado: resuelto, no se permiten ([DD-12](knowledge-base/09_decisiones_y_supuestos.md)).
 
 Diseño visual: [design-system/README.md](design-system/README.md) (revisión 1 aprobada, política `system-and-mockups`).
 

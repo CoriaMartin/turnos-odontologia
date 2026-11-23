@@ -9,7 +9,7 @@ Cada regla tiene un código `RN-{DOMINIO}-{NN}` para trazabilidad desde specs, t
 - **RN-AG-03**: Los intervalos son semiabiertos `[inicio, fin)`. Un turno que empieza exactamente cuando termina otro no se solapa.
 - **RN-AG-04**: Los sobreturnos (turnos superpuestos a propósito) están prohibidos en el MVP. No hay forma de saltear RN-AG-01 ni RN-AG-02.
 - **RN-AG-05**: La duración del turno la propone la prestación elegida (`duracion_minutos`). Puede editarse al crear o reprogramar, entre 5 y 480 minutos. `fin = inicio + duración`.
-- **RN-AG-06**: No se puede crear ni reprogramar un turno con `inicio` en el pasado respecto de la hora actual del servidor. **Suposición** confirmada como provisoria en el discovery.
+- **RN-AG-06**: No se puede crear ni reprogramar un turno con `inicio` en el pasado respecto de la hora actual del servidor. Decisión del equipo ([DD-12](09_decisiones_y_supuestos.md), 2026-11-23).
 - **RN-AG-07**: No hay restricción por horario de atención ni por bloqueos en el MVP: cualquier horario futuro sin solapamiento es válido.
 - **RN-AG-08**: Un turno requiere paciente activo, prestación activa, profesional y sillón.
 - **RN-AG-09**: La validación de solapamiento se hace en el servicio y además en la base de datos con restricciones de exclusión. Si la base rechaza la operación por concurrencia, la API responde el mismo error de negocio (`TURNO_SOLAPADO`).

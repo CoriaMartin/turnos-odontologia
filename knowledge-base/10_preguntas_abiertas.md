@@ -33,7 +33,7 @@
 
 | Prioridad | Pregunta | Bloquea | Decisor |
 |---|---|---|---|
-| Alta | ¿Se permiten turnos en el pasado (carga retroactiva)? Supuesto actual: no ([SU-01](09_decisiones_y_supuestos.md)) | Change "crear turno" | Equipo |
+| ~~Alta~~ Resuelta | ~~¿Se permiten turnos en el pasado (carga retroactiva)?~~ **No** — decidido el 2026-11-23 ([DD-12](09_decisiones_y_supuestos.md)) | — | Equipo |
 | Alta | ¿Qué proveedor SMTP y remitente se usan (Gmail con clave de app o Brevo)? | Change de recordatorios | Equipo |
 | Alta | ¿El recordatorio requiere consentimiento explícito del paciente? ([SU-03](09_decisiones_y_supuestos.md)) | Change de recordatorios | Cátedra / asesoría |
 | Media | ¿Datos mínimos del paciente: DNI obligatorio, email y teléfono opcionales? | Change de pacientes | Equipo |
