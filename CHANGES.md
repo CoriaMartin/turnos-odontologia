@@ -160,7 +160,7 @@ C-14 (ui-login) corre en paralelo y debe estar listo antes de C-16. C-13 → C-1
 > C-01, C-02 y C-19 no dependen de nada y arrancan en paralelo.
 
 ### [C-01] `backend-scaffolding`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (2026-11-23, change archivado `openspec/changes/archive/2026-11-23-backend-scaffolding`)
 - **Responsable**: Líder · tanda 1
 - **Scope**:
   - Proyecto `backend/` Maven con wrapper, Java 21, Spring Boot 3.3 (Web, Data JPA, Validation, Security, Mail, Actuator), Flyway, driver PostgreSQL.

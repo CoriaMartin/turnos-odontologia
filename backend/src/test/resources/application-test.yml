@@ -1,0 +1,7 @@
+# Perfil de tests: siempre contra la base local turnos_test (nunca contra turnos).
+spring:
+  datasource:
+    url: ${TEST_DB_URL:jdbc:postgresql://localhost:5432/turnos_test}
+  flyway:
+    # Habilitado solo acá: cada corrida limpia y recrea turnos_test (ver FlywayLimpiezaTestConfig).
+    clean-disabled: false
