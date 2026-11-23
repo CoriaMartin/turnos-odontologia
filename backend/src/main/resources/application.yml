@@ -21,6 +21,9 @@ spring:
   flyway:
     enabled: true
     clean-disabled: true
+    # Los changes tienen su número de migración fijo y se mergean en el orden en que terminan
+    # (ej. V3 de C-05 después de V4 de C-06). Ver CHANGES.md, reglas de colaboración.
+    out-of-order: true
   mvc:
     problemdetails:
       enabled: true
