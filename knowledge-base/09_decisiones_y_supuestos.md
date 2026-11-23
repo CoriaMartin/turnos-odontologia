@@ -57,12 +57,17 @@
 ### DD-11 — Equipo de 4 integrantes
 **Decisión**: 4 integrantes, autorizado por la cátedra, con un líder que conduce fundación y OPSX.
 
+### DD-12 — No se permiten turnos en el pasado
+**Decisión**: no se puede crear ni reprogramar un turno cuyo inicio sea anterior a la hora actual del servidor ([RN-AG-06](05_reglas_de_negocio.md)); la API responde 422 `TURNO_EN_PASADO`.
+**Contexto**: pregunta abierta de prioridad Alta del discovery (antes SU-01) que bloqueaba C-07. Decidida por el equipo el 2026-11-23.
+**Alternativas consideradas**: permitir carga retroactiva para registrar turnos ya atendidos.
+**Justificación**: la agenda planifica turnos futuros; la regla es simple, verificable y evita estados inconsistentes (un turno nuevo nacería en `PROGRAMADO` con inicio ya vencido).
+**Trade-offs aceptados**: no se puede registrar de forma retroactiva un turno atendido sin haberlo cargado antes. Si hiciera falta, se propone como change nuevo.
+
 ## Supuestos inferidos
 
 ### SU-01 — No se dan turnos en el pasado
-**Origen**: pregunta abierta del discovery, supuesto provisorio.
-**Riesgo si es falso**: no se podría registrar un turno atendido de forma retroactiva.
-**Cómo validar**: preguntarle a un odontólogo si carga turnos después de atender.
+**Estado**: resuelto, ahora es la decisión [DD-12](#dd-12--no-se-permiten-turnos-en-el-pasado) (2026-11-23).
 
 ### SU-02 — El recordatorio sale 24 h antes
 **Origen**: discovery §11.
