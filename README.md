@@ -85,6 +85,17 @@ cd backend
 
 Verificá que esté operativo en <http://localhost:8080/actuator/health> (debe responder `{"status":"UP"}`).
 
+### Datos de ejemplo (perfil `dev`)
+
+Para una demo o para probar el frontend con datos, levantá el backend con el perfil `dev`. Si la base no tiene pacientes, crea 5 pacientes **ficticios** (DNIs `0000000N`, emails `@example.com`):
+
+```powershell
+cd backend
+./mvnw spring-boot:run "-Dspring-boot.run.profiles=dev"
+```
+
+Nunca cargues datos reales de pacientes en el repositorio, en los seeds ni en los tests.
+
 ## Estructura
 
 ```

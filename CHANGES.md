@@ -271,7 +271,7 @@ C-14 (ui-login) corre en paralelo y debe estar listo antes de C-16. C-13 → C-1
   - `knowledge-base/06_funcionalidades.md` §US-010
 
 ### [C-06] `pacientes-gestion`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (2026-11-23, change archivado `openspec/changes/archive/2026-11-23-pacientes-gestion`)
 - **Responsable**: Líder · tanda 4
 - **Scope**:
   - Migración `V4__pacientes.sql`: tabla `paciente` (DNI único, `acepta_recordatorios`, `activo`), índices para búsqueda; extensión `unaccent`.
