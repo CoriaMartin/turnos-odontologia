@@ -5,3 +5,13 @@ spring:
   flyway:
     # Habilitado solo acá: cada corrida limpia y recrea turnos_test (ver FlywayLimpiezaTestConfig).
     clean-disabled: false
+
+# Valores FICTICIOS solo para tests. No son credenciales reales y no se usan fuera de turnos_test.
+app:
+  seguridad:
+    jwt-secret: secreto-ficticio-solo-para-tests-0123456789abcdef
+    jwt-exp-minutos: 480
+    frontend-origin: http://localhost:5173
+  admin:
+    email: odontologo@example.com
+    password: ClaveDePrueba123

@@ -232,7 +232,7 @@ C-14 (ui-login) corre en paralelo y debe estar listo antes de C-16. C-13 → C-1
   - `knowledge-base/05_reglas_de_negocio.md` §RN-AG-02
 
 ### [C-04] `auth-jwt`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (2026-11-23, change archivado `openspec/changes/archive/2026-11-23-auth-jwt`)
 - **Responsable**: Líder · tanda 3
 - **Scope**:
   - Bootstrap al arrancar: si no hay usuario, crea `usuario` + `profesional` desde `ADMIN_EMAIL` / `ADMIN_PASSWORD` (BCrypt). Falla si faltan las variables.

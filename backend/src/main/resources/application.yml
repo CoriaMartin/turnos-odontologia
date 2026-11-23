@@ -24,6 +24,18 @@ spring:
   mvc:
     problemdetails:
       enabled: true
+  autoconfigure:
+    # La autenticación es por JWT (C-04): sin usuario en memoria ni contraseña generada.
+    exclude: org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration
+
+app:
+  seguridad:
+    jwt-secret: ${JWT_SECRET:}
+    jwt-exp-minutos: ${JWT_EXP_MINUTES:480}
+    frontend-origin: ${FRONTEND_ORIGIN:http://localhost:5173}
+  admin:
+    email: ${ADMIN_EMAIL:}
+    password: ${ADMIN_PASSWORD:}
 
 management:
   endpoints:

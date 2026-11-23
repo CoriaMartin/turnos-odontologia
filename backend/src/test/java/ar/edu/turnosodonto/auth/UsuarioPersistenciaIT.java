@@ -14,6 +14,14 @@ import ar.edu.turnosodonto.support.PersistenciaTest;
 @PersistenciaTest
 class UsuarioPersistenciaIT {
 
+    /** Los contextos completos crean el usuario inicial (C-04); este slice parte sin usuarios. Se revierte al terminar. */
+    @org.junit.jupiter.api.BeforeEach
+    void sinUsuarios(@Autowired ar.edu.turnosodonto.agenda.recursos.ProfesionalRepository profesionalesExistentes,
+            @Autowired ar.edu.turnosodonto.auth.UsuarioRepository usuariosExistentes) {
+        profesionalesExistentes.deleteAllInBatch();
+        usuariosExistentes.deleteAllInBatch();
+    }
+
     private static final String HASH_FICTICIO = "$2a$10$hashFicticioDePruebaNoEsUnaClaveReal000000000000000000";
 
     @Autowired

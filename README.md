@@ -39,6 +39,31 @@ Copy-Item .env.example .env
 
 El backend lee `.env` automáticamente (desde la raíz del repo o desde `backend/`). `.env` está en `.gitignore`: **nunca lo subas**. Las variables de entorno del sistema tienen prioridad sobre el archivo.
 
+### Variables de seguridad (obligatorias para levantar el backend)
+
+| Variable | Qué es |
+|---|---|
+| `JWT_SECRET` | Clave para firmar los tokens. Al menos 32 bytes; si falta o es corta, el backend no arranca |
+| `JWT_EXP_MINUTES` | Duración del token en minutos (por defecto 480) |
+| `ADMIN_EMAIL` / `ADMIN_PASSWORD` | Usuario odontólogo que se crea en el **primer** arranque, cuando la base no tiene usuarios |
+| `FRONTEND_ORIGIN` | Único origen aceptado por CORS (por defecto `http://localhost:5173`) |
+
+Para generar un `JWT_SECRET` aleatorio en PowerShell:
+
+```powershell
+$b = New-Object byte[] 48; [Security.Cryptography.RandomNumberGenerator]::Create().GetBytes($b); [Convert]::ToBase64String($b)
+```
+
+En el primer arranque se crea el usuario con esos datos y su profesional "Odontólogo Titular". En los arranques siguientes no se modifica, aunque cambies `ADMIN_PASSWORD`. Los tests usan valores ficticios propios (`application-test.yml`) y no necesitan estas variables.
+
+Para obtener un token:
+
+```powershell
+Invoke-RestMethod -Method Post -Uri http://localhost:8080/api/auth/login -ContentType application/json -Body '{"email":"<ADMIN_EMAIL>","password":"<ADMIN_PASSWORD>"}'
+```
+
+Todas las rutas `/api/**` (salvo el login) exigen el encabezado `Authorization: Bearer <token>`.
+
 ## 3. Correr los tests
 
 ```powershell
