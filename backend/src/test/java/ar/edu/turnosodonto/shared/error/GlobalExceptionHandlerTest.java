@@ -14,6 +14,7 @@ import jakarta.validation.constraints.NotBlank;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
@@ -24,11 +25,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import ar.edu.turnosodonto.shared.security.SecurityConfig;
 
 /** Spec api-errors: un test por escenario, con un controlador de prueba. */
 @WebMvcTest(controllers = GlobalExceptionHandlerTest.ControladorDePrueba.class)
-@Import({SecurityConfig.class, GlobalExceptionHandlerTest.ControladorDePrueba.class})
+@AutoConfigureMockMvc(addFilters = false) // la seguridad se prueba en AuthIT; acá solo el formato
+@Import(GlobalExceptionHandlerTest.ControladorDePrueba.class)
 class GlobalExceptionHandlerTest {
 
     static class ReglaDeEjemploException extends NegocioException {

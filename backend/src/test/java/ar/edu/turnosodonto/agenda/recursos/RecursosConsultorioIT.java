@@ -17,6 +17,14 @@ import ar.edu.turnosodonto.support.PersistenciaTest;
 @Import(RecursosConsultorio.class)
 class RecursosConsultorioIT {
 
+    /** Los contextos completos crean el usuario inicial (C-04); este slice parte sin usuarios. Se revierte al terminar. */
+    @org.junit.jupiter.api.BeforeEach
+    void sinUsuarios(@Autowired ar.edu.turnosodonto.agenda.recursos.ProfesionalRepository profesionalesExistentes,
+            @Autowired ar.edu.turnosodonto.auth.UsuarioRepository usuariosExistentes) {
+        profesionalesExistentes.deleteAllInBatch();
+        usuariosExistentes.deleteAllInBatch();
+    }
+
     @Autowired
     private RecursosConsultorio recursosConsultorio;
 
