@@ -64,9 +64,9 @@ Los textos de la spec viven en `shared/api/mensajes.ts` (por código) o en los c
 
 ### UI Mockups
 - Design system revision: 2
-- Decision: provided (2026-11-24)
+- Decision: yes (2026-11-24)
 - Mockups: `openspec/changes/ui-gestion-turnos/mockups/` (`gestion.css`, `nuevo-turno.html`, `detalle-turno.html`, `reprogramar.html`, `cancelar.html`, `avisos.html`).
-- Approval: approved (2026-11-23, by user)
+- Approval: approved (2026-11-23, by Ludmi)
 - Preview: rendered (`openspec/changes/ui-gestion-turnos/mockups/*-desktop-1440x900.png` y `*-mobile-390x844.png`)
 - Visual verify: —
 
