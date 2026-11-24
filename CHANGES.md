@@ -290,7 +290,7 @@ C-14 (ui-login) corre en paralelo y debe estar listo antes de C-16. C-13 → C-1
   - `knowledge-base/11_cumplimiento_y_datos_sensibles.md`
 
 ### [C-12] `configuracion-consultorio`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (2026-11-24, PR #16 mergeado y cierre OpenSpec)
 - **Responsable**: Zaira · tanda 5
 - **Scope**:
   - Endpoints `GET /api/configuracion` y `PUT /api/configuracion` (horas de cancelación tardía y de anticipación del recordatorio).
