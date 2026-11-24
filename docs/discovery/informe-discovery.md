@@ -1,4 +1,22 @@
-﻿# Informe competitivo de sistemas odontológicos
+# Informe de Discovery
+
+## Turnos Odontología
+
+**Trabajo integrador académico**
+
+**Proyecto:** Sistema de gestión de turnos odontológicos.
+
+**Equipo:** 4 integrantes, autorizado por la cátedra.
+
+**Fecha de investigación:** 21 de noviembre de 2026.
+
+**Fecha de verificación manual:** 24 de noviembre de 2026.
+
+**Entregable:** C-19 - Informe Discovery y entrega.
+
+<div style="page-break-after: always;"></div>
+
+# Informe competitivo de sistemas odontológicos
 
 **Fecha de corte y consulta documental: 21 de noviembre de 2026.**
 
@@ -8,7 +26,11 @@ Se consolidan **16 productos**: seis de la ficha argentina/regional, cinco latin
 
 Se recomienda solicitar, sujeto a disponibilidad comercial, cinco demostraciones: **Bilog, DentalSoft, Odonthia, Dentalink y OdontoSoft Millennium**. Las tres referencias documentales de UX son **Dentally** (reserva y cancelación), **CareStack** (agenda y recuperación de citas) y **Codental** (profesionales y sillones). No se ensayó su usabilidad.
 
-Como hipótesis de MVP se propone resolver primero agenda confiable por profesional/recurso, autogestión controlada, recordatorios trazables, ficha odontológica mínima y salida completa de datos. Integraciones argentinas y recuperación de huecos son oportunidades de diferenciación por validar, no requisitos aprobados. **Este informe no cierra Discovery ni aprueba alcance, arquitectura o diseño.**
+El análisis competitivo permitió identificar hipótesis iniciales de funcionalidades y oportunidades de diferenciación. Posteriormente, el equipo definió un MVP acotado a un consultorio odontológico con un profesional y un sillón, centrado en la gestión interna de turnos, agenda diaria y semanal, pacientes, prestaciones, configuración del consultorio y recordatorios por email.
+
+La autogestión de pacientes, la historia clínica, la exportación integral de datos y las integraciones adicionales quedan fuera del alcance inicial.
+
+**El alcance definitivo del MVP y su justificación se documentan en la sección D.5.** Las hipótesis originales del análisis competitivo se conservan como antecedentes y oportunidades futuras.
 
 ### Método y lectura de referencias
 
@@ -353,9 +375,13 @@ Las fuentes adicionales referidas por ID (por ejemplo BI2/BI3/BI6, CO8, CU-C8 o 
 
 **Fecha de verificación manual:** 24/11/2026.
 
-Se realizó una revisión manual de cinco fuentes oficiales mediante el acceso a sus páginas web y la obtención de capturas de pantalla. Se contrastaron las afirmaciones del informe competitivo con la información publicada por cada proveedor.
+Se realizó una revisión manual de siete fuentes oficiales mediante el acceso a sus páginas web y la obtención de capturas de pantalla. Se contrastaron las afirmaciones del informe competitivo con la información publicada por los proveedores y el organismo oficial consultado.
 
 ### 1. Bilog (BI1)
+
+- Tipo de fuente: sitio oficial comercial.
+- Afirmación original: oferta de gestión odontológica y más de 1.500 clínicas y consultorios.
+- Corrección: se mantiene la afirmación como declaración comercial no auditada.
 
 - URL: https://www.bilog.com.ar/
 - Resultado: se corroboró la oferta de gestión odontológica, pacientes, profesionales, agenda y administración.
@@ -364,17 +390,29 @@ Se realizó una revisión manual de cinco fuentes oficiales mediante el acceso a
 
 ### 2. Bilog - Recordatorios por WhatsApp (BI4)
 
+- Tipo de fuente: página de funcionalidad específica.
+- Afirmación original: envío masivo iniciado manualmente y actualización de agenda mediante respuestas.
+- Corrección: se confirma el inicio manual; la actualización automática de agenda queda sin confirmar en esta revisión.
+
 - URL: https://bilog.com.ar/reminders-whatsapp/
 - Resultado: se corroboró la selección de un día de la agenda y el envío masivo de recordatorios iniciado por el usuario. Se observaron plantillas de mensajes.
 - Limitación: no se comprobó la integración mediante API oficial de WhatsApp ni la actualización automática de la agenda.
 
 ### 3. DentalSoft (DS1)
 
+- Tipo de fuente: sitio oficial comercial.
+- Afirmación original: software odontológico en la nube, agenda, reserva online y módulos administrativos.
+- Corrección: se mantiene la oferta funcional declarada. Mercado Pago y prevención de solapamientos no se validaron nuevamente.
+
 - URL: https://dentalsoft.com.ar/
 - Resultado: se corroboró la oferta de software odontológico en la nube, gestión de pacientes, agenda, historias clínicas y reserva web integrada con la agenda. Se observaron módulos de recordatorios, profesionales, caja y presupuestos.
 - Limitación: no se comprobó la integración con Mercado Pago ni las reglas de prevención de solapamientos.
 
 ### 4. Odonthia (OD1)
+
+- Tipo de fuente: sitio oficial con información de planes y precios.
+- Afirmación original: plan gratuito permanente, planes pagos y 4.639 cuentas de consultorios declaradas.
+- Corrección: se registra una nueva cifra declarada de 4.875 consultorios. Los precios observados coinciden con los originales. Se conserva la cifra histórica con su fecha de consulta.
 
 - URL: https://odonthia.com/
 - Resultado: se corroboró el origen argentino declarado, la gestión gratuita sin límite de pacientes, la historia clínica, el odontograma y la oferta de WhatsApp automático en planes pagos.
@@ -384,16 +422,38 @@ Se realizó una revisión manual de cinco fuentes oficiales mediante el acceso a
 
 ### 5. Dentalink (DL1)
 
+- Tipo de fuente: sitio oficial comercial.
+- Afirmación original: oferta para profesionales independientes y clínicas, con módulos administrativos y Argentina como opción comercial.
+- Corrección: se mantiene la afirmación sin inferir adaptación fiscal argentina ni implementación de ARCA.
+
 - URL: https://www.softwaredentalink.com/
 - Resultado: se corroboró la oferta de gestión odontológica, carga masiva de pacientes, control de caja y gastos, cálculo de pagos a profesionales, inventario, laboratorios y reportes en Excel.
 - Se observó Argentina como opción del formulario comercial y una oferta dirigida tanto a profesionales independientes como a redes dentales.
 - Limitación: no se comprobó la adaptación fiscal argentina, la integración con ARCA ni los recordatorios automáticos por correo electrónico.
 
+### 6. CareStack (CS-D1)
+
+- Tipo de fuente: centro de ayuda y documentación de usuario.
+- URL: https://carestack.zendesk.com/hc/en-us/articles/25996244132884-A-Detailed-Overview-of-the-Scheduler
+- Afirmación original: CareStack documenta funcionalidades de agenda y gestión de recursos.
+- Resultado: se corroboró que la guía oficial aborda filtros, fechas, turnos cancelados, ausencias, horarios de atención, sillones y disponibilidad de profesionales. Incluye material audiovisual y capturas de la interfaz.
+- Corrección: no se requieren cambios en la afirmación original.
+- Limitación: no se comprobaron las reglas internas de solapamiento ni el comportamiento ante operaciones concurrentes.
+
+### 7. Ley 26.529 (N1)
+
+- Tipo de fuente: normativa oficial argentina.
+- URL: https://www.argentina.gob.ar/normativa/nacional/ley-26529-160432/actualizacion
+- Afirmación original: el tratamiento de información clínica debe considerar los derechos del paciente y la confidencialidad.
+- Resultado: se verificó el texto actualizado de la ley, sancionada el 21/10/2009 y publicada el 20/11/2009. El artículo 2, incisos c y d, establece derechos relativos a la intimidad y confidencialidad, con referencia a la Ley 25.326.
+- Corrección: se mantiene la referencia normativa original.
+- Aplicación al MVP: respalda la decisión de minimizar los datos almacenados y excluir información clínica de los recordatorios.
+- Limitación: esta revisión no determina por sí sola los requisitos legales específicos del consentimiento para recordatorios por email.
+
 ### Conclusión de la verificación
 
-Se revisaron cinco fuentes oficiales y se contrastaron afirmaciones concretas del informe competitivo. Las funcionalidades observadas corresponden a declaraciones comerciales de los proveedores y no constituyen pruebas funcionales de los productos.
+Se revisaron siete fuentes oficiales y se contrastaron afirmaciones concretas del informe competitivo. Las funcionalidades observadas corresponden a declaraciones comerciales y documentación de los proveedores, y no constituyen pruebas funcionales de los productos. La fuente normativa aporta contexto legal, pero no acredita el cumplimiento integral del sistema.
 
 Las cifras y los precios corresponden a la fecha de consulta y pueden variar. Se mantienen las limitaciones y los datos históricos de la investigación original.
 
 El análisis respalda la relevancia de la gestión de turnos, pacientes, agenda y recordatorios como funcionalidades del mercado. El alcance definitivo del MVP se mantiene conforme a las decisiones del equipo documentadas en la sección D.5.
-

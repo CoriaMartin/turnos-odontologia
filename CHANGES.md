@@ -196,7 +196,7 @@ C-14 (ui-login) corre en paralelo y debe estar listo antes de C-16. C-13 → C-1
   - `design-system/README.md`, `design-system/components.html`
 
 ### [C-19] `informe-discovery-entrega`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (2026-11-24, informe, PDF, checklist, fuentes y cierre OpenSpec)
 - **Responsable**: Zaira · tanda 1
 - **Scope**:
   - Crear `docs/discovery/informe-discovery.md` a partir de `discovery/informe-competitivo.md` con portada, resumen ejecutivo y secciones A–D según la consigna.
