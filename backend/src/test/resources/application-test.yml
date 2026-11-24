@@ -20,3 +20,6 @@ app:
   admin:
     email: odontologo@example.com
     password: ClaveDePrueba123
+
+# Nunca enviar correos reales durante los tests.
+MAIL_ENABLED: false

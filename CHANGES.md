@@ -392,7 +392,7 @@ C-14 (ui-login) corre en paralelo y debe estar listo antes de C-16. C-13 → C-1
 ## FASE 4 — Recordatorios
 
 ### [C-13] `recordatorios-email`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado
 - **Responsable**: Zaira · tanda 7
 - **Scope**:
   - Migración `V6__notificaciones.sql`: tabla `notificacion` con único `(turno_id, tipo)`.
