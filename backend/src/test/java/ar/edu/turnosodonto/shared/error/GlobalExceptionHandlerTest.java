@@ -38,6 +38,17 @@ class GlobalExceptionHandlerTest {
         }
     }
 
+    static class ReglaConDatosExtraException extends NegocioException {
+        ReglaConDatosExtraException() {
+            super("EJEMPLO_CON_DATOS", HttpStatus.CONFLICT, "La regla con datos extra no se cumple.");
+        }
+
+        @Override
+        public java.util.Map<String, Object> propiedades() {
+            return java.util.Map.of("detalleExtra", java.util.Map.of("id", 7));
+        }
+    }
+
     record SolicitudDePrueba(@NotBlank String nombre) {
     }
 
@@ -47,6 +58,11 @@ class GlobalExceptionHandlerTest {
         @GetMapping("/api/prueba/negocio")
         void negocio() {
             throw new ReglaDeEjemploException();
+        }
+
+        @GetMapping("/api/prueba/negocio-con-datos")
+        void negocioConDatos() {
+            throw new ReglaConDatosExtraException();
         }
 
         @GetMapping("/api/prueba/inesperado")
@@ -82,6 +98,14 @@ class GlobalExceptionHandlerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_PROBLEM_JSON))
                 .andExpect(jsonPath("$.codigo").value("EJEMPLO_REGLA"))
                 .andExpect(jsonPath("$.instance").value("/api/prueba/negocio"));
+    }
+
+    @Test
+    void errorDeNegocioConDatosExtra() throws Exception {
+        mvc.perform(get("/api/prueba/negocio-con-datos"))
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.codigo").value("EJEMPLO_CON_DATOS"))
+                .andExpect(jsonPath("$.detalleExtra.id").value(7));
     }
 
     @Test

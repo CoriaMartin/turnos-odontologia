@@ -40,6 +40,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(NegocioException.class)
     public ResponseEntity<ProblemDetail> manejarNegocio(NegocioException ex, HttpServletRequest request) {
         ProblemDetail detalle = ProblemDetail.forStatusAndDetail(ex.getEstado(), ex.getMessage());
+        ex.propiedades().forEach(detalle::setProperty);
         return responder(detalle, ex.getCodigo(), request);
     }
 

@@ -308,7 +308,7 @@ C-14 (ui-login) corre en paralelo y debe estar listo antes de C-16. C-13 → C-1
 > C-07 es el candidato recomendado para el **primer ciclo OPSX** de la consigna: una sola funcionalidad, reglas verificables y escenarios feliz / error / borde naturales. No tiene UI, así que no requiere maqueta. Tras C-07, C-08 a C-11 se pueden repartir en paralelo.
 
 ### [C-07] `crear-turno-sin-solapamientos`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (2026-11-23, ciclo OPSX completo, change archivado `openspec/changes/archive/2026-11-23-crear-turno-sin-solapamientos`)
 - **Responsable**: Líder · tanda 5
 - **Scope**:
   - Migración `V5__turnos.sql`: tabla `turno` con `CHECK (fin > inicio)`, `version`, estados, y dos restricciones `EXCLUDE USING gist` (por `profesional_id` y por `sillon_id`) sobre `tstzrange(inicio, fin, '[)')` para estados activos.

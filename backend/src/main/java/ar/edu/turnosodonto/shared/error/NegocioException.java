@@ -1,5 +1,6 @@
 package ar.edu.turnosodonto.shared.error;
 
+import java.util.Map;
 import java.util.Objects;
 
 import org.springframework.http.HttpStatus;
@@ -26,5 +27,13 @@ public abstract class NegocioException extends RuntimeException {
 
     public HttpStatus getEstado() {
         return estado;
+    }
+
+    /**
+     * Datos extra que el error agrega al Problem Details (por ejemplo, el turno en conflicto).
+     * Por defecto ninguno. Nunca deben incluir datos personales sensibles (RN-DS-03).
+     */
+    public Map<String, Object> propiedades() {
+        return Map.of();
     }
 }
