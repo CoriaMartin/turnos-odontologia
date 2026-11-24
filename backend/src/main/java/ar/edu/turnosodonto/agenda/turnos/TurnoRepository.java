@@ -36,4 +36,19 @@ public interface TurnoRepository extends JpaRepository<Turno, Long> {
             where t.id = :id
             """)
     Optional<Turno> buscarConDetalle(@Param("id") Long id);
+
+    /**
+     * Agenda (C-08): turnos en los estados dados cuyo intervalo [inicio, fin) se superpone con el período
+     * semiabierto [desde, hasta), ordenados por inicio. Trae paciente y prestación en la misma consulta.
+     */
+    @Query("""
+            select t from Turno t
+            join fetch t.paciente
+            join fetch t.prestacion
+            where t.inicio < :hasta and t.fin > :desde
+              and t.estado in :estados
+            order by t.inicio, t.id
+            """)
+    List<Turno> buscarAgenda(@Param("desde") Instant desde, @Param("hasta") Instant hasta,
+            @Param("estados") Collection<EstadoTurno> estados);
 }

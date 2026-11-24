@@ -329,7 +329,7 @@ C-14 (ui-login) corre en paralelo y debe estar listo antes de C-16. C-13 → C-1
   - `knowledge-base/09_decisiones_y_supuestos.md` §DD-03, §DD-09, §SU-01
 
 ### [C-08] `consultar-agenda`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (2026-11-24, change archivado `openspec/changes/archive/2026-11-24-consultar-agenda`)
 - **Responsable**: Agus · tanda 6
 - **Scope**:
   - `GET /api/turnos?desde=&hasta=` con rango obligatorio (máx. 31 días), ordenado por inicio, incluye resumen de paciente y prestación.

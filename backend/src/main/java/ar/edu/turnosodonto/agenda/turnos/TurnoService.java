@@ -4,6 +4,9 @@ import java.sql.SQLException;
 import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.EnumSet;
+import java.util.List;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +16,7 @@ import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ar.edu.turnosodonto.agenda.dominio.EstadoTurno;
 import ar.edu.turnosodonto.agenda.dominio.Intervalo;
 import ar.edu.turnosodonto.agenda.dominio.ReglasAgenda;
 import ar.edu.turnosodonto.agenda.recursos.RecursosConsultorio;
@@ -127,6 +131,19 @@ public class TurnoService {
     @Transactional(readOnly = true)
     public Turno obtener(Long id) {
         return turnos.buscarConDetalle(id).orElseThrow(TurnoNoEncontradoException::new);
+    }
+
+    /**
+     * Agenda (C-08): turnos que ocupan alguna parte del período, ordenados por inicio. Valida el período
+     * (obligatorio, no vacío, máx. 31 días). Sin {@code incluirCancelados} omite CANCELADO y CANCELADO_TARDIO.
+     */
+    @Transactional(readOnly = true)
+    public List<Turno> agenda(Instant desde, Instant hasta, boolean incluirCancelados) {
+        PeriodoAgenda periodo = new PeriodoAgenda(desde, hasta);
+        Set<EstadoTurno> estados = incluirCancelados
+                ? EnumSet.allOf(EstadoTurno.class)
+                : EstadoTurno.queOcupanHorario();
+        return turnos.buscarAgenda(periodo.desde(), periodo.hasta(), estados);
     }
 
     private void validarNoPasado(Instant inicio) {
