@@ -27,9 +27,8 @@ Con C-16 el odontólogo puede ver su agenda, pero no puede hacer nada con ella: 
 ## Impact
 
 - **Frontend**: `frontend/src/features/agenda/` (diálogos, detalle de turno, mutaciones), `shared/api/mensajes.ts` (textos de los códigos nuevos) y la página de agenda de C-16 (puntos de entrada).
-- **API consumida**:
-  - En `main`: `POST /api/turnos` (C-07), `PUT /api/turnos/{id}/reprogramacion` (C-10), `GET /api/pacientes?q=` (C-06), `GET /api/prestaciones` (C-05), `GET /api/turnos?desde=&hasta=` (C-08).
-  - **No mergeados todavía**, contrato tomado de `CHANGES.md`: `POST /api/turnos/{id}/cancelacion` (C-09), `POST /api/turnos/{id}/asistencia` (C-11) y `GET /api/configuracion` (C-12, para las horas de cancelación tardía).
+- **API consumida** (todo en `main`, contratos confirmados el 2026-11-24 en `design.md`): `POST /api/turnos` (C-07), `PUT /api/turnos/{id}/reprogramacion` (C-10), `POST /api/turnos/{id}/cancelacion` (C-09), `POST /api/turnos/{id}/asistencia` (C-11), `GET /api/configuracion` (C-12, para las horas de cancelación tardía), `GET /api/pacientes?q=` (C-06), `GET /api/prestaciones` (C-05) y `GET /api/turnos?desde=&hasta=` (C-08).
+- **Código que se reutiliza de C-15**: búsqueda de pacientes, listado de prestaciones, sus tipos, `formatearDni` y el hook de diálogo modal `useDialogo` (design D6, D7). No se duplica nada.
 - **Dependencias**: ninguna nueva.
-- **Diseño**: requiere maqueta aprobada por el líder antes del apply; la maqueta está a cargo de Ludmi y todavía no existe.
-- **Orden de trabajo**: el apply necesita C-16, C-09 y C-11 en `main`; C-12 recomendado (ver `design.md`).
+- **Diseño**: maqueta aprobada por Ludmi el 2026-11-23 (`mockups/`); diferencias registradas en `design.md` D10.
+- **Orden de trabajo**: C-16, C-09, C-10, C-11, C-12 y C-15 ya están en `main`; la rama se rebaseó sobre `d3768a2`.

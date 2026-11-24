@@ -468,7 +468,7 @@ C-14 (ui-login) corre en paralelo y debe estar listo antes de C-16. C-13 → C-1
   - `discovery/informe-competitivo.md` §D.3
 
 ### [C-17] `ui-gestion-turnos`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (2026-11-24, change archivado `openspec/changes/archive/2026-11-24-ui-gestion-turnos`)
 - **Responsable**: Agus · tanda 8
 - **Scope**:
   - Diálogo "Nuevo turno": búsqueda de paciente, prestación con duración sugerida y editable, día y hora; muestra la hora de fin.
