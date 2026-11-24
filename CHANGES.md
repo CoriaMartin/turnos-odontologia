@@ -256,8 +256,9 @@ C-14 (ui-login) corre en paralelo y debe estar listo antes de C-16. C-13 → C-1
 
 > C-05, C-06 y C-12 son independientes entre sí tras C-04.
 
+
 ### [C-05] `prestaciones-catalogo`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (2026-11-23, change archivado `openspec/changes/archive/2026-11-23-prestaciones-catalogo`)
 - **Responsable**: Zaira · tanda 4
 - **Scope**:
   - Migración `V3__prestaciones.sql`: tabla `prestacion` con `CHECK (duracion_minutos BETWEEN 5 AND 480)` y nombre único; seed de 5 prestaciones de ejemplo.
@@ -269,6 +270,7 @@ C-14 (ui-login) corre en paralelo y debe estar listo antes de C-16. C-13 → C-1
   - `knowledge-base/04_modelo_de_datos.md` §prestacion
   - `knowledge-base/05_reglas_de_negocio.md` §RN-PR
   - `knowledge-base/06_funcionalidades.md` §US-010
+
 
 ### [C-06] `pacientes-gestion`
 - **Estado**: `[x]` completado (2026-11-23, change archivado `openspec/changes/archive/2026-11-23-pacientes-gestion`)
