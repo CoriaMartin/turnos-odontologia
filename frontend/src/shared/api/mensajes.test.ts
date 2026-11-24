@@ -44,4 +44,20 @@ describe('web-api-client · Mensaje para el usuario sin códigos técnicos', () 
   it('un error que no es de la API usa el mensaje genérico', () => {
     expect(mensajeDeError(new Error('falla interna'))).toBe(MENSAJE_GENERICO);
   });
+
+  it('Error sin código técnico: NOMBRE_DUPLICADO', () => {
+    const mensaje = mensajeDeError(new ApiError({ status: 409, codigo: 'NOMBRE_DUPLICADO' }));
+    expect(mensaje).toBe('Ya tenés una prestación con ese nombre. Probá con otro.');
+    expect(mensaje).not.toContain('NOMBRE_DUPLICADO');
+  });
+
+  it('Baja bloqueada por turnos futuros', () => {
+    const mensaje = mensajeDeError(
+      new ApiError({ status: 409, codigo: 'PACIENTE_CON_TURNOS_FUTUROS' }),
+    );
+    expect(mensaje).toBe(
+      'No pudimos dar de baja a este paciente porque tiene un turno programado. Cancelá o reprogramá ese turno y probá de nuevo.',
+    );
+    expect(mensaje).not.toContain('PACIENTE_CON_TURNOS_FUTUROS');
+  });
 });

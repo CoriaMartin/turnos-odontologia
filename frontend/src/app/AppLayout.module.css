@@ -75,6 +75,39 @@
   flex: 1;
 }
 
+.nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.enlace {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--hit-target);
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-md);
+  color: var(--color-ink-700);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  text-decoration: none;
+}
+
+.enlace:hover {
+  background: var(--color-brand-50);
+}
+
+.enlace:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.enlace:global(.active) {
+  color: var(--color-brand-700);
+  background: var(--color-brand-100);
+  font-weight: var(--weight-semibold);
+}
+
 /* "Cerrar sesión": .btn.btn-ghost de components.html, con el ajuste de la maqueta de C-14 para la barra. */
 .botonFantasma {
   flex: none;
@@ -127,6 +160,24 @@
 
 .contenido:focus {
   outline: none;
+}
+
+@media (max-width: 719px) {
+  .barra {
+    flex-wrap: wrap;
+  }
+
+  .separador {
+    display: none;
+  }
+
+  .nav {
+    order: 3;
+    width: 100%;
+    justify-content: space-between;
+    padding-top: var(--space-2);
+    border-top: var(--borde-fino) solid var(--color-line);
+  }
 }
 
 /* Punto de quiebre de components.html (.grid-2); las media queries no aceptan var(). */
