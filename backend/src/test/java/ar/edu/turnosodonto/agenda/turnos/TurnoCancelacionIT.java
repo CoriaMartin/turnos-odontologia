@@ -125,6 +125,50 @@ class TurnoCancelacionIT {
         return mvc.perform(get("/api/turnos/" + id).header(HttpHeaders.AUTHORIZATION, "Bearer " + token));
     }
 
+    // --- C-12: cambios de configuracion ---
+
+    @Test
+    void actualizarConfiguracionNoModificaTurnoExistente() throws Exception {
+        int id = crear(MANIANA + "10:00");
+
+        var antes = jdbc.queryForMap(
+                "select * from turno where id = ?", id);
+
+        try {
+            mvc.perform(
+                    org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+                            .put("/api/configuracion")
+                            .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content("""
+                                    {
+                                        "horasCancelacionTardia": 48,
+                                        "horasAnticipacionRecordatorio": 12
+                                    }
+                                    """))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.horasCancelacionTardia").value(48))
+                    .andExpect(jsonPath("$.horasAnticipacionRecordatorio").value(12));
+
+            var despues = jdbc.queryForMap(
+                    "select * from turno where id = ?", id);
+
+            org.assertj.core.api.Assertions.assertThat(despues)
+                    .isEqualTo(antes);
+
+            consultar(id)
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.estado").value("PROGRAMADO"));
+        } finally {
+            jdbc.update("""
+                    update configuracion
+                    set horas_cancelacion_tardia = 24,
+                        horas_anticipacion_recordatorio = 24
+                    where id = 1
+                    """);
+        }
+    }
+
     // --- Cancelar un turno ---
 
     @Test
