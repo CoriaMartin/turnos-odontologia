@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agenda · Agenda de Odontología</title>
+<link rel="stylesheet" href="../../../../design-system/tokens.css">
+<link rel="stylesheet" href="agenda.css">
+</head>
+<body data-vista="dia">
+<script>
+  (function () {
+    var pedida = new URLSearchParams(location.search).get('vista');
+    var porDefecto = window.matchMedia('(min-width: 900px)').matches ? 'semana' : 'dia';
+    document.body.dataset.vista = (pedida === 'dia' || pedida === 'semana') ? pedida : porDefecto;
+  })();
+</script>
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+
+<header class="topbar">
+  <a class="marca" href="agenda.html" aria-label="Ir al inicio">
+    <img src="../../../../design-system/assets/logo.svg" alt="Agenda de Odontología">
+    <strong data-brand-name>Agenda de Odontología</strong>
+  </a>
+  <nav class="nav-menu" aria-label="Navegación principal">
+    <a class="nav-link" href="agenda.html" aria-current="page">Agenda</a>
+    <a class="nav-link" href="#">Prestaciones</a>
+    <a class="nav-link" href="#">Pacientes</a>
+  </nav>
+  <span class="spacer"></span>
+  <button class="user-badge" type="button" aria-label="Perfil del usuario">Dra. Ejemplo</button>
+</header>
+
+<main id="contenido" tabindex="-1">
+  <div class="page-header">
+    <div class="info">
+      <h1>Agenda</h1>
+      <p>Martes 1 de diciembre de 2026 · 9 turnos agendados</p>
+    </div>
+    <button class="btn btn-primary" type="button">+ Nuevo turno</button>
+  </div>
+
+  <div class="card">
+    <div class="agenda-toolbar">
+      <div class="date-nav">
+        <button class="btn btn-secondary btn-icon" type="button" aria-label="Día anterior">‹</button>
+        <div class="field date-field">
+          <label for="fecha-agenda">Fecha</label>
+          <input id="fecha-agenda" class="tnum" type="date" value="2026-12-01">
+        </div>
+        <button class="btn btn-secondary btn-icon" type="button" aria-label="Día siguiente">›</button>
+        <button class="btn btn-secondary" type="button">Hoy</button>
+      </div>
+      <div class="seg" role="group" aria-label="Vista de la agenda">
+        <button type="button" data-vista="dia" aria-pressed="true">Día</button>
+        <button type="button" data-vista="semana" aria-pressed="false">Semana</button>
+      </div>
+    </div>
+
+    <div class="legend" aria-label="Referencia de estados">
+      <span class="badge estado-programado">Programado</span>
+      <span class="badge estado-atendido">Atendido</span>
+      <span class="badge estado-ausente">Ausente</span>
+      <span class="badge estado-cancelado">Cancelado</span>
+      <span class="badge estado-tardio">Cancelación tardía</span>
+    </div>
+
+    <section id="vista-diaria" aria-label="Agenda diaria del martes 1 de diciembre de 2026">
+      <div class="timeline">
+        <div class="timeline-head">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span class="carril-titulo" id="carril-cancelados">Cancelados</span>
+        </div>
+        <div class="hours" aria-hidden="true">
+          <span>09:00</span><span></span>
+          <span>10:00</span><span></span>
+          <span>11:00</span><span></span>
+          <span>12:00</span><span></span>
+          <span>13:00</span><span></span>
+          <span>14:00</span><span></span>
+          <span>15:00</span><span></span>
+          <span>16:00</span><span></span>
+        </div>
+        <div class="lane lane-activos">
+          <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+          <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+          <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+          <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+
+          <a class="appt atendido" href="#" style="top:0;height:calc(var(--agenda-slot-height) * 1 - var(--space-1))" aria-label="Ver turno de Adrián Fernández, Control de ortodoncia, de 09:00 a 09:30, Atendido">
+            <span class="appt-main">
+              <span class="t tnum">09:00 – 09:30</span>
+              <span class="p">Adrián Fernández · Control de ortodoncia</span>
+            </span>
+            <span class="appt-side">
+              <span class="badge estado-atendido">Atendido</span>
+              <span class="chevron" aria-hidden="true">›</span>
+            </span>
+          </a>
+
+          <a class="appt ausente" href="#" style="top:calc(var(--agenda-slot-height) * 1);height:calc(var(--agenda-slot-height) * 1 - var(--space-1))" aria-label="Ver turno de María Carmen López, Consulta y diagnóstico general, de 09:30 a 10:00, Ausente">
+            <span class="appt-main">
+              <span class="t tnum">09:30 – 10:00</span>
+              <span class="p">María Carmen López · Consulta y diagnóstico general</span>
+            </span>
+            <span class="appt-side">
+              <span class="badge estado-ausente">Ausente</span>
+              <span class="chevron" aria-hidden="true">›</span>
+            </span>
+          </a>
+
+          <a class="appt atendido" href="#" style="top:calc(var(--agenda-slot-height) * 2);height:calc(var(--agenda-slot-height) * 1.5 - var(--space-1))" aria-label="Ver turno de Patricia Gómez, Limpieza y profilaxis, de 10:00 a 10:45, Atendido">
+            <span class="appt-main">
+              <span class="t tnum">10:00 – 10:45</span>
+              <span class="p">Patricia Gómez · Limpieza y profilaxis</span>
+            </span>
+            <span class="appt-side">
+              <span class="badge estado-atendido">Atendido</span>
+              <span class="chevron" aria-hidden="true">›</span>
+            </span>
+          </a>
+
+          <a class="appt atendido" href="#" style="top:calc(var(--agenda-slot-height) * 3.5);height:calc(var(--agenda-slot-height) * 1 - var(--space-1))" aria-label="Ver turno de Roberto Martínez, Control de ortodoncia, de 10:45 a 11:15, Atendido">
+            <span class="appt-main">
+              <span class="t tnum">10:45 – 11:15</span>
+              <span class="p">Roberto Martínez · Control de ortodoncia</span>
+            </span>
+            <span class="appt-side">
+              <span class="badge estado-atendido">Atendido</span>
+              <span class="chevron" aria-hidden="true">›</span>
+            </span>
+          </a>
+
+          <a class="appt programado" href="#" style="top:calc(var(--agenda-slot-height) * 6);height:calc(var(--agenda-slot-height) * 2 - var(--space-1))" aria-label="Ver turno de Sofía Ramírez, Tratamiento de conducto, de 12:00 a 13:00, Programado">
+            <span class="appt-main">
+              <span class="t tnum">12:00 – 13:00</span>
+              <span class="p">Sofía Ramírez · Tratamiento de conducto</span>
+            </span>
+            <span class="appt-side">
+              <span class="badge estado-programado">Programado</span>
+              <span class="chevron" aria-hidden="true">›</span>
+            </span>
+          </a>
+
+          <button class="appt libre" type="button" style="top:calc(var(--agenda-slot-height) * 10);height:calc(var(--agenda-slot-height) * 1 - var(--space-1))" aria-label="Crear un turno el martes 1 de diciembre de 14:00 a 14:30">+ Nuevo turno · 14:00 – 14:30</button>
+
+          <a class="appt programado" href="#" style="top:calc(var(--agenda-slot-height) * 12);height:calc(var(--agenda-slot-height) * 2 - var(--space-1))" aria-label="Ver turno de Valentina Ortiz, Extracción simple, de 15:00 a 16:00, Programado">
+            <span class="appt-main">
+              <span class="t tnum">15:00 – 16:00</span>
+              <span class="p">Valentina Ortiz · Extracción simple</span>
+            </span>
+            <span class="appt-side">
+              <span class="badge estado-programado">Programado</span>
+              <span class="chevron" aria-hidden="true">›</span>
+            </span>
+          </a>
+
+          <a class="appt programado" href="#" style="top:calc(var(--agenda-slot-height) * 14.5);height:calc(var(--agenda-slot-height) * 1 - var(--space-1))" aria-label="Ver turno de Martín Aguirre, Obturación de resina, de 16:15 a 16:45, Programado">
+            <span class="appt-main">
+              <span class="t tnum">16:15 – 16:45</span>
+              <span class="p">Martín Aguirre · Obturación de resina</span>
+            </span>
+            <span class="appt-side">
+              <span class="badge estado-programado">Programado</span>
+              <span class="chevron" aria-hidden="true">›</span>
+            </span>
+          </a>
+
+          <div class="now" style="top:calc(var(--agenda-slot-height) * 4.733)" aria-label="Hora actual: 11:22"></div>
+        </div>
+
+        <div class="lane lane-cancelados" role="group" aria-labelledby="carril-cancelados">
+          <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+          <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+          <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+          <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+
+          <a class="appt-c" href="#" style="top:calc(var(--agenda-slot-height) * 5);height:calc(var(--agenda-slot-height) * 1 - var(--space-1))" aria-label="Ver turno de Lucía Benítez, Consulta y diagnóstico general, de 11:30 a 12:00, Cancelado">
+            <span class="c-t tnum">11:30 – 12:00</span>
+            <span class="c-p">Lucía Benítez</span>
+            <span class="badge estado-cancelado">Cancelado</span>
+          </a>
+
+          <a class="appt-c tardio" href="#" style="top:calc(var(--agenda-slot-height) * 8.5);height:calc(var(--agenda-slot-height) * 1 - var(--space-1))" aria-label="Ver turno de Diego Sosa, Obturación de resina, de 13:15 a 13:45, Cancelación tardía">
+            <span class="c-t tnum">13:15 – 13:45</span>
+            <span class="c-p">Diego Sosa</span>
+            <span class="badge estado-tardio"><span class="largo">Cancelación tardía</span><span class="corto">Tardía</span></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="vista-semanal" aria-label="Agenda semanal del 30 de noviembre al 6 de diciembre de 2026">
+      <p class="week-range">Semana del 30 de noviembre al 6 de diciembre de 2026</p>
+      <div class="week">
+        <div class="week-head">
+          <div class="hueco" aria-hidden="true"></div>
+          <div class="week-day"><span class="dow">Lun</span><span class="num">30/11</span></div>
+          <div class="week-day hoy"><span class="dow">Mar</span><span class="num">01/12</span></div>
+          <div class="week-day"><span class="dow">Mié</span><span class="num">02/12</span></div>
+          <div class="week-day"><span class="dow">Jue</span><span class="num">03/12</span></div>
+          <div class="week-day"><span class="dow">Vie</span><span class="num">04/12</span></div>
+          <div class="week-day"><span class="dow">Sáb</span><span class="num">05/12</span></div>
+          <div class="week-day"><span class="dow">Dom</span><span class="num">06/12</span></div>
+        </div>
+        <div class="week-grid">
+          <div class="hours" aria-hidden="true">
+            <span>09:00</span><span></span>
+            <span>10:00</span><span></span>
+            <span>11:00</span><span></span>
+            <span>12:00</span><span></span>
+            <span>13:00</span><span></span>
+            <span>14:00</span><span></span>
+            <span>15:00</span><span></span>
+            <span>16:00</span><span></span>
+          </div>
+
+          <div class="week-lane">
+            <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+            <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+            <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+            <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+            <a class="appt mini atendido" href="#" style="top:0;height:calc(var(--agenda-slot-height) * 1 - var(--space-1))" aria-label="Ver turno de Adrián Fernández, Control de ortodoncia, de 09:00 a 09:30, Atendido"><span class="t tnum">09:00</span><span class="p">Fernández</span></a>
+            <a class="appt mini atendido" href="#" style="top:calc(var(--agenda-slot-height) * 2);height:calc(var(--agenda-slot-height) * 1.5 - var(--space-1))" aria-label="Ver turno de Patricia Gómez, Limpieza y profilaxis, de 10:00 a 10:45, Atendido"><span class="t tnum">10:00</span><span class="p">Gómez</span></a>
+            <a class="appt mini atendido" href="#" style="top:calc(var(--agenda-slot-height) * 12);height:calc(var(--agenda-slot-height) * 2 - var(--space-1))" aria-label="Ver turno de Sofía Ramírez, Tratamiento de conducto, de 15:00 a 16:00, Atendido"><span class="t tnum">15:00</span><span class="p">Ramírez</span></a>
+          </div>
+
+          <div class="week-lane">
+            <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+            <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+            <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+            <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+            <a class="appt mini atendido" href="#" style="top:0;height:calc(var(--agenda-slot-height) * 1 - var(--space-1))" aria-label="Ver turno de Adrián Fernández, Control de ortodoncia, de 09:00 a 09:30, Atendido"><span class="t tnum">09:00</span><span class="p">Fernández</span></a>
+            <a class="appt mini atendido" href="#" style="top:calc(var(--agenda-slot-height) * 2);height:calc(var(--agenda-slot-height) * 1.5 - var(--space-1))" aria-label="Ver turno de Patricia Gómez, Limpieza y profilaxis, de 10:00 a 10:45, Atendido"><span class="t tnum">10:00</span><span class="p">Gómez</span></a>
+            <a class="appt mini programado" href="#" style="top:calc(var(--agenda-slot-height) * 6);height:calc(var(--agenda-slot-height) * 2 - var(--space-1))" aria-label="Ver turno de Sofía Ramírez, Tratamiento de conducto, de 12:00 a 13:00, Programado"><span class="t tnum">12:00</span><span class="p">Ramírez</span></a>
+            <a class="appt mini programado" href="#" style="top:calc(var(--agenda-slot-height) * 12);height:calc(var(--agenda-slot-height) * 2 - var(--space-1))" aria-label="Ver turno de Valentina Ortiz, Extracción simple, de 15:00 a 16:00, Programado"><span class="t tnum">15:00</span><span class="p">Ortiz</span></a>
+          </div>
+
+          <div class="week-lane">
+            <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+            <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+            <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+            <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+            <a class="appt mini programado" href="#" style="top:calc(var(--agenda-slot-height) * 2);height:calc(var(--agenda-slot-height) * 1.5 - var(--space-1))" aria-label="Ver turno de Martín Aguirre, Extracción simple, de 10:00 a 10:45, Programado"><span class="t tnum">10:00</span><span class="p">Aguirre</span></a>
+            <a class="appt mini programado" href="#" style="top:calc(var(--agenda-slot-height) * 10);height:calc(var(--agenda-slot-height) * 0.667 - var(--space-1))" aria-label="Ver turno de Diego Sosa, Control de ortodoncia, de 14:00 a 14:20, Programado"><span class="t tnum">14:00</span><span class="p">Sosa</span></a>
+          </div>
+
+          <div class="week-lane">
+            <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+            <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+            <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+            <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+            <a class="appt mini programado" href="#" style="top:0;height:calc(var(--agenda-slot-height) * 1.5 - var(--space-1))" aria-label="Ver turno de María Carmen López, Limpieza y profilaxis, de 09:00 a 09:45, Programado"><span class="t tnum">09:00</span><span class="p">López</span></a>
+            <a class="appt mini programado" href="#" style="top:calc(var(--agenda-slot-height) * 5);height:calc(var(--agenda-slot-height) * 3 - var(--space-1))" aria-label="Ver turno de Valentina Ortiz, Tratamiento de conducto, de 11:30 a 13:00, Programado"><span class="t tnum">11:30</span><span class="p">Ortiz</span></a>
+          </div>
+
+          <div class="week-lane">
+            <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+            <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+            <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+            <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+            <a class="appt mini ausente" href="#" style="top:calc(var(--agenda-slot-height) * 2.5);height:calc(var(--agenda-slot-height) * 1 - var(--space-1))" aria-label="Ver turno de Lucía Benítez, Consulta y diagnóstico general, de 10:15 a 10:45, Ausente"><span class="t tnum">10:15</span><span class="p">Benítez</span></a>
+            <a class="appt mini programado" href="#" style="top:calc(var(--agenda-slot-height) * 14);height:calc(var(--agenda-slot-height) * 1.5 - var(--space-1))" aria-label="Ver turno de Martín Aguirre, Obturación de resina, de 16:00 a 16:45, Programado"><span class="t tnum">16:00</span><span class="p">Aguirre</span></a>
+          </div>
+
+          <div class="week-lane">
+            <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+            <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+            <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+            <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+          </div>
+
+          <div class="week-lane">
+            <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+            <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+            <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+            <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="week-cancelados">
+        <h3>Cancelados de la semana</h3>
+        <ul>
+          <li>
+            <a class="chip-c" href="#" aria-label="Ver turno cancelado de Lucía Benítez, Consulta y diagnóstico general, martes 1 de diciembre de 11:30 a 12:00">
+              <span class="d tnum">Mar 01/12 · 11:30</span>
+              <span class="n">Lucía Benítez</span>
+              <span class="badge estado-cancelado">Cancelado</span>
+            </a>
+          </li>
+          <li>
+            <a class="chip-c tardio" href="#" aria-label="Ver turno cancelado de Diego Sosa, Obturación de resina, jueves 3 de diciembre de 16:15 a 16:45, cancelación tardía">
+              <span class="d tnum">Jue 03/12 · 16:15</span>
+              <span class="n">Diego Sosa</span>
+              <span class="badge estado-tardio">Cancelación tardía</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <section aria-labelledby="estados-titulo">
+    <h2 id="estados-titulo" class="demo-title">Estados de la agenda</h2>
+    <div class="grid-2">
+      <div class="card">
+        <div class="empty">
+          <strong>No hay turnos para este día</strong>
+          <span>Cuando agendes uno, va a aparecer en esta línea de tiempo.</span>
+          <button class="btn btn-primary" type="button">+ Nuevo turno</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="alert alert-danger" role="alert">
+          <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm-.9 4h1.8v5.2H9.1V6zm0 6.6h1.8v1.8H9.1v-1.8z"/></svg>
+          <div>
+            <b>No pudimos cargar la agenda</b>
+            Tus turnos siguen guardados. Revisá tu conexión e intentá de nuevo.
+          </div>
+        </div>
+        <div class="error-box">
+          <button class="btn btn-secondary" type="button">Reintentar</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script src="../../../../design-system/brand.js"></script>
+<script>
+  (function () {
+    var botones = document.querySelectorAll('.seg [data-vista]');
+    var actual = document.body.dataset.vista === 'semana' ? 'semana' : 'dia';
+    function aplicar(v) {
+      document.body.dataset.vista = v;
+      botones.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.vista === v)); });
+    }
+    aplicar(actual);
+    botones.forEach(function (b) {
+      b.addEventListener('click', function () {
+        aplicar(b.dataset.vista);
+        var url = new URL(location.href);
+        url.searchParams.set('vista', b.dataset.vista);
+        history.replaceState(null, '', url);
+      });
+    });
+  })();
+</script>
+</body>
+</html>
