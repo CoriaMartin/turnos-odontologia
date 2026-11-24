@@ -13,11 +13,14 @@ import ar.edu.turnosodonto.shared.time.RelojConfig;
 
 /**
  * Busca el turno que choca con un intervalo. Tiene su propio método con transacción nueva para el caso
- * de carrera: cuando PostgreSQL rechaza el INSERT por la EXCLUDE, la transacción original queda abortada
- * y no admite más consultas.
+ * de carrera: cuando PostgreSQL rechaza el INSERT/UPDATE por la EXCLUDE, la transacción original queda
+ * abortada y no admite más consultas.
  */
 @Component
 class ConsultaConflictos {
+
+    /** Para el alta: no hay turno propio que excluir (los ids empiezan en 1). */
+    static final long NINGUNO = 0L;
 
     private static final ZoneId ZONA = RelojConfig.ZONA_CONSULTORIO;
 
@@ -28,20 +31,21 @@ class ConsultaConflictos {
     }
 
     @Transactional(readOnly = true)
-    public Optional<TurnoSolapadoException.TurnoEnConflicto> buscar(Long profesionalId, Long sillonId, Intervalo intervalo) {
-        return primero(profesionalId, sillonId, intervalo);
+    public Optional<TurnoSolapadoException.TurnoEnConflicto> buscar(Long profesionalId, Long sillonId,
+            Intervalo intervalo, long excluirId) {
+        return primero(profesionalId, sillonId, intervalo, excluirId);
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
-    public Optional<TurnoSolapadoException.TurnoEnConflicto> buscarEnTransaccionNueva(Long profesionalId, Long sillonId,
-            Intervalo intervalo) {
-        return primero(profesionalId, sillonId, intervalo);
+    public Optional<TurnoSolapadoException.TurnoEnConflicto> buscarEnTransaccionNueva(Long profesionalId,
+            Long sillonId, Intervalo intervalo, long excluirId) {
+        return primero(profesionalId, sillonId, intervalo, excluirId);
     }
 
     private Optional<TurnoSolapadoException.TurnoEnConflicto> primero(Long profesionalId, Long sillonId,
-            Intervalo intervalo) {
+            Intervalo intervalo, long excluirId) {
         return turnos.buscarQueSeSuperponen(profesionalId, sillonId, intervalo.inicio(), intervalo.fin(),
-                        EstadoTurno.queOcupanHorario())
+                        EstadoTurno.queOcupanHorario(), excluirId)
                 .stream()
                 .findFirst()
                 .map(t -> new TurnoSolapadoException.TurnoEnConflicto(

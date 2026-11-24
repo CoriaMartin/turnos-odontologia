@@ -357,7 +357,7 @@ C-14 (ui-login) corre en paralelo y debe estar listo antes de C-16. C-13 → C-1
   - `knowledge-base/06_funcionalidades.md` §US-033
 
 ### [C-10] `reprogramar-turno`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (2026-11-23, change archivado `openspec/changes/archive/2026-11-23-reprogramar-turno`)
 - **Responsable**: Líder · tanda 6
 - **Scope**:
   - `PUT /api/turnos/{id}/reprogramacion` con nuevo inicio y duración opcional.
