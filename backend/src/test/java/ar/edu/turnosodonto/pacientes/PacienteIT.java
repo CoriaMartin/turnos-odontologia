@@ -238,6 +238,47 @@ class PacienteIT {
                 .andExpect(jsonPath("$.dni").value("00000010"));
     }
 
+    // --- RN-PA-04 (C-09): la baja se rechaza con turnos programados futuros ---
+
+    /** Turno insertado directo, con inicio relativo a la hora de la base. Devuelve su id. */
+    private long insertarTurno(long pacienteId, String desplazamiento) {
+        return jdbc.queryForObject("""
+                insert into turno (paciente_id, profesional_id, sillon_id, prestacion_id, inicio, fin, estado)
+                values (?, (select id from profesional order by id limit 1), (select id from sillon order by id limit 1),
+                        (select id from prestacion where nombre = 'Limpieza'),
+                        now() + cast(? as interval), now() + cast(? as interval) + interval '45 minutes', 'PROGRAMADO')
+                returning id""", Long.class, pacienteId, desplazamiento, desplazamiento);
+    }
+
+    @Test
+    void bajaBloqueadaPorUnTurnoProgramadoFuturo() throws Exception {
+        long id = crear("Ficticio Con Turno", "00000011");
+        insertarTurno(id, "1 day");
+
+        ejecutar(delete(URL + "/" + id))
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.codigo").value("PACIENTE_CON_TURNOS_FUTUROS"));
+
+        ejecutar(get(URL + "/" + id)).andExpect(jsonPath("$.activo").value(true));
+    }
+
+    @Test
+    void bajaPermitidaDespuesDeCancelarElTurno() throws Exception {
+        long id = crear("Ficticio Cancelado", "00000012");
+        long turnoId = insertarTurno(id, "1 day");
+        ejecutar(post("/api/turnos/" + turnoId + "/cancelacion")).andExpect(status().isOk());
+
+        ejecutar(delete(URL + "/" + id)).andExpect(status().isNoContent());
+    }
+
+    @Test
+    void turnosPasadosNoBloqueanLaBaja() throws Exception {
+        long id = crear("Ficticio Turno Pasado", "00000013");
+        insertarTurno(id, "-1 hour");
+
+        ejecutar(delete(URL + "/" + id)).andExpect(status().isNoContent());
+    }
+
     // --- Acceso y datos sensibles ---
 
     @Test

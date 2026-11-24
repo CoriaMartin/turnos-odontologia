@@ -5,7 +5,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+import jakarta.persistence.LockModeType;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -36,6 +39,17 @@ public interface TurnoRepository extends JpaRepository<Turno, Long> {
             where t.id = :id
             """)
     Optional<Turno> buscarConDetalle(@Param("id") Long id);
+
+    /**
+     * Cancelación (C-09): lee el turno con {@code SELECT ... FOR UPDATE}, solo sobre {@code turno} (sin join fetch
+     * para no bloquear paciente ni prestación). Una cancelación simultánea espera y ve el estado ya confirmado.
+     */
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @Query("select t from Turno t where t.id = :id")
+    Optional<Turno> buscarParaActualizar(@Param("id") Long id);
+
+    /** RN-PA-04 (C-09): turnos del paciente en el estado dado con inicio estrictamente posterior. Usa turno_paciente_idx. */
+    boolean existsByPacienteIdAndEstadoAndInicioAfter(Long pacienteId, EstadoTurno estado, Instant inicio);
 
     /**
      * Agenda (C-08): turnos en los estados dados cuyo intervalo [inicio, fin) se superpone con el período

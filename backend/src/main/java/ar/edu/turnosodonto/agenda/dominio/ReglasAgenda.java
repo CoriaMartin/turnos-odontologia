@@ -1,11 +1,12 @@
 package ar.edu.turnosodonto.agenda.dominio;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.function.Function;
 
-/** Reglas de agenda como funciones puras (RN-AG-01..06). */
+/** Reglas de agenda como funciones puras (RN-AG-01..06, RN-CA-01/04). */
 public final class ReglasAgenda {
 
     public static final int DURACION_MINIMA_MINUTOS = 5;
@@ -17,6 +18,14 @@ public final class ReglasAgenda {
     /** RN-AG-06 / DD-12: no se aceptan inicios anteriores a la hora actual. */
     public static boolean esPasado(Instant inicio, Instant ahora) {
         return inicio.isBefore(ahora);
+    }
+
+    /**
+     * RN-CA-01/04: la cancelación es tardía si entre {@code ahora} y el inicio falta estrictamente menos que
+     * {@code limite}. Exactamente en el límite no es tardía.
+     */
+    public static boolean esCancelacionTardia(Instant inicio, Instant ahora, Duration limite) {
+        return Duration.between(ahora, inicio).compareTo(limite) < 0;
     }
 
     /** RN-AG-05: duración entre 5 y 480 minutos. */

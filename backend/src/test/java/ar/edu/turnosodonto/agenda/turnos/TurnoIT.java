@@ -2,6 +2,7 @@ package ar.edu.turnosodonto.agenda.turnos;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.nullValue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
@@ -258,7 +259,9 @@ class TurnoIT {
                 .andExpect(jsonPath("$.estado").value("PROGRAMADO"))
                 .andExpect(jsonPath("$.paciente.apellido").value("Ficticio Turnos"))
                 .andExpect(jsonPath("$.prestacion.nombre").value("Limpieza"))
-                .andExpect(jsonPath("$.version").value(0));
+                .andExpect(jsonPath("$.version").value(0))
+                .andExpect(jsonPath("$.motivoCancelacion").value(nullValue()))
+                .andExpect(jsonPath("$.canceladoEn").value(nullValue()));
     }
 
     @Test

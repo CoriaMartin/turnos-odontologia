@@ -61,4 +61,12 @@ public class TurnoController {
     public TurnoResponse reprogramar(@PathVariable Long id, @Valid @RequestBody ReprogramarTurnoRequest solicitud) {
         return TurnoResponse.de(servicio.reprogramar(id, solicitud.aNuevoHorario()));
     }
+
+    /** Cancelación (C-09): cuerpo opcional; sin cuerpo = sin motivo. */
+    @PostMapping("/{id}/cancelacion")
+    public TurnoResponse cancelar(@PathVariable Long id,
+            @Valid @RequestBody(required = false) CancelarTurnoRequest solicitud) {
+        String motivo = solicitud == null ? null : solicitud.motivo();
+        return TurnoResponse.de(servicio.cancelar(id, motivo));
+    }
 }

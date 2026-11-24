@@ -1,5 +1,7 @@
 package ar.edu.turnosodonto.pacientes;
 
+import java.time.Clock;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -19,9 +21,13 @@ public class PacienteService {
     private static final String RESTRICCION_DNI = "paciente_dni_uk";
 
     private final PacienteRepository pacientes;
+    private final TurnosDePaciente turnos;
+    private final Clock reloj;
 
-    public PacienteService(PacienteRepository pacientes) {
+    public PacienteService(PacienteRepository pacientes, TurnosDePaciente turnos, Clock reloj) {
         this.pacientes = pacientes;
+        this.turnos = turnos;
+        this.reloj = reloj;
     }
 
     @Transactional
@@ -49,10 +55,14 @@ public class PacienteService {
         return paciente;
     }
 
+    /** Baja lógica. RN-PA-04: se rechaza si hay turnos programados futuros (los que ya empezaron no cuentan). */
     @Transactional
     public void darDeBaja(Long id) {
         Paciente paciente = obtener(id);
         if (paciente.isActivo()) {
+            if (turnos.tieneProgramadosDesde(id, reloj.instant())) {
+                throw new PacienteConTurnosFuturosException();
+            }
             paciente.darDeBaja();
             log.info("Paciente dado de baja id={}", id);
         }
