@@ -196,7 +196,7 @@ C-14 (ui-login) corre en paralelo y debe estar listo antes de C-16. C-13 → C-1
   - `design-system/README.md`, `design-system/components.html`
 
 ### [C-19] `informe-discovery-entrega`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (2026-11-24, informe, PDF, checklist y verificación de fuentes)
 - **Responsable**: Zaira · tanda 1
 - **Scope**:
   - Crear `docs/discovery/informe-discovery.md` a partir de `discovery/informe-competitivo.md` con portada, resumen ejecutivo y secciones A–D según la consigna.
@@ -290,7 +290,7 @@ C-14 (ui-login) corre en paralelo y debe estar listo antes de C-16. C-13 → C-1
   - `knowledge-base/11_cumplimiento_y_datos_sensibles.md`
 
 ### [C-12] `configuracion-consultorio`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (2026-11-24, PR #16 mergeado)
 - **Responsable**: Zaira · tanda 5
 - **Scope**:
   - Endpoints `GET /api/configuracion` y `PUT /api/configuracion` (horas de cancelación tardía y de anticipación del recordatorio).
