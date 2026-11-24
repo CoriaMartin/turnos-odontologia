@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pacientes · Agenda de Odontología</title>
+<link rel="stylesheet" href="../../../../design-system/tokens.css">
+<link rel="stylesheet" href="layout.css">
+</head>
+<body>
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+
+<header class="topbar">
+  <a class="marca" href="pacientes.html" aria-label="Ir al inicio">
+    <img src="../../../../design-system/assets/logo.svg" alt="Agenda de Odontología">
+    <strong data-brand-name>Agenda de Odontología</strong>
+  </a>
+  <nav class="nav-menu" aria-label="Navegación principal">
+    <a class="nav-link" href="#">Agenda</a>
+    <a class="nav-link" href="prestaciones.html">Prestaciones</a>
+    <a class="nav-link" href="pacientes.html" aria-current="page">Pacientes</a>
+  </nav>
+  <span class="spacer"></span>
+  <button class="user-badge" type="button" aria-label="Perfil del usuario">Dra. Ejemplo</button>
+</header>
+
+<main id="contenido" tabindex="-1">
+  <div class="page-header">
+    <div class="info">
+      <h1>Pacientes</h1>
+      <p>Buscá, registrá y actualizá los datos de tus pacientes y su consentimiento para recibir recordatorios por email.</p>
+    </div>
+    <button class="btn btn-primary" type="button">+ Nuevo paciente</button>
+  </div>
+
+  <div class="card">
+    <form class="filter-bar" role="search" onsubmit="return false">
+      <div class="search-box">
+        <div class="field">
+          <label for="q-paciente">Buscar paciente</label>
+          <input id="q-paciente" name="q" type="search" value="Gómez" placeholder="Apellido, nombre o DNI">
+        </div>
+        <button class="btn btn-secondary" type="submit">Buscar</button>
+      </div>
+      <p class="hint tnum" role="status">4 pacientes encontrados</p>
+    </form>
+
+    <ul class="patient-list" aria-label="Listado de pacientes">
+      <li class="patient-item">
+        <span class="avatar" aria-hidden="true">FA</span>
+        <div class="patient-info">
+          <div class="patient-name">Fernández, Adrián</div>
+          <div class="patient-meta tnum">
+            <span>DNI 28.456.789</span><span class="sep" aria-hidden="true">·</span>
+            <span>OSDE 310 · Nº 4589201</span><span class="sep" aria-hidden="true">·</span>
+            <span>adrian.fernandez@example.com</span>
+          </div>
+        </div>
+        <span class="badge badge-success">Acepta recordatorios</span>
+        <div class="patient-actions">
+          <button class="btn btn-ghost" type="button">Editar</button>
+          <button class="btn btn-danger" type="button">Dar de baja</button>
+        </div>
+      </li>
+
+      <li class="patient-item">
+        <span class="avatar" aria-hidden="true">GP</span>
+        <div class="patient-info">
+          <div class="patient-name">Gómez, Patricia</div>
+          <div class="patient-meta tnum">
+            <span>DNI 32.112.334</span><span class="sep" aria-hidden="true">·</span>
+            <span>Sin obra social</span><span class="sep" aria-hidden="true">·</span>
+            <span>patricia.gomez@example.com</span>
+          </div>
+        </div>
+        <span class="badge badge-success">Acepta recordatorios</span>
+        <div class="patient-actions">
+          <button class="btn btn-ghost" type="button">Editar</button>
+          <button class="btn btn-danger" type="button">Dar de baja</button>
+        </div>
+      </li>
+
+      <li class="patient-item">
+        <span class="avatar" aria-hidden="true">LM</span>
+        <div class="patient-info">
+          <div class="patient-name">López, María Carmen</div>
+          <div class="patient-meta tnum">
+            <span>DNI 18.900.123</span><span class="sep" aria-hidden="true">·</span>
+            <span>OSECAC · Nº 109283</span><span class="sep" aria-hidden="true">·</span>
+            <span class="no-email">Sin email cargado</span>
+          </div>
+        </div>
+        <span class="badge badge-warning">No recibe recordatorios</span>
+        <div class="patient-actions">
+          <button class="btn btn-ghost" type="button">Editar</button>
+          <button class="btn btn-danger" type="button">Dar de baja</button>
+        </div>
+      </li>
+
+      <li class="patient-item">
+        <span class="avatar" aria-hidden="true">RM</span>
+        <div class="patient-info">
+          <div class="patient-name">Martínez, Roberto</div>
+          <div class="patient-meta tnum">
+            <span>DNI 25.678.901</span><span class="sep" aria-hidden="true">·</span>
+            <span>Swiss Medical · Nº 778812</span><span class="sep" aria-hidden="true">·</span>
+            <span>rmartinez@example.com</span>
+          </div>
+        </div>
+        <span class="badge badge-inactive">No acepta recordatorios</span>
+        <div class="patient-actions">
+          <button class="btn btn-ghost" type="button">Editar</button>
+          <button class="btn btn-danger" type="button">Dar de baja</button>
+        </div>
+      </li>
+    </ul>
+
+    <div class="pagination">
+      <span class="tnum">Mostrando 1 a 4 de 45 pacientes</span>
+      <div class="controls">
+        <button class="btn btn-secondary" type="button" disabled>Anterior</button>
+        <span class="tnum" style="padding:0 var(--space-2)">Página 1 de 12</span>
+        <button class="btn btn-secondary" type="button">Siguiente</button>
+      </div>
+    </div>
+  </div>
+
+  <section aria-labelledby="form-paciente-titulo">
+    <h2 id="form-paciente-titulo" class="demo-title">Formulario: editar paciente (con errores de DNI duplicado y email inválido)</h2>
+    <div class="scrim">
+      <div class="dialog" role="dialog" aria-labelledby="dlg-paciente" aria-describedby="dlg-paciente-desc">
+        <header>
+          <h2 id="dlg-paciente">Editar paciente</h2>
+          <p id="dlg-paciente-desc">Actualizá los datos personales y el consentimiento de recordatorios.</p>
+        </header>
+        <div class="body form-grid">
+          <div class="field">
+            <label for="f-nombre">Nombre</label>
+            <input id="f-nombre" type="text" value="Patricia" maxlength="100">
+          </div>
+          <div class="field">
+            <label for="f-apellido">Apellido</label>
+            <input id="f-apellido" type="text" value="Gómez" maxlength="100">
+          </div>
+
+          <div class="field invalid">
+            <label for="f-dni">DNI</label>
+            <input id="f-dni" class="tnum" type="text" value="32112334" inputmode="numeric" aria-invalid="true" aria-describedby="err-dni">
+            <span id="err-dni" class="hint">Ese DNI ya pertenece a otro paciente. Revisalo o buscá al paciente existente.</span>
+          </div>
+          <div class="field">
+            <label for="f-tel">Teléfono</label>
+            <input id="f-tel" class="tnum" type="tel" value="11 4567-8901">
+          </div>
+
+          <div class="field invalid span-2">
+            <label for="f-email">Email</label>
+            <input id="f-email" type="email" value="patricia.gomez.invalido@" aria-invalid="true" aria-describedby="err-email">
+            <span id="err-email" class="hint">Revisá el email: falta la parte después del arroba.</span>
+          </div>
+
+          <div class="field">
+            <label for="f-os">Obra social</label>
+            <input id="f-os" type="text" value="Swiss Medical">
+          </div>
+          <div class="field">
+            <label for="f-afiliado">Número de afiliado</label>
+            <input id="f-afiliado" class="tnum" type="text" value="987654321">
+          </div>
+
+          <div class="field span-2">
+            <label for="f-fnac">Fecha de nacimiento</label>
+            <input id="f-fnac" class="tnum" type="date" value="1988-04-14">
+          </div>
+
+          <div class="span-2">
+            <label class="check" for="f-recordatorios">
+              <input type="checkbox" id="f-recordatorios" checked>
+              <span>
+                Acepta recordatorios por email
+                <span class="hint">Si no lo acepta, no se le envían recordatorios automáticos antes del turno.</span>
+              </span>
+            </label>
+          </div>
+        </div>
+        <footer>
+          <button class="btn btn-secondary" type="button">Cancelar</button>
+          <button class="btn btn-primary" type="button">Guardar paciente</button>
+        </footer>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="baja-paciente-titulo">
+    <h2 id="baja-paciente-titulo" class="demo-title">Confirmación: dar de baja un paciente (baja lógica)</h2>
+    <div class="scrim">
+      <div class="dialog narrow" role="dialog" aria-labelledby="dlg-baja" aria-describedby="dlg-baja-desc">
+        <header>
+          <h2 id="dlg-baja" class="peligro">¿Dar de baja a Patricia Gómez?</h2>
+          <p id="dlg-baja-desc">El paciente deja de aparecer en las búsquedas y no se le pueden asignar turnos nuevos.</p>
+        </header>
+        <div class="body">
+          <div class="alert alert-danger" role="alert">
+            <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm-.9 4h1.8v5.2H9.1V6zm0 6.6h1.8v1.8H9.1v-1.8z"/></svg>
+            <div>
+              <b>Se conservan los datos</b>
+              Patricia Gómez (DNI 32.112.334) queda como paciente inactivo. Si tenía turnos futuros, primero tenés que resolverlos.
+            </div>
+          </div>
+        </div>
+        <footer>
+          <button class="btn btn-secondary" type="button">Cancelar</button>
+          <button class="btn btn-danger-primary" type="button">Dar de baja</button>
+        </footer>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script src="../../../../design-system/brand.js"></script>
+</body>
+</html>

@@ -18,7 +18,7 @@ Agenda web para el odontólogo independiente argentino: un usuario, un sillón, 
 | Tests backend | JUnit 5, AssertJ, Mockito, Spring Boot Test, MockMvc | — |
 | Frontend | React, TypeScript, Vite, React Router, TanStack Query | React 18, TS 5, Vite 5 |
 | Tests frontend | Vitest, Testing Library | — |
-| Email | SMTP real (Gmail o Brevo) vía `JavaMailSender` | — |
+| Email | Adaptador SMTP vía `JavaMailSender`, apagado en el MVP (`MAIL_ENABLED=false`, DD-13) | — |
 | Entorno | Instalación local, sin Docker | Node 20 |
 
 Detalle completo: [knowledge-base/02_descripcion_general.md](knowledge-base/02_descripcion_general.md)
@@ -42,7 +42,7 @@ La fuente de verdad del dominio vive en `knowledge-base/`. **Leé el archivo rel
 | [10_preguntas_abiertas.md](knowledge-base/10_preguntas_abiertas.md) | ⚠️ Inconsistencias a resolver ANTES de codear |
 | [11_cumplimiento_y_datos_sensibles.md](knowledge-base/11_cumplimiento_y_datos_sensibles.md) | Leyes 25.326 y 26.529 |
 
-> ⚠️ Resolver las preguntas de prioridad **Alta** de `10_preguntas_abiertas.md` antes de arrancar el change que bloquean (SMTP y consentimiento → C-13). Turnos en el pasado: resuelto, no se permiten ([DD-12](knowledge-base/09_decisiones_y_supuestos.md)).
+> ⚠️ Resolver las preguntas de prioridad **Alta** de `10_preguntas_abiertas.md` antes de arrancar el change que bloquean. Hoy no queda ninguna abierta: turnos en el pasado no se permiten ([DD-12](knowledge-base/09_decisiones_y_supuestos.md)); el MVP no usa proveedor de email real ([DD-13](knowledge-base/09_decisiones_y_supuestos.md)); los recordatorios exigen consentimiento ([DD-14](knowledge-base/09_decisiones_y_supuestos.md)).
 
 Diseño visual: [design-system/README.md](design-system/README.md) (revisión 2 aprobada, política `system-and-mockups`).
 

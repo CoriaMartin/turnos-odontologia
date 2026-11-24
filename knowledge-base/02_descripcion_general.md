@@ -13,7 +13,7 @@
 | Frontend | React, TypeScript, Vite | React 18, TS 5, Vite 5 |
 | Frontend libs | React Router, TanStack Query | — |
 | Tests frontend | Vitest, Testing Library | — |
-| Email | SMTP real (Gmail o Brevo) vía `JavaMailSender` | — |
+| Email | Adaptador SMTP vía `JavaMailSender`, apagado en el MVP (`MAIL_ENABLED=false`, [DD-13](09_decisiones_y_supuestos.md)) | — |
 | Entorno | Instalación local (sin Docker) | Node 20 |
 
 ## Arquitectura general
@@ -40,7 +40,7 @@
 
 | Servicio | Propósito | Tipo | Obligatorio en MVP |
 |---|---|---|---|
-| Proveedor SMTP (Gmail o Brevo) | Enviar recordatorios a pacientes | SMTP con TLS | Sí |
+| Proveedor SMTP (a definir) | Enviar recordatorios a pacientes | SMTP con TLS | No: el MVP no usa proveedor real ([DD-13](09_decisiones_y_supuestos.md)) |
 
 WhatsApp, Mercado Pago, ARCA y calendarios externos están fuera del MVP ([01](01_vision_y_objetivos.md)).
 
