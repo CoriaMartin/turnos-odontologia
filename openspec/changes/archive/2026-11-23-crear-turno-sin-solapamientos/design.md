@@ -66,6 +66,12 @@ CREATE INDEX turno_prestacion_idx ON turno (prestacion_id);
 7. `saveAndFlush`; si PostgreSQL rechaza con `SQLSTATE 23P01` (exclusion_violation, otra transacción ganó la carrera) → busca el conflicto en una transacción nueva y lanza `TurnoSolapadoException`.
 - Orden de validaciones: primero lo barato y propio de la solicitud, después lo que depende de otros turnos.
 
+### D4 bis — Bloqueo por recurso antes de verificar (ajuste de apply, 2026-11-23)
+**Hallazgo**: `TurnoConcurrenciaIT` falló en 1 de 5 repeticiones con 500. Con dos restricciones `EXCLUDE` (profesional y sillón), dos `INSERT` simultáneos pueden esperarse mutuamente cada uno en una restricción distinta; PostgreSQL detecta el deadlock (`40P01`) y aborta a uno con `CannotAcquireLockException`, que no es `23P01` y terminaba como error interno.
+**Decisión**: dentro de la transacción del alta, antes de buscar conflictos, tomar `pg_advisory_xact_lock` por profesional y luego por sillón (siempre en ese orden, `BloqueoAgenda`). Las solicitudes que compiten por los mismos recursos se serializan: la segunda espera, ve el turno ya confirmado y responde `TURNO_SOLAPADO` por el camino normal. Los bloqueos se liberan solos al confirmar o revertir.
+**Alternativas**: traducir también `40P01` a solapamiento (descartada: la víctima puede consultar antes de que el ganador confirme y no encontrar el conflicto); nivel `SERIALIZABLE` (descartada: reintentos en toda la API).
+**Impacto en la spec**: ninguno; el escenario sigue siendo exactamente una 201 y una 409. Las `EXCLUDE` y la traducción de `23P01` se mantienen como red de seguridad.
+
 ### D5 — Error con el turno en conflicto
 `TurnoSolapadoException` (409) lleva un resumen `{id, inicio, fin}` del turno en conflicto. `GlobalExceptionHandler` agrega las propiedades extra que declare la excepción: se agrega a `NegocioException` un método `propiedades()` (por defecto vacío) que el handler vuelca en el `ProblemDetail`. Así no se acopla el handler al dominio. Sin datos personales del paciente en el error.
 

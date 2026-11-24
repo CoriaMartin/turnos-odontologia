@@ -52,6 +52,7 @@ class PacienteIT {
 
     @BeforeEach
     void preparar() throws Exception {
+        jdbc.update("delete from turno"); // FK turno → paciente (C-07)
         jdbc.update("delete from paciente");
         String respuesta = mvc.perform(post("/api/auth/login").contentType(MediaType.APPLICATION_JSON)
                         .content("{\"email\":\"odontologo@example.com\",\"password\":\"ClaveDePrueba123\"}"))
