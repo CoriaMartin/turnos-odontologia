@@ -343,7 +343,7 @@ C-14 (ui-login) corre en paralelo y debe estar listo antes de C-16. C-13 → C-1
   - `knowledge-base/04_modelo_de_datos.md` §turno
 
 ### [C-09] `cancelar-turno`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (2026-11-24, change archivado `openspec/changes/archive/2026-11-24-cancelar-turno`)
 - **Responsable**: Agus (reasignado por Zaira, 2026-11-24) · tanda 6
 - **Scope**:
   - `POST /api/turnos/{id}/cancelacion` con motivo opcional (≤ 255).
