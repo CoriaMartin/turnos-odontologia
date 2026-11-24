@@ -28,7 +28,7 @@
 ## 4. Verificación integral
 
 - [x] 4.1 Correr `npm run verify` en `frontend/`; verificar todo en verde y un test por cada escenario de `specs/web-agenda` y del delta de `specs/web-app-shell`
-- [ ] 4.2 Prueba manual contra el backend local (`./mvnw spring-boot:run` + `npm run dev`) con turnos en los cinco estados; registrar resultados en `evidencia.md`
+- [x] 4.2 Prueba manual contra el backend local (`./mvnw spring-boot:run` + `npm run dev`) con turnos en los cinco estados; registrar resultados en `evidencia.md`
 - [x] 4.3 Verificación visual: capturar cada estado de la maqueta a 390x844 y 1440x900 en `mockups/verify/`, comparar con la maqueta aprobada, revisar consola y red, y completar `Preview:` y `Visual verify:` en `design.md`
 
 ## Workflow follow-up
