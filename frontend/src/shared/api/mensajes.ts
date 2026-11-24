@@ -20,6 +20,11 @@ export const MENSAJES_POR_CODIGO: Readonly<Record<string, string>> = {
   CREDENCIALES_INVALIDAS: 'El email o la contraseña no son correctos. Revisalos y probá de nuevo.',
   LOGIN_BLOQUEADO: 'Hubo demasiados intentos fallidos. Esperá 15 minutos y volvé a intentar.',
   NO_AUTENTICADO: 'Tu sesión venció. Ingresá de nuevo para seguir.',
+  // C-15 · prestaciones y pacientes (spec web-administracion).
+  NOMBRE_DUPLICADO: 'Ya tenés una prestación con ese nombre. Probá con otro.',
+  DNI_DUPLICADO: 'Ese DNI ya pertenece a otro paciente. Revisalo o buscá al paciente existente.',
+  PACIENTE_CON_TURNOS_FUTUROS:
+    'No pudimos dar de baja a este paciente porque tiene un turno programado. Cancelá o reprogramá ese turno y probá de nuevo.',
 };
 
 /** Mensaje para mostrar al usuario ante cualquier error. */

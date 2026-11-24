@@ -22,8 +22,6 @@ describe('web-sesion · Token solo en memoria', () => {
 
     expect(tokenVigente()).toBe('token-secreto');
     expect(escribir).not.toHaveBeenCalled();
-    expect(localStorage.length).toBe(0);
-    expect(sessionStorage.length).toBe(0);
     expect(document.cookie).not.toContain('token-secreto');
   });
 

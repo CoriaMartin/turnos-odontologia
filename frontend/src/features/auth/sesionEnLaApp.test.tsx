@@ -21,6 +21,7 @@ function encabezadosDeLaUltimaSolicitud(): Record<string, string> {
 const DATOS_EN_CACHE = [{ id: 1, apellido: 'Ficticio' }];
 
 beforeEach(() => {
+  fetchSimulado.mockReset();
   vi.stubGlobal('fetch', fetchSimulado);
   vi.stubEnv('VITE_API_URL', 'http://localhost:8080/api');
 });
@@ -114,6 +115,57 @@ describe('web-agenda · Sesión vencida al consultar la agenda', () => {
   });
 });
 
+describe('web-administracion · Sesión en las rutas nuevas', () => {
+  it.each(['/prestaciones', '/pacientes'])(
+    'Ruta protegida sin sesión: %s lleva al login y recuerda la ruta',
+    async (ruta) => {
+      const { router } = renderConRutas(ruta);
+
+      expect(
+        await screen.findByRole('heading', { level: 1, name: 'Ingresá a tu agenda' }),
+      ).toBeInTheDocument();
+      expect(router.state.location.pathname).toBe('/login');
+      expect(router.state.location.state).toEqual({ desde: ruta });
+    },
+  );
+
+  it('Token rechazado al cargar: en prestaciones, 401 → login con aviso y vuelta a la ruta', async () => {
+    let loginHecho = false;
+    fetchSimulado.mockImplementation((entrada) => {
+      if (String(entrada).endsWith('/auth/login')) {
+        loginHecho = true;
+        return Promise.resolve(
+          new Response(
+            JSON.stringify({ token: 'token-nuevo', tipo: 'Bearer', expiraEn: '2999-01-01T00:00:00Z' }),
+            { status: 200, headers: { 'Content-Type': 'application/json' } },
+          ),
+        );
+      }
+      return Promise.resolve(
+        loginHecho ? new Response('[]', { status: 200 }) : noAutenticado(),
+      );
+    });
+    const usuario = userEvent.setup();
+    const { router } = renderConRutas('/prestaciones', { conSesion: true });
+
+    expect(
+      await screen.findByRole('heading', { level: 1, name: 'Ingresá a tu agenda' }),
+    ).toBeInTheDocument();
+    expect(within(screen.getByRole('status')).getByText('Tu sesión venció')).toBeInTheDocument();
+    expect(screen.queryByText('No pudimos cargar las prestaciones')).not.toBeInTheDocument();
+    expect(router.state.location.state).toEqual({ desde: '/prestaciones' });
+
+    await usuario.type(screen.getByLabelText('Email'), 'consultorio@ejemplo.com');
+    await usuario.type(screen.getByLabelText('Contraseña'), 'secreta');
+    await usuario.click(screen.getByRole('button', { name: 'Ingresar' }));
+
+    expect(
+      await screen.findByRole('heading', { level: 1, name: 'Catálogo de prestaciones' }),
+    ).toBeInTheDocument();
+    expect(router.state.location.pathname).toBe('/prestaciones');
+  });
+});
+
 describe('web-sesion · Cierre de sesión', () => {
   it('Cerrar sesión: muestra el login sin aviso, descarta datos y no envía más el token', async () => {
     // Una respuesta nueva por solicitud: desde C-16, `/` ya pide la agenda antes del `apiFetch` del final.
@@ -140,7 +192,9 @@ describe('web-sesion · Cierre de sesión', () => {
 
     await usuario.click(screen.getByRole('button', { name: 'Cerrar sesión' }));
     await screen.findByRole('heading', { level: 1, name: 'Ingresá a tu agenda' });
-    await act(() => router.navigate('/'));
+    await act(async () => {
+      await router.navigate('/');
+    });
 
     expect(screen.getByRole('heading', { level: 1, name: 'Ingresá a tu agenda' })).toBeInTheDocument();
     expect(router.state.location.pathname).toBe('/login');

@@ -1,6 +1,14 @@
 import { screen, within } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { simularApiAgenda } from '../test/agenda';
+import {
+  PACIENTES_DE_PRUEBA,
+  paginaDe,
+  PRESTACIONES_DE_PRUEBA,
+  respuestaJson,
+  simularApi,
+} from '../test/catalogos';
 import { renderConRutas } from '../test/renderConRutas';
 
 // Con sesión, `/` es la agenda (C-16) y pide turnos: la API se simula para no salir a la red.
@@ -34,6 +42,33 @@ describe('web-app-shell · Barra superior con la marca', () => {
 
     expect(screen.queryByRole('banner')).not.toBeInTheDocument();
     expect(screen.queryByRole('button', { name: 'Cerrar sesión' })).not.toBeInTheDocument();
+  });
+
+  it('Navegar entre secciones', async () => {
+    simularApi((url) => {
+      if (url.pathname.endsWith('/prestaciones')) return respuestaJson(PRESTACIONES_DE_PRUEBA);
+      if (url.pathname.endsWith('/pacientes')) return respuestaJson(paginaDe(PACIENTES_DE_PRUEBA));
+      return respuestaJson([]);
+    });
+    renderConRutas('/', { conSesion: true });
+    const usuario = userEvent.setup();
+    const navegacion = within(screen.getByRole('banner')).getByRole('navigation', {
+      name: 'Navegación principal',
+    });
+    expect(within(navegacion).getAllByRole('link')).toHaveLength(3);
+
+    await usuario.click(within(navegacion).getByRole('link', { name: 'Prestaciones' }));
+    expect(await screen.findByRole('heading', { name: 'Catálogo de prestaciones' })).toBeInTheDocument();
+    expect(within(navegacion).getByRole('link', { name: 'Prestaciones' })).toHaveAttribute(
+      'aria-current',
+      'page',
+    );
+
+    await usuario.click(within(navegacion).getByRole('link', { name: 'Pacientes' }));
+    expect(await screen.findByRole('heading', { name: 'Pacientes' })).toBeInTheDocument();
+
+    await usuario.click(within(navegacion).getByRole('link', { name: 'Agenda' }));
+    expect(await screen.findByRole('heading', { name: 'Agenda' })).toBeInTheDocument();
   });
 });
 

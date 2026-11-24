@@ -435,7 +435,7 @@ C-14 (ui-login) corre en paralelo y debe estar listo antes de C-16. C-13 → C-1
   - `design-system/components.html` §Inicio de sesión
 
 ### [C-15] `ui-prestaciones-pacientes`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x] completado (2026-11-24, change archivado openspec/changes/archive/2026-11-24-ui-prestaciones-pacientes)`
 - **Responsable**: Ludmi · tanda 5
 - **Scope**:
   - Pantalla de prestaciones: listado, alta, edición, activar/desactivar.

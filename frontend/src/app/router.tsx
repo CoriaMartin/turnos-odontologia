@@ -2,6 +2,8 @@ import { createBrowserRouter, type RouteObject } from 'react-router-dom';
 import { AgendaPage } from '../features/agenda/AgendaPage';
 import { LoginPage } from '../features/auth/LoginPage';
 import { RutaProtegida } from '../features/auth/RutaProtegida';
+import { PacientesPage } from '../features/pacientes/PacientesPage';
+import { PrestacionesPage } from '../features/prestaciones/PrestacionesPage';
 import { NoEncontradaPage } from '../pages/NoEncontradaPage';
 import { AppLayout } from './AppLayout';
 
@@ -22,6 +24,8 @@ export const rutas: RouteObject[] = [
     ),
     children: [
       { index: true, element: <AgendaPage /> },
+      { path: 'prestaciones', element: <PrestacionesPage /> },
+      { path: 'pacientes', element: <PacientesPage /> },
       { path: '*', element: <NoEncontradaPage /> },
     ],
   },
