@@ -344,7 +344,7 @@ C-14 (ui-login) corre en paralelo y debe estar listo antes de C-16. C-13 → C-1
 
 ### [C-09] `cancelar-turno`
 - **Estado**: `[ ]` pendiente
-- **Responsable**: Zaira · tanda 6
+- **Responsable**: Agus (reasignado por Zaira, 2026-11-24) · tanda 6
 - **Scope**:
   - `POST /api/turnos/{id}/cancelacion` con motivo opcional (≤ 255).
   - `CANCELADO` o `CANCELADO_TARDIO` según `horas_cancelacion_tardia` (exactamente en el límite = `CANCELADO`); registra `cancelado_en`; libera el horario.
