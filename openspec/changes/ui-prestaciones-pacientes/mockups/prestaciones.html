@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Catálogo de prestaciones · Agenda de Odontología</title>
+<link rel="stylesheet" href="../../../../design-system/tokens.css">
+<link rel="stylesheet" href="layout.css">
+</head>
+<body>
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+
+<header class="topbar">
+  <a class="marca" href="prestaciones.html" aria-label="Ir al inicio">
+    <img src="../../../../design-system/assets/logo.svg" alt="Agenda de Odontología">
+    <strong data-brand-name>Agenda de Odontología</strong>
+  </a>
+  <nav class="nav-menu" aria-label="Navegación principal">
+    <a class="nav-link" href="#">Agenda</a>
+    <a class="nav-link" href="prestaciones.html" aria-current="page">Prestaciones</a>
+    <a class="nav-link" href="pacientes.html">Pacientes</a>
+  </nav>
+  <span class="spacer"></span>
+  <button class="user-badge" type="button" aria-label="Perfil del usuario">Dra. Ejemplo</button>
+</header>
+
+<main id="contenido" tabindex="-1">
+  <div class="page-header">
+    <div class="info">
+      <h1>Catálogo de prestaciones</h1>
+      <p>Gestioná los tratamientos que ofrecés y su duración predeterminada, para que al crear un turno se calcule solo el horario de fin.</p>
+    </div>
+    <button class="btn btn-primary" type="button">+ Nueva prestación</button>
+  </div>
+
+  <div class="card">
+    <div class="table-wrapper">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th scope="col">Nombre de la prestación</th>
+            <th scope="col">Duración</th>
+            <th scope="col">Estado</th>
+            <th scope="col" style="text-align: right">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="accion-nombre"><strong>Consulta y diagnóstico general</strong></td>
+            <td class="tnum" data-label="Duración">30 min</td>
+            <td data-label="Estado"><span class="badge badge-active">Activa</span></td>
+            <td class="actions">
+              <button class="btn btn-ghost" type="button">Editar</button>
+              <button class="btn btn-secondary" type="button">Desactivar</button>
+            </td>
+          </tr>
+          <tr>
+            <td class="accion-nombre"><strong>Control de ortodoncia</strong></td>
+            <td class="tnum" data-label="Duración">20 min</td>
+            <td data-label="Estado"><span class="badge badge-active">Activa</span></td>
+            <td class="actions">
+              <button class="btn btn-ghost" type="button">Editar</button>
+              <button class="btn btn-secondary" type="button">Desactivar</button>
+            </td>
+          </tr>
+          <tr>
+            <td class="accion-nombre"><strong>Extracción simple</strong></td>
+            <td class="tnum" data-label="Duración">45 min</td>
+            <td data-label="Estado"><span class="badge badge-active">Activa</span></td>
+            <td class="actions">
+              <button class="btn btn-ghost" type="button">Editar</button>
+              <button class="btn btn-secondary" type="button">Desactivar</button>
+            </td>
+          </tr>
+          <tr class="inactiva">
+            <td class="accion-nombre"><strong>Incrustación estética</strong></td>
+            <td class="tnum" data-label="Duración">60 min</td>
+            <td data-label="Estado"><span class="badge badge-inactive">Inactiva</span></td>
+            <td class="actions">
+              <button class="btn btn-ghost" type="button">Editar</button>
+              <button class="btn btn-ghost" type="button">Activar</button>
+            </td>
+          </tr>
+          <tr>
+            <td class="accion-nombre"><strong>Limpieza y profilaxis</strong></td>
+            <td class="tnum" data-label="Duración">45 min</td>
+            <td data-label="Estado"><span class="badge badge-active">Activa</span></td>
+            <td class="actions">
+              <button class="btn btn-ghost" type="button">Editar</button>
+              <button class="btn btn-secondary" type="button">Desactivar</button>
+            </td>
+          </tr>
+          <tr>
+            <td class="accion-nombre"><strong>Obturación de resina</strong></td>
+            <td class="tnum" data-label="Duración">45 min</td>
+            <td data-label="Estado"><span class="badge badge-active">Activa</span></td>
+            <td class="actions">
+              <button class="btn btn-ghost" type="button">Editar</button>
+              <button class="btn btn-secondary" type="button">Desactivar</button>
+            </td>
+          </tr>
+          <tr>
+            <td class="accion-nombre"><strong>Tratamiento de conducto</strong></td>
+            <td class="tnum" data-label="Duración">90 min</td>
+            <td data-label="Estado"><span class="badge badge-active">Activa</span></td>
+            <td class="actions">
+              <button class="btn btn-ghost" type="button">Editar</button>
+              <button class="btn btn-secondary" type="button">Desactivar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <section aria-labelledby="form-prestacion-titulo">
+    <h2 id="form-prestacion-titulo" class="demo-title">Formulario: nueva prestación (con error de nombre duplicado)</h2>
+    <div class="scrim">
+      <div class="dialog" role="dialog" aria-labelledby="dlg-prestacion" aria-describedby="dlg-prestacion-desc">
+        <header>
+          <h2 id="dlg-prestacion">Nueva prestación</h2>
+          <p id="dlg-prestacion-desc">Completá el nombre y la duración sugerida en minutos.</p>
+        </header>
+        <div class="body form-grid">
+          <div class="field invalid span-2">
+            <label for="p-nombre">Nombre de la prestación</label>
+            <input id="p-nombre" type="text" value="Limpieza y profilaxis" maxlength="100" aria-invalid="true" aria-describedby="err-nombre">
+            <span id="err-nombre" class="hint">Ya tenés una prestación con ese nombre. Probá con otro.</span>
+          </div>
+          <div class="field span-2">
+            <label for="p-duracion">Duración predeterminada (minutos)</label>
+            <input id="p-duracion" class="tnum" type="number" value="45" min="5" max="480" aria-describedby="hint-duracion">
+            <span id="hint-duracion" class="hint">Entre 5 y 480 minutos.</span>
+          </div>
+        </div>
+        <footer>
+          <button class="btn btn-secondary" type="button">Cancelar</button>
+          <button class="btn btn-primary" type="button">Guardar prestación</button>
+        </footer>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script src="../../../../design-system/brand.js"></script>
+</body>
+</html>
