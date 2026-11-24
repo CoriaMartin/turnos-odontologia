@@ -44,6 +44,7 @@
   display: flex;
   align-items: center;
   gap: var(--space-3);
+  min-width: 0;
   color: inherit;
   text-decoration: none;
   border-radius: var(--radius-md);
@@ -55,6 +56,7 @@
 }
 
 .logo {
+  flex: none;
   display: block;
   width: var(--logo-barra);
   height: var(--logo-barra);
@@ -64,6 +66,52 @@
   font-size: var(--text-lg);
   font-weight: var(--weight-bold);
   color: var(--color-brand-900);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.separador {
+  flex: 1;
+}
+
+/* "Cerrar sesión": .btn.btn-ghost de components.html, con el ajuste de la maqueta de C-14 para la barra. */
+.botonFantasma {
+  flex: none;
+  min-height: var(--hit-target);
+  padding: 0 var(--space-3);
+  font: inherit;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  white-space: nowrap;
+  color: var(--color-brand-700);
+  background: transparent;
+  border: var(--borde-fino) solid transparent;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition:
+    background var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+
+.botonFantasma:hover {
+  background: var(--color-brand-50);
+}
+
+.botonFantasma:active {
+  transform: scale(0.97);
+}
+
+.botonFantasma:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+/* Maqueta C-14: en pantallas angostas el nombre baja un tamaño para entrar junto a "Cerrar sesión". */
+@media (max-width: 479px) {
+  .nombre {
+    font-size: var(--text-md);
+  }
 }
 
 .contenido {

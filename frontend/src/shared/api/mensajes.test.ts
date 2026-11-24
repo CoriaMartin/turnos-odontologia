@@ -27,6 +27,20 @@ describe('web-api-client · Mensaje para el usuario sin códigos técnicos', () 
     },
   );
 
+  it('Credenciales inválidas: mensaje genérico que no dice qué dato falló', () => {
+    expect(mensajeDeError(new ApiError({ status: 401, codigo: 'CREDENCIALES_INVALIDAS' }))).toBe(
+      'El email o la contraseña no son correctos. Revisalos y probá de nuevo.',
+    );
+  });
+
+  it('Login bloqueado: explica el bloqueo de 15 minutos y qué hacer, sin 429', () => {
+    const mensaje = mensajeDeError(new ApiError({ status: 429, codigo: 'LOGIN_BLOQUEADO' }));
+    expect(mensaje).toBe(
+      'Hubo demasiados intentos fallidos. Esperá 15 minutos y volvé a intentar.',
+    );
+    expect(mensaje).not.toContain('429');
+  });
+
   it('un error que no es de la API usa el mensaje genérico', () => {
     expect(mensajeDeError(new Error('falla interna'))).toBe(MENSAJE_GENERICO);
   });

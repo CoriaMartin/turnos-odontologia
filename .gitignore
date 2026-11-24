@@ -14,3 +14,6 @@ frontend/dist/
 
 # Maven Wrapper (only-script no usa jar)
 backend/.mvn/wrapper/maven-wrapper.jar
+
+# Snapshots y logs de Playwright MCP (capturas de maquetas)
+.playwright-mcp/

@@ -4,6 +4,9 @@ import { createRoot } from 'react-dom/client';
 import { AppProviders } from './app/AppProviders';
 import { crearQueryClient } from './app/queryClient';
 import { crearRouter } from './app/router';
+import { conectarSesionConApi } from './features/auth/sesion';
+
+conectarSesionConApi();
 
 const contenedor = document.getElementById('root');
 if (!contenedor) {

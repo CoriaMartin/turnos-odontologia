@@ -1,16 +1,24 @@
 import { createBrowserRouter, type RouteObject } from 'react-router-dom';
+import { LoginPage } from '../features/auth/LoginPage';
+import { RutaProtegida } from '../features/auth/RutaProtegida';
 import { InicioPage } from '../pages/InicioPage';
 import { NoEncontradaPage } from '../pages/NoEncontradaPage';
 import { AppLayout } from './AppLayout';
 
 /**
- * Rutas de la web app. Los changes siguientes agregan rutas hijas acá (C-14 suma /login y la protección).
+ * Rutas de la web app. `/login` es pública y no lleva barra superior; todo lo demás requiere sesión
+ * (C-14, design.md D4). Los changes siguientes agregan rutas hijas dentro del layout protegido.
  * La página para rutas inexistentes vive dentro del layout para conservar la barra superior.
  */
 export const rutas: RouteObject[] = [
+  { path: '/login', element: <LoginPage /> },
   {
     path: '/',
-    element: <AppLayout />,
+    element: (
+      <RutaProtegida>
+        <AppLayout />
+      </RutaProtegida>
+    ),
     children: [
       { index: true, element: <InicioPage /> },
       { path: '*', element: <NoEncontradaPage /> },

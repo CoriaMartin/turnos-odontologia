@@ -16,6 +16,10 @@ export const MENSAJES_POR_CODIGO: Readonly<Record<string, string>> = {
   RECURSO_NO_ENCONTRADO:
     'No encontramos lo que buscabas. Puede que ya no exista: actualizá la página y probá de nuevo.',
   SOLICITUD_INVALIDA: 'No pudimos procesar los datos enviados. Revisalos y probá de nuevo.',
+  // C-14 · sesión (spec web-sesion). El aviso de bloqueo fija los 15 minutos de RN-AU-03: la API no informa el tiempo restante.
+  CREDENCIALES_INVALIDAS: 'El email o la contraseña no son correctos. Revisalos y probá de nuevo.',
+  LOGIN_BLOQUEADO: 'Hubo demasiados intentos fallidos. Esperá 15 minutos y volvé a intentar.',
+  NO_AUTENTICADO: 'Tu sesión venció. Ingresá de nuevo para seguir.',
 };
 
 /** Mensaje para mostrar al usuario ante cualquier error. */
