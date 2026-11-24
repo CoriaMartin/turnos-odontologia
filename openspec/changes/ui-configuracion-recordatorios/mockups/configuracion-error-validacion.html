@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>C-18 · Configuración de Recordatorios · Agenda de Odontología</title>
+<link rel="stylesheet" href="../../../../design-system/tokens.css">
+<link rel="stylesheet" href="layout.css">
+</head>
+<body>
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+
+<header class="topbar">
+<a class="marca" href="pacientes.html" aria-label="Ir al inicio">
+<img src="../../../../design-system/assets/logo.svg" alt="Agenda de Odontología">
+<strong data-brand-name>Agenda de Odontología</strong>
+</a>
+<nav class="nav-menu" aria-label="Navegación principal">
+<a class="nav-link" href="#">Agenda</a>
+<a class="nav-link" href="prestaciones.html">Prestaciones</a>
+<a class="nav-link" href="pacientes.html" aria-current="page">Pacientes</a>
+</nav>
+<span class="spacer"></span>
+<button class="user-badge" type="button" aria-label="Perfil del usuario">Dra. Ejemplo</button>
+</header>
+
+<main id="contenido">
+<section class="card" data-estado="invalid">
+<h2 class="demo-title">Error: horas inválidas</h2>
+<form class="form-grid" noValidate>
+<div class="field invalid">
+<label for="cancelacionTardia2">Horas cancelación tardía</label>
+<input id="cancelacionTardia2" type="number" min="0" value="-1" placeholder="-1 (inválido)" aria-invalid="true" aria-describedby="err-cancelacion">
+<span id="err-cancelacion" class="hint">Debe ser ≥ 0</span>
+</div>
+<div class="field">
+<label for="recordatorio2">Horas recordatorio</label>
+<input id="recordatorio2" type="number" min="1" value="0" placeholder="0 (inválido)" aria-invalid="true" aria-describedby="err-registro">
+<span id="err-registro" class="hint">Debe ser > 0</span>
+</div>
+<button class="btn btn-primary" type="submit">Guardar configuración</button>
+</form>
+<p class="alerta" role="alert">
+<b>Verifique los campos señalados.</b> Las horas deben ser números enteros ≥ 0 para cancelación y > 0 para recordatorio.
+</p>
+</section>
+</main>
+
+<footer style="margin-top: var(--space-8); padding: var(--space-6) var(--space-4); color: var(--color-ink-500); font-size: var(--text-xs); text-align: center;">
+<p>C-18 · configuracion-error-validacion — Maquetas (revisión 2026-11-24)</p>
+</footer>
+
+<script src="../../../../design-system/brand.js"></script>
+</body>
+</html>
