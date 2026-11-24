@@ -1,9 +1,16 @@
 # Sistema de diseño
 
 Mode: system-and-mockups
-Revision: 1
-Approval: approved (2026-11-21, by user)
+Revision: 2
+Approval: approved (2026-11-23, by líder)
 Decision source: plan de fundación aprobado por el usuario (2026-11-21), fase `visual-design`.
+
+## Historial de revisiones
+
+| Revisión | Fecha | Cambio | Aprobación |
+|---|---|---|---|
+| 1 | 2026-11-21 | Base inicial: tokens, componentes, marca y logo provisorios | Usuario (plan de fundación) |
+| 2 | 2026-11-23 | Nombre "Agenda de Odontología" y logo definitivo (sin "TBD" ni borde punteado, muela centrada); sin rótulo "Marca provisoria" | Líder. No requiere volver a revisar las maquetas aprobadas |
 
 Base visual compartida de la web app (React + TypeScript). Cada change visual posterior crea su maqueta en `openspec/changes/<change>/mockups/` importando estos archivos, y se aprueba antes de implementarse.
 
@@ -15,8 +22,8 @@ Base visual compartida de la web app (React + TypeScript). Cada change visual po
 | [brand.md](brand.md) | Nombre, tono visual, tono de textos, reglas de imágenes |
 | [brand.js](brand.js) | Constante `BRAND_NAME` que completa los elementos `[data-brand-name]` |
 | [components.html](components.html) | Componentes de referencia: botones, campos, estados, mensajes, agenda diaria, formulario de turno, pacientes, login |
-| [assets/logo.svg](assets/logo.svg) | Logo **provisorio**, rotulado "TBD" |
-| [previews/](previews/) | Capturas de página completa: `components-desktop-1440x900.png` (ventana 1440 de ancho) y `components-mobile-390x844.png` (columna de 390 px dentro de un marco neutro). Renderizadas con Edge headless el 2026-11-21 e inspeccionadas; en 375 px no hay desborde horizontal |
+| [assets/logo.svg](assets/logo.svg) | Logo: muela blanca sobre fondo verde petróleo (aprobado por el líder, 2026-11-23) |
+| [previews/](previews/) | Capturas de página completa: `components-desktop-1440x900.png` (ventana 1440 de ancho) y `components-mobile-390x844.png` (columna de 390 px dentro de un marco neutro). Renderizadas con Edge headless el 2026-11-21 e inspeccionadas; en 375 px no hay desborde horizontal. Regeneradas con Playwright el 2026-11-23 tras definir el nombre (la móvil ahora es la ventana de 390 px, sin marco) |
 
 ## Fuentes
 
@@ -28,15 +35,15 @@ Base visual compartida de la web app (React + TypeScript). Cada change visual po
 
 | Decisión | Estado | Dónde se reemplaza |
 |---|---|---|
-| Nombre del producto | (TBD) provisorio "Agenda Odonto (TBD)" | `brand.js` → `BRAND_NAME` |
-| Logo | (TBD) placeholder rotulado | `assets/logo.svg` (mismo nombre de archivo) |
+| Nombre del producto | Resuelto: "Agenda de Odontología" (aprobado por el líder, 2026-11-23) | `brand.js` → `BRAND_NAME` |
+| Logo | Resuelto: se quitó el rótulo "TBD" y el borde punteado del placeholder (aprobado por el líder, 2026-11-23) | `assets/logo.svg` (mismo nombre de archivo) |
 | Modo oscuro | (TBD) no incluido en la revisión 1 | `tokens.css` |
 | Tipografía propia | (TBD) se usa la del sistema, sin fuentes remotas | `tokens.css` → `--font-sans` |
 
 ## Cómo reemplazar
 
 1. **Nombre**: editar `BRAND_NAME` en `brand.js`. Todas las maquetas que usan `data-brand-name` se actualizan solas.
-2. **Logo**: sobrescribir `assets/logo.svg` conservando el nombre. Quitar la etiqueta "Marca provisoria" de `components.html`.
+2. **Logo**: sobrescribir `assets/logo.svg` conservando el nombre. (La etiqueta "Marca provisoria" ya se quitó de `components.html` el 2026-11-23, al definirse el nombre.)
 3. **Colores o tipografía**: cambiar solo `tokens.css`, subir `Revision:` en este README, volver a `Approval: pending`, regenerar las capturas y revisar las maquetas afectadas.
 
 ## Uso en el frontend

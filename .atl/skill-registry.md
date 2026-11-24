@@ -203,7 +203,7 @@ Pre-digested rules per skill. Delegators copy matching blocks into sub-agent pro
 - Refinement preserves the incumbent identity; ask before replacing copy or brand elements.
 
 ### design-system
-- Project policy is recorded: `system-and-mockups`, revision 1 approved. Do not ask again.
+- Project policy is recorded: `system-and-mockups`, revision 2 approved (2026-11-23, by the leader). Do not ask again.
 - Each visual change needs an approved HTML mockup in `openspec/changes/<change>/mockups/` before apply.
 - Changing a shared token/asset bumps `Revision:` and resets approval to pending.
 
@@ -234,7 +234,7 @@ Pre-digested rules per skill. Delegators copy matching blocks into sub-agent pro
 | AGENTS.md / CLAUDE.md | — | Not created yet (fase `agents` pendiente) |
 | Knowledge base | `knowledge-base/README.md` | Domain, rules (RN-XX), architecture, decisions |
 | Roadmap | `CHANGES.md` | Change IDs C-01..C-20, dependencies, governance |
-| Design system | `design-system/README.md` | Revision 1 approved; tokens in `design-system/tokens.css` |
+| Design system | `design-system/README.md` | Revision 2 approved; tokens in `design-system/tokens.css` |
 | OpenSpec config | `openspec/config.yaml` | OPSX workflow |
 
 Read the convention files listed above for project-specific patterns and rules. All referenced paths have been extracted — no need to read index files to discover more.

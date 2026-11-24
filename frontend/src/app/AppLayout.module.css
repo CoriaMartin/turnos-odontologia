@@ -1,0 +1,93 @@
+/* Layout base según la maqueta aprobada (openspec/changes/frontend-scaffolding/mockups/).
+   Medidas que el sistema de diseño no define, copiadas de design-system/components.html (D7):
+   ancho máximo del contenido, tamaño del logo en la barra y borde fino. Anotadas para la próxima revisión. */
+.layout {
+  --contenido-max: 1200px;
+  --logo-barra: 32px;
+  --borde-fino: 1px;
+
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.saltar {
+  position: absolute;
+  left: var(--space-4);
+  top: calc(-1 * var(--space-12));
+  z-index: 3;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-brand-700);
+}
+
+.saltar:focus {
+  top: var(--space-2);
+  outline: none;
+  box-shadow: var(--focus-ring), var(--shadow-2);
+}
+
+.barra {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface);
+  border-bottom: var(--borde-fino) solid var(--color-line);
+}
+
+.marca {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: inherit;
+  text-decoration: none;
+  border-radius: var(--radius-md);
+}
+
+.marca:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.logo {
+  display: block;
+  width: var(--logo-barra);
+  height: var(--logo-barra);
+}
+
+.nombre {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  color: var(--color-brand-900);
+}
+
+.contenido {
+  flex: 1;
+  width: 100%;
+  max-width: var(--contenido-max);
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-4) var(--space-12);
+  display: grid;
+  align-content: start;
+  gap: var(--space-6);
+}
+
+.contenido:focus {
+  outline: none;
+}
+
+/* Punto de quiebre de components.html (.grid-2); las media queries no aceptan var(). */
+@media (min-width: 900px) {
+  .barra {
+    padding: var(--space-3) var(--space-6);
+  }
+
+  .contenido {
+    padding: var(--space-8) var(--space-6) var(--space-12);
+  }
+}

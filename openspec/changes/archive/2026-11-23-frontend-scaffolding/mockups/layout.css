@@ -1,0 +1,46 @@
+/* Maqueta C-02 · layout base. Solo variables de design-system/tokens.css (revisión 2).
+   Medidas sueltas copiadas tal cual de components.html (sistema aprobado): ancho máximo del
+   contenido (1200px) y logo de 32px. */
+:root { --contenido-max: 1200px; }
+
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; min-height: 100vh; display: flex; flex-direction: column; font-family: var(--font-sans); font-size: var(--text-md); line-height: var(--leading-normal); color: var(--color-ink-900); background: var(--color-canvas); -webkit-font-smoothing: antialiased; }
+h1 { margin: 0; font-size: var(--text-2xl); line-height: var(--leading-tight); color: var(--color-ink-900); }
+p { margin: 0; }
+
+/* Enlace para saltar al contenido (visible solo con foco de teclado) */
+.saltar { position: absolute; left: var(--space-4); top: calc(-1 * var(--space-12)); background: var(--color-surface); color: var(--color-brand-700); padding: var(--space-2) var(--space-3); border-radius: var(--radius-md); z-index: 3; }
+.saltar:focus { top: var(--space-2); outline: none; box-shadow: var(--focus-ring), var(--shadow-2); }
+
+/* Barra superior: igual a components.html */
+.topbar { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-4); background: var(--color-surface); border-bottom: 1px solid var(--color-line); position: sticky; top: 0; z-index: 2; }
+.topbar .marca { display: flex; align-items: center; gap: var(--space-3); color: inherit; text-decoration: none; border-radius: var(--radius-md); }
+.topbar .marca:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+.topbar img { width: 32px; height: 32px; display: block; }
+.topbar strong { font-size: var(--text-lg); color: var(--color-brand-900); }
+
+/* Área de contenido */
+main { flex: 1; width: 100%; max-width: var(--contenido-max); margin: 0 auto; padding: var(--space-6) var(--space-4) var(--space-12); display: grid; align-content: start; gap: var(--space-6); }
+main:focus { outline: none; }
+.encabezado p { margin-top: var(--space-2); color: var(--color-ink-500); max-width: 60ch; }
+
+/* Estado vacío: igual a .empty de components.html */
+.empty { text-align: center; padding: var(--space-10) var(--space-4); color: var(--color-ink-500); border: 1px dashed var(--color-ink-300); border-radius: var(--radius-md); background: var(--color-surface); display: grid; gap: var(--space-2); justify-items: center; }
+.empty strong { color: var(--color-ink-700); font-weight: var(--weight-semibold); }
+
+/* Página inexistente */
+.no-encontrada { display: grid; justify-items: start; gap: var(--space-4); padding-top: var(--space-8); max-width: 60ch; }
+.no-encontrada .icono { width: var(--space-12); height: var(--space-12); border-radius: var(--radius-pill); background: var(--color-brand-50); color: var(--color-brand-700); display: grid; place-items: center; font-weight: var(--weight-bold); font-size: var(--text-xl); }
+.no-encontrada p { color: var(--color-ink-500); }
+
+/* Botones: iguales a components.html */
+.btn { font: inherit; font-size: var(--text-sm); font-weight: var(--weight-semibold); min-height: var(--hit-target); padding: 0 var(--space-4); border-radius: var(--radius-md); border: 1px solid transparent; cursor: pointer; display: inline-flex; align-items: center; gap: var(--space-2); text-decoration: none; transition: background var(--duration-fast) var(--ease-out), transform var(--duration-fast) var(--ease-out); }
+.btn:active { transform: scale(0.97); }
+.btn:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+.btn-primary { background: var(--color-brand-600); color: var(--color-surface); }
+.btn-primary:hover { background: var(--color-brand-700); }
+
+@media (min-width: 900px) {
+  .topbar { padding: var(--space-3) var(--space-6); }
+  main { padding: var(--space-8) var(--space-6) var(--space-12); }
+}
