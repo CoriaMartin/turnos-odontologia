@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>C-18 · Configuración de Recordatorios · Agenda de Odontología</title>
+<link rel="stylesheet" href="../../../../design-system/tokens.css">
+<link rel="stylesheet" href="layout.css">
+</head>
+<body>
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+
+<header class="topbar">
+<a class="marca" href="pacientes.html" aria-label="Ir al inicio">
+<img src="../../../../design-system/assets/logo.svg" alt="Agenda de Odontología">
+<strong data-brand-name>Agenda de Odontología</strong>
+</a>
+<nav class="nav-menu" aria-label="Navegación principal">
+<a class="nav-link" href="#">Agenda</a>
+<a class="nav-link" href="prestaciones.html">Prestaciones</a>
+<a class="nav-link" href="pacientes.html" aria-current="page">Pacientes</a>
+</nav>
+<span class="spacer"></span>
+<button class="user-badge" type="button" aria-label="Perfil del usuario">Dra. Ejemplo</button>
+</header>
+
+<main id="contenido">
+<section class="card" data-estado="guardando">
+<h2 class="demo-title">Guardando configuración</h2>
+<form class="form-grid" noValidate>
+<div class="field">
+<label for="cancelacionTardia3">Horas cancelación tardía</label>
+<input id="cancelacionTardia3" type="number" min="0" value="48" placeholder="48">
+</div>
+<div class="field">
+<label for="recordatorio3">Horas recordatorio</label>
+<input id="recordatorio3" type="number" min="1" value="12" placeholder="12">
+</div>
+<button class="btn btn-primary" disabled aria-busy="true"><span class="spinner" aria-hidden="true"></span>Guardando...</button>
+</form>
+<p class="hint">Los cambios se guardarán en la base de datos.</p>
+</section>
+</main>
+
+<footer style="margin-top: var(--space-8); padding: var(--space-6) var(--space-4); color: var(--color-ink-500); font-size: var(--text-xs); text-align: center;">
+<p>C-18 · configuracion-guardando — Maquetas (revisión 2026-11-24)</p>
+</footer>
+
+<script src="../../../../design-system/brand.js"></script>
+</body>
+</html>

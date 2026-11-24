@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>C-18 · Configuración de Recordatorios · Agenda de Odontología</title>
+<link rel="stylesheet" href="../../../../design-system/tokens.css">
+<link rel="stylesheet" href="layout.css">
+</head>
+<body>
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+
+<header class="topbar">
+<a class="marca" href="pacientes.html" aria-label="Ir al inicio">
+<img src="../../../../design-system/assets/logo.svg" alt="Agenda de Odontología">
+<strong data-brand-name>Agenda de Odontología</strong>
+</a>
+<nav class="nav-menu" aria-label="Navegación principal">
+<a class="nav-link" href="#">Agenda</a>
+<a class="nav-link" href="prestaciones.html">Prestaciones</a>
+<a class="nav-link" href="pacientes.html" aria-current="page">Pacientes</a>
+</nav>
+<span class="spacer"></span>
+<button class="user-badge" type="button" aria-label="Perfil del usuario">Dra. Ejemplo</button>
+</header>
+
+<main id="contenido">
+<section class="card" data-estado="sesion-iniciada">
+<h2 class="demo-title">Inicio con sesión iniciada</h2>
+<p>Las configuraciones se guardan en la base de datos y persisten entre sesiones.</p>
+<p>Estado del recordatorio en el detalle del turno:</p>
+<ul aria-label="Estados de recordatorio">
+<li>✅ <span class="badge badge-success">Enviado</span> — Si ya se envió el recordatorio</li>
+<li>🕐 <span class="badge badge-pendiente">Pendiente</span> — Si el turno está programado y falta la ventana de envío</li>
+<li>❌ <span class="badge badge-inactivo">No aplica</span> — Si el paciente no tiene email</li>
+<li>⚠️ <span class="badge badge-warning">No consentido</span> — Si el paciente tiene email pero no aceptó recordatorios</li>
+</ul>
+</section>
+</main>
+
+<footer style="margin-top: var(--space-8); padding: var(--space-6) var(--space-4); color: var(--color-ink-500); font-size: var(--text-xs); text-align: center;">
+<p>C-18 · turno-detalle-recordatorio — Maquetas (revisión 2026-11-24)</p>
+</footer>
+
+<script src="../../../../design-system/brand.js"></script>
+</body>
+</html>
