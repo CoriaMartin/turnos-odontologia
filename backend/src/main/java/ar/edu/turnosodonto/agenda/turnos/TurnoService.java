@@ -20,6 +20,7 @@ import ar.edu.turnosodonto.agenda.dominio.EstadoTurno;
 import ar.edu.turnosodonto.agenda.dominio.Intervalo;
 import ar.edu.turnosodonto.agenda.dominio.ReglasAgenda;
 import ar.edu.turnosodonto.agenda.recursos.RecursosConsultorio;
+import ar.edu.turnosodonto.agenda.turnos.web.EstadoAsistencia;
 import ar.edu.turnosodonto.configuracion.ConfiguracionService;
 import ar.edu.turnosodonto.pacientes.Paciente;
 import ar.edu.turnosodonto.pacientes.PacienteService;
@@ -147,6 +148,19 @@ public class TurnoService {
         }
         log.info("Turno cancelado id={} estado={}", turno.getId(), turno.getEstado());
         // Mismo contexto de persistencia: inicializa paciente y prestación para la respuesta (open-in-view apagado).
+        return turnos.buscarConDetalle(id).orElseThrow(TurnoNoEncontradoException::new);
+    }
+
+    @Transactional
+    public Turno registrarAsistencia(Long id, EstadoAsistencia estado) {
+        Turno turno = turnos.buscarParaActualizar(id).orElseThrow(TurnoNoEncontradoException::new);
+        turno.registrarAsistencia(estado, reloj.instant());
+        try {
+            turnos.saveAndFlush(turno);
+        } catch (ObjectOptimisticLockingFailureException e) {
+            throw new TurnoModificadoException();
+        }
+        log.info("Asistencia registrada id={} estado={}", turno.getId(), turno.getEstado());
         return turnos.buscarConDetalle(id).orElseThrow(TurnoNoEncontradoException::new);
     }
 

@@ -22,6 +22,7 @@ import ar.edu.turnosodonto.agenda.dominio.Intervalo;
 import ar.edu.turnosodonto.agenda.dominio.ReglasAgenda;
 import ar.edu.turnosodonto.agenda.recursos.Profesional;
 import ar.edu.turnosodonto.agenda.recursos.Sillon;
+import ar.edu.turnosodonto.agenda.turnos.web.EstadoAsistencia;
 import ar.edu.turnosodonto.pacientes.Paciente;
 import ar.edu.turnosodonto.prestaciones.Prestacion;
 import ar.edu.turnosodonto.shared.persistence.EntidadAuditada;
@@ -135,6 +136,16 @@ public class Turno extends EntidadAuditada {
                 : EstadoTurno.CANCELADO;
         this.canceladoEn = ahora;
         this.motivoCancelacion = normalizarMotivo(motivo);
+    }
+
+    public void registrarAsistencia(EstadoAsistencia estadoAsistencia, Instant ahora) {
+        if (estado != EstadoTurno.PROGRAMADO) {
+            throw new TransicionInvalidaException("Solo se puede registrar asistencia de turnos programados.");
+        }
+        if (ahora.isBefore(inicio)) {
+            throw new TransicionInvalidaException("El turno todavía no empezó.");
+        }
+        this.estado = estadoAsistencia.aEstadoTurno();
     }
 
     private static String normalizarMotivo(String motivo) {
