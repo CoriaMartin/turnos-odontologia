@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reprogramar turno · Agenda de Odontología</title>
+<link rel="stylesheet" href="../../../../design-system/tokens.css">
+<link rel="stylesheet" href="gestion.css">
+</head>
+<body>
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+
+<header class="topbar">
+  <a class="marca" href="../ui-agenda/mockups/agenda.html" aria-label="Ir al inicio">
+    <img src="../../../../design-system/assets/logo.svg" alt="Agenda de Odontología">
+    <strong data-brand-name>Agenda de Odontología</strong>
+  </a>
+  <nav class="nav-menu" aria-label="Navegación principal">
+    <a class="nav-link" href="../ui-agenda/mockups/agenda.html" aria-current="page">Agenda</a>
+    <a class="nav-link" href="../ui-prestaciones-pacientes/mockups/prestaciones.html">Prestaciones</a>
+    <a class="nav-link" href="../ui-prestaciones-pacientes/mockups/pacientes.html">Pacientes</a>
+  </nav>
+  <span class="spacer"></span>
+  <button class="user-badge" type="button" aria-label="Perfil del usuario">Dra. Ejemplo</button>
+</header>
+
+<main id="contenido" tabindex="-1">
+  <div class="page-header">
+    <div class="info">
+      <h1>Agenda</h1>
+      <p>Martes 1 de diciembre de 2026 · 9 turnos agendados</p>
+    </div>
+    <button class="btn btn-primary" type="button">+ Turno</button>
+  </div>
+
+  <section class="stage" aria-label="Agenda con el diálogo Reprogramar turno abierto">
+    <div class="agenda-fondo" aria-hidden="true">
+      <div class="agenda-card">
+        <div class="agenda-toolbar">
+          <div class="date-nav">
+            <span class="btn btn-secondary btn-icon">‹</span>
+            <span class="fecha tnum">01/12/2026</span>
+            <span class="btn btn-secondary btn-icon">›</span>
+            <span class="btn btn-secondary">Hoy</span>
+          </div>
+          <div class="seg"><span aria-pressed="true">Día</span><span aria-pressed="false">Semana</span></div>
+        </div>
+        <div class="legend">
+          <span class="badge estado-programado">Programado</span>
+          <span class="badge estado-atendido">Atendido</span>
+          <span class="badge estado-ausente">Ausente</span>
+          <span class="badge estado-cancelado">Cancelado</span>
+          <span class="badge estado-tardio">Cancelación tardía</span>
+        </div>
+        <div class="timeline">
+          <div class="hours"><span>09:00</span><span></span><span>10:00</span><span></span><span>11:00</span><span></span><span>12:00</span><span></span></div>
+          <div class="lane">
+            <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+            <div class="appt atendido" style="top:0;height:calc(var(--agenda-slot-height) * 1 - var(--space-1))"><div><div class="t tnum">09:00 – 09:30</div><div class="p">Ficticio Uno · Control</div></div><span class="badge estado-atendido">Atendido</span></div>
+            <div class="appt ausente" style="top:calc(var(--agenda-slot-height) * 1);height:calc(var(--agenda-slot-height) * 1 - var(--space-1))"><div><div class="t tnum">09:30 – 10:00</div><div class="p">Ficticio Dos · Control</div></div><span class="badge estado-ausente">Ausente</span></div>
+            <div class="appt programado" style="top:calc(var(--agenda-slot-height) * 2);height:calc(var(--agenda-slot-height) * 1.5 - var(--space-1))"><div><div class="t tnum">10:00 – 10:45</div><div class="p">Ficticio Tres · Limpieza</div></div><span class="badge estado-programado">Programado</span></div>
+            <div class="appt libre" style="top:calc(var(--agenda-slot-height) * 5);height:calc(var(--agenda-slot-height) * 1 - var(--space-1))">Horario libre · 11:30 – 12:00</div>
+          </div>
+          <div class="lane-cancelados">
+            <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+            <div class="appt cancelado" style="top:calc(var(--agenda-slot-height) * 3.5);height:calc(var(--agenda-slot-height) * 1.5 - var(--space-1))"><div><div class="t tnum">10:45 – 11:30</div><div class="p">Ficticio Cuatro · Obturación</div></div><span class="badge estado-tardio">Tardía</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="scrim" aria-hidden="true"></div>
+
+    <dialog open class="dlg" aria-labelledby="rp-titulo" aria-describedby="rp-bajada">
+      <header>
+        <div class="dlg-titulo">
+          <h2 id="rp-titulo">Reprogramar turno</h2>
+          <button class="btn btn-ghost btn-icon" type="button" aria-label="Cerrar">×</button>
+        </div>
+        <p id="rp-bajada">Solo cambian el día, la hora y la duración. El paciente y la prestación se mantienen.</p>
+      </header>
+      <div class="body form-grid">
+        <div class="field span-2">
+          <label for="rp-paciente">Paciente</label>
+          <input id="rp-paciente" type="text" value="Ficticio Tres, Paciente" readonly>
+          <span class="hint">DNI 00.000.003</span>
+        </div>
+        <div class="field span-2">
+          <label for="rp-prestacion">Prestación</label>
+          <input id="rp-prestacion" type="text" value="Limpieza · 45 min" readonly>
+        </div>
+        <div class="field">
+          <label for="rp-dia">Día</label>
+          <input id="rp-dia" class="tnum" type="text" inputmode="numeric" value="03/12/2026">
+        </div>
+        <div class="field">
+          <label for="rp-hora">Hora</label>
+          <input id="rp-hora" class="tnum" type="text" inputmode="numeric" value="12:00" aria-describedby="rp-fin">
+          <span class="hint tnum" id="rp-fin">Termina 12:45</span>
+        </div>
+        <div class="field">
+          <label for="rp-duracion">Duración (min)</label>
+          <input id="rp-duracion" class="tnum" type="text" inputmode="numeric" value="45">
+        </div>
+      </div>
+      <footer>
+        <button class="btn btn-secondary" type="button">Cancelar</button>
+        <button class="btn btn-primary" type="button">Guardar cambios</button>
+      </footer>
+    </dialog>
+  </section>
+
+  <section class="galeria" aria-labelledby="galeria-titulo">
+    <h2 id="galeria-titulo" class="demo-title">Estados del diálogo</h2>
+    <div class="galeria-grid">
+
+      <div class="mini-wrap">
+        <h3>El turno cambió mientras lo editabas</h3>
+        <div class="resultado-agenda">
+          <div class="alert alert-danger" role="alert">
+            <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm-.9 4h1.8v5.2H9.1V6zm0 6.6h1.8v1.8H9.1v-1.8z"/></svg>
+            <div><b>Este turno cambió mientras lo editabas</b>Actualizamos la agenda: revisalo y probá de nuevo.</div>
+          </div>
+          <div class="turno-resumen">
+            <span class="hora tnum">12:00 - 12:45</span>
+            <span class="quien"><strong>Ficticio Tres, Paciente</strong><span>Limpieza</span></span>
+            <span class="badge estado-programado">Programado</span>
+          </div>
+          <p class="hint">El diálogo se cierra y la agenda muestra el turno más reciente.</p>
+        </div>
+      </div>
+
+      <div class="mini-wrap">
+        <h3>Horario ocupado al reprogramar</h3>
+        <dialog open class="dlg mini" aria-labelledby="rp-ocupado-titulo">
+          <header>
+            <div class="dlg-titulo"><h2 id="rp-ocupado-titulo">Reprogramar turno</h2><button class="btn btn-ghost btn-icon" type="button" aria-label="Cerrar">×</button></div>
+            <p>Los datos siguen cargados para que elijas otro horario.</p>
+          </header>
+          <div class="body form-grid">
+            <div class="alert alert-danger span-2" role="alert">
+              <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm-.9 4h1.8v5.2H9.1V6zm0 6.6h1.8v1.8H9.1v-1.8z"/></svg>
+              <div><b>Ese horario ya está ocupado</b>Se superpone con el turno de 12:00 a 12:30. Elegí otro horario.</div>
+            </div>
+            <div class="field span-2">
+              <label for="rp-ocupado-paciente">Paciente</label>
+              <input id="rp-ocupado-paciente" type="text" value="Ficticio Tres, Paciente" readonly>
+            </div>
+            <div class="field">
+              <label for="rp-ocupado-dia">Día</label>
+              <input id="rp-ocupado-dia" class="tnum" type="text" inputmode="numeric" value="03/12/2026">
+            </div>
+            <div class="field">
+              <label for="rp-ocupado-hora">Hora</label>
+              <input id="rp-ocupado-hora" class="tnum" type="text" inputmode="numeric" value="12:00" aria-describedby="rp-ocupado-fin">
+              <span class="hint tnum" id="rp-ocupado-fin">Termina 12:45</span>
+            </div>
+            <div class="field">
+              <label for="rp-ocupado-duracion">Duración (min)</label>
+              <input id="rp-ocupado-duracion" class="tnum" type="text" inputmode="numeric" value="45">
+            </div>
+          </div>
+          <footer>
+            <button class="btn btn-secondary" type="button">Cancelar</button>
+            <button class="btn btn-primary" type="button">Guardar cambios</button>
+          </footer>
+        </dialog>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<script src="../../../../design-system/brand.js"></script>
+</body>
+</html>

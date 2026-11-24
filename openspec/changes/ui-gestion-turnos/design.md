@@ -64,10 +64,10 @@ Los textos de la spec viven en `shared/api/mensajes.ts` (por código) o en los c
 
 ### UI Mockups
 - Design system revision: 2
-- Decision: yes (2026-11-24)
-- Mockups: **pendiente: a cargo de Ludmi** (plan del equipo en CHANGES.md: "maquetas C-17, C-18", tanda 3). Al 2026-11-24 no existe en el repo ni en ninguna rama remota. Fuentes: `design-system/components.html` §Formulario: nuevo turno y §Mensajes, `design-system/brand.md` §Tono de los textos, la spec `web-gestion-turnos` y la maqueta de C-16 cuando exista (los diálogos se abren sobre la agenda). Estados mínimos a cubrir: nuevo turno (vacío, completo con hora de fin, errores de campo, horario ocupado, guardando), detalle de turno en cada grupo de estados, reprogramar, cancelar con y sin aviso de cancelación tardía, aviso de éxito; móvil y escritorio.
-- Approval: pending (la aprueba el líder)
-- Preview: —
+- Decision: provided (2026-11-24)
+- Mockups: `openspec/changes/ui-gestion-turnos/mockups/` (`gestion.css`, `nuevo-turno.html`, `detalle-turno.html`, `reprogramar.html`, `cancelar.html`, `avisos.html`).
+- Approval: approved (2026-11-23, by user)
+- Preview: rendered (`openspec/changes/ui-gestion-turnos/mockups/*-desktop-1440x900.png` y `*-mobile-390x844.png`)
 - Visual verify: —
 
 ## Risks / Trade-offs

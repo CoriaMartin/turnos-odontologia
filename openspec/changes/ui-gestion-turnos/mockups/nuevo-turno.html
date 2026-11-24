@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nuevo turno · Agenda de Odontología</title>
+<link rel="stylesheet" href="../../../../design-system/tokens.css">
+<link rel="stylesheet" href="gestion.css">
+</head>
+<body>
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+
+<header class="topbar">
+  <a class="marca" href="../ui-agenda/mockups/agenda.html" aria-label="Ir al inicio">
+    <img src="../../../../design-system/assets/logo.svg" alt="Agenda de Odontología">
+    <strong data-brand-name>Agenda de Odontología</strong>
+  </a>
+  <nav class="nav-menu" aria-label="Navegación principal">
+    <a class="nav-link" href="../ui-agenda/mockups/agenda.html" aria-current="page">Agenda</a>
+    <a class="nav-link" href="../ui-prestaciones-pacientes/mockups/prestaciones.html">Prestaciones</a>
+    <a class="nav-link" href="../ui-prestaciones-pacientes/mockups/pacientes.html">Pacientes</a>
+  </nav>
+  <span class="spacer"></span>
+  <button class="user-badge" type="button" aria-label="Perfil del usuario">Dra. Ejemplo</button>
+</header>
+
+<main id="contenido" tabindex="-1">
+  <div class="page-header">
+    <div class="info">
+      <h1>Agenda</h1>
+      <p>Martes 1 de diciembre de 2026 · 9 turnos agendados</p>
+    </div>
+    <button class="btn btn-primary" type="button">+ Turno</button>
+  </div>
+
+  <section class="stage" aria-label="Agenda con el diálogo Nuevo turno abierto">
+    <div class="agenda-fondo" aria-hidden="true">
+      <div class="agenda-card">
+        <div class="agenda-toolbar">
+          <div class="date-nav">
+            <span class="btn btn-secondary btn-icon">‹</span>
+            <span class="fecha tnum">01/12/2026</span>
+            <span class="btn btn-secondary btn-icon">›</span>
+            <span class="btn btn-secondary">Hoy</span>
+          </div>
+          <div class="seg"><span aria-pressed="true">Día</span><span aria-pressed="false">Semana</span></div>
+        </div>
+        <div class="legend">
+          <span class="badge estado-programado">Programado</span>
+          <span class="badge estado-atendido">Atendido</span>
+          <span class="badge estado-ausente">Ausente</span>
+          <span class="badge estado-cancelado">Cancelado</span>
+          <span class="badge estado-tardio">Cancelación tardía</span>
+        </div>
+        <div class="timeline">
+          <div class="hours"><span>09:00</span><span></span><span>10:00</span><span></span><span>11:00</span><span></span><span>12:00</span><span></span></div>
+          <div class="lane">
+            <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+            <div class="appt atendido" style="top:0;height:calc(var(--agenda-slot-height) * 1 - var(--space-1))"><div><div class="t tnum">09:00 – 09:30</div><div class="p">Ficticio Uno · Control</div></div><span class="badge estado-atendido">Atendido</span></div>
+            <div class="appt ausente" style="top:calc(var(--agenda-slot-height) * 1);height:calc(var(--agenda-slot-height) * 1 - var(--space-1))"><div><div class="t tnum">09:30 – 10:00</div><div class="p">Ficticio Dos · Control</div></div><span class="badge estado-ausente">Ausente</span></div>
+            <div class="appt programado" style="top:calc(var(--agenda-slot-height) * 2);height:calc(var(--agenda-slot-height) * 1.5 - var(--space-1))"><div><div class="t tnum">10:00 – 10:45</div><div class="p">Ficticio Tres · Limpieza</div></div><span class="badge estado-programado">Programado</span></div>
+            <div class="appt libre" style="top:calc(var(--agenda-slot-height) * 5);height:calc(var(--agenda-slot-height) * 1 - var(--space-1))">Horario libre · 11:30 – 12:00</div>
+          </div>
+          <div class="lane-cancelados">
+            <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+            <div class="appt cancelado" style="top:calc(var(--agenda-slot-height) * 3.5);height:calc(var(--agenda-slot-height) * 1.5 - var(--space-1))"><div><div class="t tnum">10:45 – 11:30</div><div class="p">Ficticio Cuatro · Obturación</div></div><span class="badge estado-tardio">Tardía</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="scrim" aria-hidden="true"></div>
+
+    <dialog open class="dlg" aria-labelledby="nt-titulo" aria-describedby="nt-bajada">
+      <header>
+        <div class="dlg-titulo">
+          <h2 id="nt-titulo">Nuevo turno</h2>
+          <button class="btn btn-ghost btn-icon" type="button" aria-label="Cerrar">×</button>
+        </div>
+        <p id="nt-bajada">La duración se completa según la prestación y podés cambiarla.</p>
+      </header>
+      <div class="body form-grid">
+        <div class="field span-2">
+          <label for="nt-paciente">Paciente</label>
+          <div class="combo">
+            <input id="nt-paciente" type="text" role="combobox" aria-expanded="false" aria-controls="nt-lista-pacientes" aria-autocomplete="list" value="Ficticio Tres, Paciente" readonly>
+            <ul id="nt-lista-pacientes" class="listbox" role="listbox" aria-label="Pacientes" hidden></ul>
+          </div>
+          <span class="hint">DNI 00.000.003 · <a href="#" class="cambiar-link">Cambiar paciente</a></span>
+        </div>
+        <div class="field">
+          <label for="nt-prestacion">Prestación</label>
+          <select id="nt-prestacion">
+            <option selected>Limpieza</option>
+            <option>Control</option>
+            <option>Obturación</option>
+            <option>Conducto</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="nt-duracion">Duración (min)</label>
+          <input id="nt-duracion" class="tnum" type="text" inputmode="numeric" value="45">
+        </div>
+        <div class="field">
+          <label for="nt-dia">Día</label>
+          <input id="nt-dia" class="tnum" type="text" inputmode="numeric" value="03/12/2026">
+        </div>
+        <div class="field">
+          <label for="nt-hora">Hora</label>
+          <input id="nt-hora" class="tnum" type="text" inputmode="numeric" value="10:00" aria-describedby="nt-fin">
+          <span class="hint tnum" id="nt-fin">Termina 10:45</span>
+        </div>
+      </div>
+      <footer>
+        <button class="btn btn-secondary" type="button">Cancelar</button>
+        <button class="btn btn-primary" type="button">Crear turno</button>
+      </footer>
+    </dialog>
+  </section>
+
+  <section class="galeria" aria-labelledby="galeria-titulo">
+    <h2 id="galeria-titulo" class="demo-title">Estados del diálogo</h2>
+    <div class="galeria-grid">
+
+      <div class="mini-wrap">
+        <h3>Vacío · desde una franja libre</h3>
+        <dialog open class="dlg mini" aria-labelledby="nt-vacio-titulo">
+          <header>
+            <div class="dlg-titulo"><h2 id="nt-vacio-titulo">Nuevo turno</h2><button class="btn btn-ghost btn-icon" type="button" aria-label="Cerrar">×</button></div>
+            <p>La duración se completa según la prestación.</p>
+          </header>
+          <div class="body form-grid">
+            <div class="field span-2">
+              <label for="nt-vacio-paciente">Paciente</label>
+              <div class="combo"><input id="nt-vacio-paciente" type="text" role="combobox" aria-expanded="false" aria-autocomplete="list" placeholder="Apellido, nombre o DNI"></div>
+              <span class="hint">Buscá desde 2 letras. Se muestran hasta 10 resultados.</span>
+            </div>
+            <div class="field">
+              <label for="nt-vacio-prestacion">Prestación</label>
+              <select id="nt-vacio-prestacion"><option selected>Elegí una prestación</option></select>
+            </div>
+            <div class="field">
+              <label for="nt-vacio-duracion">Duración (min)</label>
+              <input id="nt-vacio-duracion" class="tnum" type="text" inputmode="numeric" placeholder="—">
+            </div>
+            <div class="field">
+              <label for="nt-vacio-dia">Día</label>
+              <input id="nt-vacio-dia" class="tnum" type="text" inputmode="numeric" value="01/12/2026">
+            </div>
+            <div class="field">
+              <label for="nt-vacio-hora">Hora</label>
+              <input id="nt-vacio-hora" class="tnum" type="text" inputmode="numeric" value="11:30" aria-describedby="nt-vacio-fin">
+              <span class="hint tnum" id="nt-vacio-fin">Termina —</span>
+            </div>
+          </div>
+          <footer><button class="btn btn-secondary" type="button">Cancelar</button><button class="btn btn-primary" type="button">Crear turno</button></footer>
+        </dialog>
+      </div>
+
+      <div class="mini-wrap">
+        <h3>Búsqueda de paciente</h3>
+        <dialog open class="dlg mini" aria-labelledby="nt-buscar-titulo">
+          <header>
+            <div class="dlg-titulo"><h2 id="nt-buscar-titulo">Nuevo turno</h2><button class="btn btn-ghost btn-icon" type="button" aria-label="Cerrar">×</button></div>
+            <p>Elegí un paciente activo de la lista.</p>
+          </header>
+          <div class="body">
+            <div class="field">
+              <label for="nt-buscar">Paciente</label>
+              <div class="combo">
+                <input id="nt-buscar" type="text" role="combobox" aria-expanded="true" aria-controls="nt-lista-buscar" aria-autocomplete="list" aria-activedescendant="nt-op-3" value="fict">
+                <ul id="nt-lista-buscar" class="listbox estatico" role="listbox" aria-label="Pacientes que coinciden">
+                  <li id="nt-op-1" role="option" aria-selected="false">Ficticio Uno, Paciente <span class="meta tnum">DNI 00.000.001</span></li>
+                  <li id="nt-op-2" role="option" aria-selected="false">Ficticio Dos, Paciente <span class="meta tnum">DNI 00.000.002</span></li>
+                  <li id="nt-op-3" role="option" aria-selected="true">Ficticio Tres, Paciente <span class="meta tnum">DNI 00.000.003</span></li>
+                </ul>
+              </div>
+              <span class="hint">Navegá con las flechas y elegí con Enter.</span>
+            </div>
+            <div class="field">
+              <label for="nt-buscar-prestacion">Prestación</label>
+              <select id="nt-buscar-prestacion"><option selected>Limpieza</option><option>Control</option></select>
+            </div>
+          </div>
+          <footer><button class="btn btn-secondary" type="button">Cancelar</button><button class="btn btn-primary" type="button">Crear turno</button></footer>
+        </dialog>
+      </div>
+
+      <div class="mini-wrap">
+        <h3>Errores de campo</h3>
+        <dialog open class="dlg mini" aria-labelledby="nt-error-titulo">
+          <header>
+            <div class="dlg-titulo"><h2 id="nt-error-titulo">Nuevo turno</h2><button class="btn btn-ghost btn-icon" type="button" aria-label="Cerrar">×</button></div>
+            <p>Revisá los campos marcados antes de crear el turno.</p>
+          </header>
+          <div class="body form-grid">
+            <div class="field span-2 invalid">
+              <label for="nt-error-paciente">Paciente</label>
+              <div class="combo"><input id="nt-error-paciente" type="text" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-invalid="true" aria-describedby="nt-error-paciente-h"></div>
+              <span class="hint" id="nt-error-paciente-h">Elegí un paciente</span>
+            </div>
+            <div class="field invalid">
+              <label for="nt-error-prestacion">Prestación</label>
+              <select id="nt-error-prestacion" aria-invalid="true" aria-describedby="nt-error-prestacion-h"><option selected>Elegí una prestación</option></select>
+              <span class="hint" id="nt-error-prestacion-h">Elegí una prestación</span>
+            </div>
+            <div class="field invalid">
+              <label for="nt-error-duracion">Duración (min)</label>
+              <input id="nt-error-duracion" class="tnum" type="text" inputmode="numeric" value="500" aria-invalid="true" aria-describedby="nt-error-duracion-h">
+              <span class="hint" id="nt-error-duracion-h">La duración tiene que estar entre 5 y 480 minutos.</span>
+            </div>
+            <div class="field invalid">
+              <label for="nt-error-dia">Día</label>
+              <input id="nt-error-dia" class="tnum" type="text" inputmode="numeric" value="20/11/2026" aria-invalid="true" aria-describedby="nt-error-dia-h">
+              <span class="hint" id="nt-error-dia-h">No se pueden dar turnos en el pasado.</span>
+            </div>
+            <div class="field">
+              <label for="nt-error-hora">Hora</label>
+              <input id="nt-error-hora" class="tnum" type="text" inputmode="numeric" value="10:00">
+            </div>
+          </div>
+          <footer><button class="btn btn-secondary" type="button">Cancelar</button><button class="btn btn-primary" type="button">Crear turno</button></footer>
+        </dialog>
+      </div>
+
+      <div class="mini-wrap">
+        <h3>Horario ocupado</h3>
+        <dialog open class="dlg mini" aria-labelledby="nt-ocupado-titulo">
+          <header>
+            <div class="dlg-titulo"><h2 id="nt-ocupado-titulo">Nuevo turno</h2><button class="btn btn-ghost btn-icon" type="button" aria-label="Cerrar">×</button></div>
+            <p>Los datos siguen cargados para que elijas otro horario.</p>
+          </header>
+          <div class="body form-grid">
+            <div class="alert alert-danger span-2" role="alert">
+              <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm-.9 4h1.8v5.2H9.1V6zm0 6.6h1.8v1.8H9.1v-1.8z"/></svg>
+              <div><b>Ese horario ya está ocupado</b>Se superpone con el turno de 10:00 a 10:30. Elegí otro horario.</div>
+            </div>
+            <div class="field span-2">
+              <label for="nt-ocupado-paciente">Paciente</label>
+              <div class="combo"><input id="nt-ocupado-paciente" type="text" role="combobox" aria-expanded="false" aria-autocomplete="list" value="Ficticio Tres, Paciente" readonly></div>
+              <span class="hint">DNI 00.000.003</span>
+            </div>
+            <div class="field">
+              <label for="nt-ocupado-prestacion">Prestación</label>
+              <select id="nt-ocupado-prestacion"><option selected>Limpieza</option><option>Control</option></select>
+            </div>
+            <div class="field">
+              <label for="nt-ocupado-duracion">Duración (min)</label>
+              <input id="nt-ocupado-duracion" class="tnum" type="text" inputmode="numeric" value="45">
+            </div>
+            <div class="field">
+              <label for="nt-ocupado-dia">Día</label>
+              <input id="nt-ocupado-dia" class="tnum" type="text" inputmode="numeric" value="03/12/2026">
+            </div>
+            <div class="field">
+              <label for="nt-ocupado-hora">Hora</label>
+              <input id="nt-ocupado-hora" class="tnum" type="text" inputmode="numeric" value="10:00" aria-describedby="nt-ocupado-fin">
+              <span class="hint tnum" id="nt-ocupado-fin">Termina 10:45</span>
+            </div>
+          </div>
+          <footer><button class="btn btn-secondary" type="button">Cancelar</button><button class="btn btn-primary" type="button">Crear turno</button></footer>
+        </dialog>
+      </div>
+
+      <div class="mini-wrap">
+        <h3>Guardando</h3>
+        <dialog open class="dlg mini" aria-labelledby="nt-guardando-titulo">
+          <header>
+            <div class="dlg-titulo"><h2 id="nt-guardando-titulo">Nuevo turno</h2><button class="btn btn-ghost btn-icon" type="button" aria-label="Cerrar" disabled>×</button></div>
+            <p>Estamos creando el turno.</p>
+          </header>
+          <div class="body form-grid">
+            <div class="field span-2">
+              <label for="nt-guardando-paciente">Paciente</label>
+              <div class="combo"><input id="nt-guardando-paciente" type="text" role="combobox" aria-expanded="false" aria-autocomplete="list" value="Ficticio Tres, Paciente" readonly disabled></div>
+              <span class="hint">DNI 00.000.003</span>
+            </div>
+            <div class="field">
+              <label for="nt-guardando-prestacion">Prestación</label>
+              <select id="nt-guardando-prestacion" disabled><option selected>Limpieza</option></select>
+            </div>
+            <div class="field">
+              <label for="nt-guardando-duracion">Duración (min)</label>
+              <input id="nt-guardando-duracion" class="tnum" type="text" inputmode="numeric" value="45" disabled>
+            </div>
+            <div class="field">
+              <label for="nt-guardando-dia">Día</label>
+              <input id="nt-guardando-dia" class="tnum" type="text" inputmode="numeric" value="03/12/2026" disabled>
+            </div>
+            <div class="field">
+              <label for="nt-guardando-hora">Hora</label>
+              <input id="nt-guardando-hora" class="tnum" type="text" inputmode="numeric" value="10:00" aria-describedby="nt-guardando-fin" disabled>
+              <span class="hint tnum" id="nt-guardando-fin">Termina 10:45</span>
+            </div>
+          </div>
+          <footer>
+            <button class="btn btn-secondary" type="button" disabled>Cancelar</button>
+            <button class="btn btn-primary" type="button" aria-busy="true" disabled><span class="spinner" aria-hidden="true"></span>Guardando…</button>
+          </footer>
+        </dialog>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<script src="../../../../design-system/brand.js"></script>
+</body>
+</html>
