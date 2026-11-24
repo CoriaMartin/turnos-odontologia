@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ingresar · Agenda de Odontología</title>
+<link rel="stylesheet" href="../../../../design-system/tokens.css">
+<link rel="stylesheet" href="login.css?v=3">
+</head>
+<body>
+<main class="pagina-login">
+  <div class="tarjeta">
+    <form class="login" novalidate onsubmit="return false" aria-labelledby="titulo-login">
+      <div class="marca"><img src="../../../../design-system/assets/logo.svg" alt=""><strong data-brand-name>Agenda de Odontología</strong></div>
+      <h1 id="titulo-login">Ingresá a tu agenda</h1>
+      <p class="sub">Usá el email y la contraseña del consultorio.</p>
+      <div class="alert alert-danger" role="alert">
+        <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm-.9 4h1.8v5.2H9.1V6zm0 6.6h1.8v1.8H9.1v-1.8z"/></svg>
+        <div><b>Ingreso bloqueado por 15 minutos</b>Hubo demasiados intentos fallidos. Esperá 15 minutos y volvé a intentar.</div>
+      </div>
+      <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="username" placeholder="tu@consultorio.com" value="consultorio@ejemplo.com"></div>
+      <div class="field"><label for="password">Contraseña</label><input id="password" name="password" type="password" autocomplete="current-password"></div>
+      <button class="btn btn-primary btn-block" type="submit">Ingresar</button>
+    </form>
+  </div>
+</main>
+<span class="rotulo-maqueta" aria-hidden="true">Maqueta C-14 · bloqueo por intentos (429)</span>
+<script src="../../../../design-system/brand.js"></script>
+</body>
+</html>

@@ -7,44 +7,53 @@ Define la estructura visible común de la web app (barra superior con la marca, 
 ## Requirements
 
 ### Requirement: Barra superior con la marca
-Toda página de la web app SHALL mostrar una barra superior con el logo, con texto alternativo, y el nombre visible del producto, "Agenda de Odontología".
+Toda página de la web app que requiere sesión SHALL mostrar una barra superior con el logo, con texto alternativo, el nombre visible del producto, "Agenda de Odontología", y el botón "Cerrar sesión". La página `/login` SHALL NOT mostrar esta barra.
 
 #### Scenario: Página de inicio con la marca
-- **WHEN** el usuario abre la ruta `/`
+- **WHEN** el usuario con sesión iniciada abre la ruta `/`
 - **THEN** ve una barra superior con el logo, con texto alternativo, y el nombre "Agenda de Odontología"
+- **AND** ve el botón "Cerrar sesión"
 - **AND** no ve el rótulo "Marca provisoria"
 
 #### Scenario: Barra presente en una ruta inexistente
-- **WHEN** el usuario abre una ruta que no existe
-- **THEN** la barra superior con logo y nombre sigue visible
+- **WHEN** el usuario con sesión iniciada abre una ruta que no existe
+- **THEN** la barra superior con logo, nombre y "Cerrar sesión" sigue visible
+
+#### Scenario: Login sin barra superior
+- **WHEN** el usuario sin sesión abre `/login`
+- **THEN** no ve la barra superior ni el botón "Cerrar sesión"
 
 ### Requirement: Área de contenido principal
-Debajo de la barra superior, la web app SHALL mostrar el contenido de la ruta actual dentro de una única región principal identificable por tecnologías de asistencia.
+Debajo de la barra superior, la web app SHALL mostrar el contenido de la ruta actual dentro de una única región principal identificable por tecnologías de asistencia. La página `/login` también SHALL tener exactamente una región principal.
 
 #### Scenario: Contenido de la ruta en la región principal
-- **WHEN** el usuario abre la ruta `/`
+- **WHEN** el usuario con sesión iniciada abre la ruta `/`
 - **THEN** la página tiene exactamente una región principal (`main`)
 - **AND** esa región contiene un título de nivel 1
 
+#### Scenario: Región principal en el login
+- **WHEN** el usuario sin sesión abre `/login`
+- **THEN** la página tiene exactamente una región principal (`main`) con un título de nivel 1
+
 ### Requirement: Página de inicio provisoria
-Hasta que exista la agenda (C-16), la ruta `/` SHALL mostrar una página de inicio que indique en español rioplatense que la agenda todavía no está disponible.
+Hasta que exista la agenda (C-16), la ruta `/`, con sesión iniciada, SHALL mostrar una página de inicio que indique en español rioplatense que la agenda todavía no está disponible.
 
 #### Scenario: Inicio sin agenda
-- **WHEN** el usuario abre la ruta `/`
+- **WHEN** el usuario con sesión iniciada abre la ruta `/`
 - **THEN** ve el título "Inicio"
 - **AND** ve un texto que explica que la agenda va a aparecer ahí
 
 ### Requirement: Página para rutas inexistentes
-Ante una ruta que no existe, la web app SHALL mostrar una página que explique en español rioplatense que la página no existe y ofrezca un enlace para volver al inicio, sin mostrar códigos técnicos.
+Ante una ruta que no existe, con sesión iniciada, la web app SHALL mostrar una página que explique en español rioplatense que la página no existe y ofrezca un enlace para volver al inicio, sin mostrar códigos técnicos.
 
 #### Scenario: Ruta inexistente
-- **WHEN** el usuario abre `/ruta-que-no-existe`
+- **WHEN** el usuario con sesión iniciada abre `/ruta-que-no-existe`
 - **THEN** ve el título "No encontramos esta página"
 - **AND** ve un enlace "Volver al inicio" que lleva a `/`
 - **AND** no ve el código "404" en la página
 
 #### Scenario: Volver al inicio desde la página inexistente
-- **WHEN** el usuario está en una ruta inexistente y activa "Volver al inicio"
+- **WHEN** el usuario con sesión iniciada está en una ruta inexistente y activa "Volver al inicio"
 - **THEN** la web app muestra la página de inicio
 
 ### Requirement: Idioma y estilos del sistema de diseño

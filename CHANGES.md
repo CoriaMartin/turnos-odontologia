@@ -416,7 +416,7 @@ C-14 (ui-login) corre en paralelo y debe estar listo antes de C-16. C-13 → C-1
 > Cada change de esta fase requiere maqueta aprobada antes de `apply` (política `system-and-mockups`). Las maquetas pueden adelantarse mientras el backend avanza.
 
 ### [C-14] `ui-login`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (2026-11-23, change archivado `openspec/changes/archive/2026-11-23-ui-login`)
 - **Responsable**: Agus · tanda 4
 - **Scope**:
   - Página `/login` con email y contraseña; guarda el token en memoria (no `localStorage`); redirige a la agenda.

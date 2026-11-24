@@ -1,9 +1,12 @@
 import '@testing-library/jest-dom/vitest';
 import { cleanup } from '@testing-library/react';
 import { afterEach } from 'vitest';
+import { reiniciarSesion } from '../features/auth/sesion';
 
 afterEach(() => {
   cleanup();
+  // La sesión vive en un módulo: se reinicia para que no pase de un test a otro (design.md D1).
+  reiniciarSesion();
 });
 
 /*

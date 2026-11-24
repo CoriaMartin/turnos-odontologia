@@ -1,0 +1,68 @@
+/* Maqueta C-14 · solo variables de design-system/tokens.css (revisión 2). */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { height: 100%; }
+body { margin: 0; font-family: var(--font-sans); font-size: var(--text-md); line-height: var(--leading-normal); color: var(--color-ink-900); background: var(--color-canvas); -webkit-font-smoothing: antialiased; }
+h1, h2 { line-height: var(--leading-tight); margin: 0; }
+
+/* Página de login: tarjeta centrada, sin barra superior */
+.pagina-login { min-height: 100%; display: grid; place-items: center; padding: var(--space-6) var(--space-4); }
+.tarjeta { width: 100%; max-width: 420px; background: var(--color-surface); border: 1px solid var(--color-line); border-radius: var(--radius-lg); box-shadow: var(--shadow-2); padding: var(--space-8) var(--space-6); }
+.login { display: grid; gap: var(--space-4); }
+.login .marca { display: flex; gap: var(--space-3); align-items: center; }
+.login .marca img { width: 40px; height: 40px; }
+.login .marca strong { font-size: var(--text-lg); color: var(--color-brand-900); }
+.login h1 { font-size: var(--text-xl); font-weight: var(--weight-semibold); margin-top: var(--space-2); }
+.login .sub { margin: calc(var(--space-3) * -1) 0 0; font-size: var(--text-sm); color: var(--color-ink-500); }
+.pie { margin: var(--space-4) 0 0; text-align: center; font-size: var(--text-xs); color: var(--color-ink-500); }
+
+/* Campos (components.html §Campos) */
+.field { display: grid; gap: var(--space-1); }
+.field label { font-size: var(--text-sm); font-weight: var(--weight-medium); color: var(--color-ink-700); }
+.field input { font: inherit; min-height: var(--hit-target); padding: 0 var(--space-3); border: 1px solid var(--color-ink-300); border-radius: var(--radius-md); background: var(--color-surface); color: var(--color-ink-900); width: 100%; }
+.field input:focus-visible { outline: none; border-color: var(--color-brand-500); box-shadow: 0 0 0 3px var(--color-brand-100); }
+.field input[readonly] { background: var(--color-sunken); color: var(--color-ink-500); }
+.field .hint { font-size: var(--text-xs); color: var(--color-ink-500); }
+.field.invalid input { border-color: var(--color-danger-700); }
+.field.invalid .hint { color: var(--color-danger-700); }
+
+/* Botones (components.html §Botones) */
+.btn { font: inherit; font-size: var(--text-sm); font-weight: var(--weight-semibold); min-height: var(--hit-target); padding: 0 var(--space-4); border-radius: var(--radius-md); border: 1px solid transparent; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2); transition: background var(--duration-fast) var(--ease-out), transform var(--duration-fast) var(--ease-out); }
+.btn:active:not(:disabled) { transform: scale(0.97); }
+.btn:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+.btn-primary { background: var(--color-brand-600); color: var(--color-surface); }
+.btn-primary:hover { background: var(--color-brand-700); }
+.btn-primary[aria-busy="true"] { cursor: progress; }
+.btn-ghost { background: transparent; color: var(--color-brand-700); }
+.btn-ghost:hover { background: var(--color-brand-50); }
+.btn-block { width: 100%; }
+.spinner { width: 14px; height: 14px; border: 2px solid var(--color-brand-100); border-top-color: var(--color-surface); border-radius: 50%; animation: spin .8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Avisos (components.html §Mensajes, con colores solo de tokens) */
+.alert { display: grid; grid-template-columns: auto 1fr; gap: var(--space-3); padding: var(--space-3) var(--space-4); border-radius: var(--radius-md); border: 1px solid; font-size: var(--text-sm); color: var(--color-ink-900); }
+.alert b { display: block; margin-bottom: 2px; }
+.alert svg { width: 18px; height: 18px; margin-top: 1px; }
+.alert-danger { background: var(--color-danger-100); border-color: var(--color-danger-700); }
+.alert-danger svg { color: var(--color-danger-700); }
+.alert-info { background: var(--color-info-100); border-color: var(--color-info-700); }
+.alert-info svg { color: var(--color-info-700); }
+
+/* Barra superior con sesión (layout de C-02 + Cerrar sesión) */
+.saltar { position: absolute; left: var(--space-3); top: -100px; background: var(--color-surface); padding: var(--space-2) var(--space-3); border-radius: var(--radius-md); z-index: 3; }
+.saltar:focus { top: var(--space-3); box-shadow: var(--focus-ring); }
+.topbar { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-4); background: var(--color-surface); border-bottom: 1px solid var(--color-line); position: sticky; top: 0; z-index: 2; }
+.topbar .marca { display: flex; align-items: center; gap: var(--space-3); text-decoration: none; color: inherit; border-radius: var(--radius-md); min-width: 0; }
+.topbar .marca:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+.topbar img { width: 32px; height: 32px; flex: none; }
+.topbar strong { font-size: var(--text-lg); color: var(--color-brand-900); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.topbar .spacer { flex: 1; }
+.topbar .btn { flex: none; white-space: nowrap; text-decoration: none; padding: 0 var(--space-3); }
+@media (max-width: 479px) { .topbar strong { font-size: var(--text-md); } }
+main.contenido { max-width: 1200px; margin: 0 auto; padding: var(--space-6) var(--space-4) var(--space-12); display: grid; gap: var(--space-6); }
+.encabezado h1 { font-size: var(--text-2xl); }
+.encabezado p { color: var(--color-ink-500); margin: var(--space-2) 0 0; }
+.empty { display: grid; gap: var(--space-1); text-align: center; padding: var(--space-8) var(--space-4); color: var(--color-ink-500); border: 1px dashed var(--color-ink-300); border-radius: var(--radius-md); }
+.empty strong { color: var(--color-ink-700); }
+
+/* Rótulo de la maqueta (no forma parte de la UI) */
+.rotulo-maqueta { position: fixed; right: var(--space-3); bottom: var(--space-3); font-size: var(--text-xs); font-family: var(--font-mono); color: var(--color-ink-500); background: var(--color-surface); border: 1px solid var(--color-line); border-radius: var(--radius-pill); padding: 2px var(--space-2); }

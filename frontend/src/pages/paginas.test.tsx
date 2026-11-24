@@ -5,7 +5,7 @@ import { renderConRutas } from '../test/renderConRutas';
 
 describe('web-app-shell · Página de inicio provisoria', () => {
   it('Inicio sin agenda: título "Inicio" y aviso de que la agenda va a aparecer ahí', async () => {
-    renderConRutas('/');
+    renderConRutas('/', { conSesion: true });
 
     expect(screen.getByRole('heading', { level: 1, name: 'Inicio' })).toBeInTheDocument();
     expect(screen.getByText('La agenda todavía no está disponible')).toBeInTheDocument();
@@ -16,7 +16,7 @@ describe('web-app-shell · Página de inicio provisoria', () => {
 
 describe('web-app-shell · Página para rutas inexistentes', () => {
   it('Ruta inexistente: título, enlace "Volver al inicio" a / y sin el código 404', async () => {
-    renderConRutas('/ruta-que-no-existe');
+    renderConRutas('/ruta-que-no-existe', { conSesion: true });
 
     expect(
       screen.getByRole('heading', { level: 1, name: 'No encontramos esta página' }),
@@ -30,7 +30,7 @@ describe('web-app-shell · Página para rutas inexistentes', () => {
 
   it('Volver al inicio desde la página inexistente muestra la página de inicio', async () => {
     const usuario = userEvent.setup();
-    const { router } = renderConRutas('/ruta-que-no-existe');
+    const { router } = renderConRutas('/ruta-que-no-existe', { conSesion: true });
 
     await usuario.click(screen.getByRole('link', { name: 'Volver al inicio' }));
 
