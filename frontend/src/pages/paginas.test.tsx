@@ -1,16 +1,21 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
+import { simularApiAgenda } from '../test/agenda';
 import { renderConRutas } from '../test/renderConRutas';
 
-describe('web-app-shell · Página de inicio provisoria', () => {
-  it('Inicio sin agenda: título "Inicio" y aviso de que la agenda va a aparecer ahí', async () => {
+beforeEach(() => {
+  simularApiAgenda();
+});
+
+// El requisito "Página de inicio provisoria" se retiró en C-16 (delta de web-app-shell): `/` es la agenda.
+describe('web-app-shell · La ruta de inicio es la agenda (C-16)', () => {
+  it('con sesión, / muestra la agenda y ya no el aviso provisorio', async () => {
     renderConRutas('/', { conSesion: true });
 
-    expect(screen.getByRole('heading', { level: 1, name: 'Inicio' })).toBeInTheDocument();
-    expect(screen.getByText('La agenda todavía no está disponible')).toBeInTheDocument();
-    expect(screen.getByText('Cuando esté lista, acá vas a ver los turnos del día.')).toBeInTheDocument();
-    await waitFor(() => expect(document.title).toBe('Inicio · Agenda de Odontología'));
+    expect(screen.getByRole('heading', { level: 1, name: 'Agenda' })).toBeInTheDocument();
+    expect(screen.queryByText('La agenda todavía no está disponible')).not.toBeInTheDocument();
+    await waitFor(() => expect(document.title).toBe('Agenda · Agenda de Odontología'));
   });
 });
 
@@ -34,7 +39,7 @@ describe('web-app-shell · Página para rutas inexistentes', () => {
 
     await usuario.click(screen.getByRole('link', { name: 'Volver al inicio' }));
 
-    expect(await screen.findByRole('heading', { level: 1, name: 'Inicio' })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { level: 1, name: 'Agenda' })).toBeInTheDocument();
     expect(router.state.location.pathname).toBe('/');
   });
 });

@@ -451,7 +451,7 @@ C-14 (ui-login) corre en paralelo y debe estar listo antes de C-16. C-13 → C-1
   - `design-system/components.html` §Pacientes
 
 ### [C-16] `ui-agenda`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (2026-11-24, change archivado `openspec/changes/archive/2026-11-24-ui-agenda`)
 - **Responsable**: Agus · tanda 7
 - **Scope**:
   - Vista diaria (línea de tiempo, slot de 30 min) y semanal con navegación entre fechas; línea de hora actual.

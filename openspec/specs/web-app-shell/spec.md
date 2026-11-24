@@ -35,14 +35,6 @@ Debajo de la barra superior, la web app SHALL mostrar el contenido de la ruta ac
 - **WHEN** el usuario sin sesión abre `/login`
 - **THEN** la página tiene exactamente una región principal (`main`) con un título de nivel 1
 
-### Requirement: Página de inicio provisoria
-Hasta que exista la agenda (C-16), la ruta `/`, con sesión iniciada, SHALL mostrar una página de inicio que indique en español rioplatense que la agenda todavía no está disponible.
-
-#### Scenario: Inicio sin agenda
-- **WHEN** el usuario con sesión iniciada abre la ruta `/`
-- **THEN** ve el título "Inicio"
-- **AND** ve un texto que explica que la agenda va a aparecer ahí
-
 ### Requirement: Página para rutas inexistentes
 Ante una ruta que no existe, con sesión iniciada, la web app SHALL mostrar una página que explique en español rioplatense que la página no existe y ofrezca un enlace para volver al inicio, sin mostrar códigos técnicos.
 

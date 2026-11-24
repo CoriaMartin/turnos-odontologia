@@ -1,0 +1,761 @@
+/* Agenda (C-16), según la maqueta aprobada openspec/changes/ui-agenda/mockups/agenda.css.
+   Solo tokens de design-system/tokens.css. Las medidas propias de esta pantalla que el sistema de diseño
+   no tiene (anchos del carril de cancelados, bordes, puntos, rayado, spinner) son variables locales de
+   .pagina, anotadas para la próxima revisión del sistema. Los colores sueltos de la maqueta
+   (#ffffff, #f1b7b1, #7a1a12) se reemplazaron por tokens (design.md D10). */
+.pagina {
+  --ancho-horas: var(--agenda-slot-height);
+  --ancho-cancelados: 200px;
+  --ancho-horas-movil: 44px;
+  --ancho-cancelados-movil: 92px;
+  --campo-fecha: 200px;
+  --borde-fino: 1px;
+  --borde-turno: 4px;
+  --borde-turno-mini: 3px;
+  --relleno-mini: 2px;
+  --punto: 6px;
+  --punto-ahora: 10px;
+  --grosor-ahora: 2px;
+  --raya: 6px;
+  --selector-alto: 38px;
+  --selector-relleno: 3px;
+  --selector-radio: 8px;
+  --badge-relleno: 3px;
+  --spinner: 16px;
+  --borde-spinner: 2px;
+  --icono-aviso: 18px;
+
+  display: grid;
+  gap: var(--space-6);
+}
+
+/* Encabezado */
+.encabezado {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.titulo {
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
+  color: var(--color-ink-900);
+}
+
+.bajada {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--color-ink-500);
+  font-variant-numeric: tabular-nums;
+}
+
+.tarjeta {
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  background: var(--color-surface);
+  border: var(--borde-fino) solid var(--color-line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-1);
+  min-width: 0;
+}
+
+/* Barra de la agenda */
+.barra {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.navegacion {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--space-2);
+}
+
+.boton {
+  font: inherit;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  min-height: var(--hit-target);
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-md);
+  border: var(--borde-fino) solid var(--color-ink-300);
+  background: var(--color-surface);
+  color: var(--color-ink-900);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  transition:
+    background var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+
+.boton:hover {
+  background: var(--color-sunken);
+}
+
+.boton:active {
+  transform: scale(0.97);
+}
+
+.boton:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.botonIcono {
+  width: var(--hit-target);
+  padding: 0;
+  font-size: var(--text-lg);
+  line-height: 1;
+}
+
+.campoFecha {
+  display: grid;
+  gap: var(--space-1);
+  max-width: var(--campo-fecha);
+}
+
+.campoFecha label {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-ink-700);
+}
+
+.campoFecha input {
+  font: inherit;
+  min-height: var(--hit-target);
+  padding: 0 var(--space-3);
+  border: var(--borde-fino) solid var(--color-ink-300);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-ink-900);
+  font-variant-numeric: tabular-nums;
+}
+
+.campoFecha input:focus-visible {
+  outline: none;
+  border-color: var(--color-brand-500);
+  box-shadow: var(--focus-ring);
+}
+
+.selector {
+  display: inline-flex;
+  padding: var(--selector-relleno);
+  background: var(--color-sunken);
+  border-radius: var(--radius-md);
+}
+
+.selector button {
+  font: inherit;
+  font-size: var(--text-sm);
+  min-height: var(--selector-alto);
+  padding: 0 var(--space-4);
+  border: 0;
+  border-radius: var(--selector-radio);
+  background: transparent;
+  color: var(--color-ink-700);
+  cursor: pointer;
+}
+
+.selector button[aria-pressed='true'] {
+  background: var(--color-surface);
+  color: var(--color-ink-900);
+  font-weight: var(--weight-semibold);
+  box-shadow: var(--shadow-1);
+}
+
+.selector button:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+/* Leyenda y badges de estado (tokens RN-ES) */
+.leyenda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-3);
+  margin: 0;
+  padding: var(--space-1) 0 0;
+  list-style: none;
+  border-top: var(--borde-fino) solid var(--color-line);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--punto);
+  padding: var(--badge-relleno) var(--space-2);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  white-space: nowrap;
+}
+
+.badge::before {
+  content: '';
+  width: var(--punto);
+  height: var(--punto);
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.estadoProgramado {
+  color: var(--estado-programado-fg);
+  background: var(--estado-programado-bg);
+}
+
+.estadoAtendido {
+  color: var(--estado-atendido-fg);
+  background: var(--estado-atendido-bg);
+}
+
+.estadoAusente {
+  color: var(--estado-ausente-fg);
+  background: var(--estado-ausente-bg);
+}
+
+.estadoCancelado {
+  color: var(--estado-cancelado-fg);
+  background: var(--estado-cancelado-bg);
+}
+
+.estadoTardio {
+  color: var(--estado-tardio-fg);
+  background: var(--estado-tardio-bg);
+}
+
+.region {
+  display: grid;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+/* Línea de tiempo diaria: horas | activos | carril angosto de cancelados (D6) */
+.lineaDeTiempo {
+  display: grid;
+  grid-template-columns: var(--ancho-horas) minmax(0, 1fr) var(--ancho-cancelados);
+}
+
+.carrilTitulo {
+  padding-bottom: var(--space-1);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  text-align: center;
+  color: var(--color-ink-500);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.horas {
+  display: grid;
+  grid-auto-rows: var(--agenda-slot-height);
+}
+
+.horas span {
+  font-size: var(--text-xs);
+  color: var(--color-ink-500);
+  font-variant-numeric: tabular-nums;
+  transform: translateY(calc(-1 * var(--space-2)));
+}
+
+.carril {
+  position: relative;
+  display: grid;
+  grid-auto-rows: var(--agenda-slot-height);
+  border-left: var(--borde-fino) solid var(--color-line);
+  min-width: 0;
+}
+
+.carril > i {
+  border-top: var(--borde-fino) solid var(--color-line);
+}
+
+.carril > i:nth-of-type(even) {
+  border-top-style: dashed;
+  border-top-color: var(--color-sunken);
+}
+
+.carrilCancelados {
+  border-left-style: dashed;
+  background: var(--color-canvas);
+}
+
+/* Turno activo */
+.turno {
+  position: absolute;
+  left: var(--space-2);
+  right: var(--space-2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  overflow: hidden;
+  font-size: var(--text-sm);
+  color: var(--color-ink-900);
+  border-left: var(--borde-turno) solid;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-1);
+}
+
+.turnoEnLista {
+  position: static;
+  min-height: var(--agenda-slot-height);
+}
+
+.turnoPrincipal {
+  display: grid;
+  min-width: 0;
+}
+
+.turnoHora {
+  font-weight: var(--weight-semibold);
+  font-variant-numeric: tabular-nums;
+}
+
+.turnoPaciente {
+  font-size: var(--text-xs);
+  color: var(--color-ink-700);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.programado {
+  background: var(--color-brand-50);
+  border-color: var(--color-brand-600);
+}
+
+.atendido {
+  background: var(--estado-atendido-bg);
+  border-color: var(--color-success-700);
+}
+
+.ausente {
+  background: var(--estado-ausente-bg);
+  border-color: var(--color-warning-700);
+}
+
+/* Turno compacto de la cuadrícula semanal: hora, apellido y estado en texto (D10) */
+.turnoMini {
+  left: var(--space-1);
+  right: var(--space-1);
+  display: grid;
+  align-content: start;
+  justify-content: stretch;
+  gap: 0;
+  padding: var(--relleno-mini) var(--space-2);
+  font-size: var(--text-xs);
+  border-left-width: var(--borde-turno-mini);
+}
+
+.turnoMini > span {
+  line-height: var(--leading-tight);
+}
+
+.turnoEstadoMini {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  color: var(--color-ink-700);
+}
+
+.turnoMiniCorto {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding-top: 0;
+  padding-bottom: 0;
+  white-space: nowrap;
+}
+
+.turnoMiniCorto > span {
+  flex: none;
+}
+
+.turnoMiniCorto > .turnoEstadoMini {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Cancelado en su carril angosto: rayado, tachado y con badge (D6) */
+.cancelado {
+  position: absolute;
+  left: var(--relleno-mini);
+  right: var(--relleno-mini);
+  display: grid;
+  align-content: center;
+  padding: var(--relleno-mini) var(--space-1);
+  overflow: hidden;
+  font-size: var(--text-xs);
+  color: var(--color-ink-500);
+  border-left: var(--borde-turno-mini) solid var(--color-ink-300);
+  border-radius: var(--radius-sm);
+  background: repeating-linear-gradient(
+    45deg,
+    var(--color-canvas),
+    var(--color-canvas) var(--raya),
+    var(--color-sunken) var(--raya),
+    var(--color-sunken) calc(var(--raya) * 2)
+  );
+}
+
+.cancelado .badge {
+  justify-self: start;
+  padding: 0 var(--space-1);
+}
+
+.canceladoTardio {
+  border-left-color: var(--color-danger-700);
+  background: repeating-linear-gradient(
+    45deg,
+    var(--color-canvas),
+    var(--color-canvas) var(--raya),
+    var(--color-danger-100) var(--raya),
+    var(--color-danger-100) calc(var(--raya) * 2)
+  );
+}
+
+.tachado {
+  text-decoration: line-through;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cancelado .tachado:first-child {
+  font-weight: var(--weight-semibold);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Línea de hora actual */
+.ahora {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  height: var(--grosor-ahora);
+  background: var(--color-danger-700);
+  pointer-events: none;
+}
+
+.ahora::before {
+  content: '';
+  position: absolute;
+  left: calc(-1 * var(--space-1));
+  top: calc(var(--grosor-ahora) / 2 - var(--punto-ahora) / 2);
+  width: var(--punto-ahora);
+  height: var(--punto-ahora);
+  border-radius: 50%;
+  background: var(--color-danger-700);
+}
+
+/* Rótulo visible de la maqueta; el nombre accesible lo da el aria-label con la hora. */
+.ahora::after {
+  content: 'Ahora';
+  position: absolute;
+  right: 0;
+  top: calc(-1 * var(--space-5));
+  padding: 0 var(--space-1);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  color: var(--color-danger-700);
+  background: var(--color-surface);
+  border-radius: var(--radius-sm);
+}
+
+/* Vista semanal: cuadrícula (escritorio) */
+.semana {
+  border: var(--borde-fino) solid var(--color-line);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.semanaCabecera,
+.semanaCuerpo {
+  display: grid;
+  grid-template-columns: var(--ancho-horas) repeat(7, minmax(0, 1fr));
+}
+
+.semanaCabecera {
+  background: var(--color-canvas);
+  border-bottom: var(--borde-fino) solid var(--color-line);
+}
+
+.semanaDia {
+  display: grid;
+  gap: var(--relleno-mini);
+  padding: var(--space-2);
+  text-align: center;
+  border-left: var(--borde-fino) solid var(--color-line);
+}
+
+.semanaDiaNombre {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-ink-500);
+}
+
+.semanaDiaNumero {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-ink-900);
+}
+
+.hoy {
+  background: var(--color-brand-50);
+}
+
+.hoy .semanaDiaNombre,
+.hoy .semanaDiaNumero {
+  color: var(--color-brand-700);
+}
+
+/* Vista semanal: lista por día (móvil, D11) */
+.listaSemana {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.listaDia {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.listaDiaTitulo {
+  margin: 0;
+  padding: var(--space-1) var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-ink-700);
+  border-radius: var(--radius-sm);
+}
+
+.listaDiaTitulo.hoy {
+  color: var(--color-brand-700);
+}
+
+.listaSinTurnos {
+  margin: 0;
+  padding: 0 var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--color-ink-500);
+}
+
+/* Cancelados de la semana: después de los activos (D6) */
+.canceladosSemana {
+  display: grid;
+  gap: var(--space-2);
+  padding-top: var(--space-3);
+  border-top: var(--borde-fino) dashed var(--color-line);
+}
+
+.canceladosSemanaTitulo {
+  margin: 0;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--color-ink-700);
+}
+
+.canceladosSemana ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-xs);
+  color: var(--color-ink-500);
+  border: var(--borde-fino) solid var(--color-line);
+  border-left: var(--borde-turno-mini) solid var(--color-ink-300);
+  border-radius: var(--radius-md);
+  background: repeating-linear-gradient(
+    45deg,
+    var(--color-canvas),
+    var(--color-canvas) var(--raya),
+    var(--color-sunken) var(--raya),
+    var(--color-sunken) calc(var(--raya) * 2)
+  );
+}
+
+.chip.canceladoTardio {
+  border-left-color: var(--color-danger-700);
+}
+
+.chipFecha {
+  font-weight: var(--weight-semibold);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-ink-700);
+}
+
+/* Estados: vacío, cargando y error (D11) */
+.vacio,
+.cargando {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-2);
+  padding: var(--space-10) var(--space-4);
+  text-align: center;
+  color: var(--color-ink-500);
+  border-radius: var(--radius-md);
+}
+
+.vacio {
+  background: var(--color-surface);
+  border: var(--borde-fino) dashed var(--color-ink-300);
+}
+
+.vacio strong {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+  color: var(--color-ink-700);
+}
+
+.cargando {
+  background: var(--color-sunken);
+  border: var(--borde-fino) solid var(--color-line);
+  font-weight: var(--weight-medium);
+  color: var(--color-ink-700);
+}
+
+.indicador {
+  width: var(--spinner);
+  height: var(--spinner);
+  border: var(--borde-spinner) solid var(--color-brand-100);
+  border-top-color: var(--color-brand-600);
+  border-radius: 50%;
+  animation: girar 0.8s linear infinite;
+}
+
+@keyframes girar {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .indicador {
+    animation: none;
+  }
+}
+
+.error {
+  display: grid;
+  gap: var(--space-3);
+  justify-items: start;
+}
+
+.aviso {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-sm);
+  color: var(--color-ink-900);
+  background: var(--color-danger-100);
+  border: var(--borde-fino) solid var(--color-danger-700);
+  border-radius: var(--radius-md);
+}
+
+.aviso b {
+  display: block;
+  margin-bottom: var(--relleno-mini);
+}
+
+.aviso svg {
+  width: var(--icono-aviso);
+  height: var(--icono-aviso);
+  margin-top: var(--borde-fino);
+  color: var(--color-danger-700);
+}
+
+/* Punto de quiebre de la maqueta y del layout; las media queries no aceptan var(). */
+@media (max-width: 899px) {
+  .pagina {
+    --ancho-horas: var(--ancho-horas-movil);
+    --ancho-cancelados: var(--ancho-cancelados-movil);
+  }
+
+  .tarjeta {
+    padding: var(--space-4);
+  }
+
+  /* Como la maqueta: ‹ Fecha › Hoy en una fila; el selector Día/Semana debajo, a lo ancho (D11). */
+  .barra {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .navegacion {
+    flex-wrap: nowrap;
+  }
+
+  .campoFecha {
+    flex: 1;
+    min-width: 0;
+    max-width: none;
+  }
+
+  .campoFecha input {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .selector button {
+    flex: 1;
+  }
+
+  /* Como la maqueta: horario y badge en la primera línea, paciente debajo. */
+  .turno {
+    left: var(--space-1);
+    right: var(--space-1);
+    display: block;
+    padding: var(--space-1) var(--space-2);
+  }
+
+  .turno > .badge {
+    position: absolute;
+    top: var(--space-1);
+    right: var(--space-1);
+    padding: 0 var(--space-1);
+  }
+
+  .turno .turnoHora {
+    font-size: var(--text-xs);
+  }
+
+  .ahora::after {
+    display: none;
+  }
+
+  .turnoEnLista {
+    display: flex;
+    align-items: center;
+  }
+
+  .turnoEnLista > .badge {
+    position: static;
+  }
+}

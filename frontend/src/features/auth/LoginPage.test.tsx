@@ -53,7 +53,7 @@ describe('web-sesion · Página de inicio de sesión', () => {
   it('Abrir el login con sesión iniciada lleva a /', async () => {
     const { router } = renderConRutas('/login', { conSesion: true });
 
-    expect(await screen.findByRole('heading', { level: 1, name: 'Inicio' })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { level: 1, name: 'Agenda' })).toBeInTheDocument();
     expect(router.state.location.pathname).toBe('/');
   });
 });
@@ -65,7 +65,7 @@ describe('web-sesion · Ingreso con credenciales válidas', () => {
 
     await completarYEnviar('consultorio@ejemplo.com', 'secreta');
 
-    expect(await screen.findByRole('heading', { level: 1, name: 'Inicio' })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { level: 1, name: 'Agenda' })).toBeInTheDocument();
     expect(router.state.location.pathname).toBe('/');
     expect(tokenVigente()).toBe('token-recibido');
     const [, init] = solicitudesDeLogin()[0]!;
@@ -91,7 +91,7 @@ describe('web-sesion · Token solo en memoria', () => {
     const { router } = renderConRutas('/login');
 
     await completarYEnviar('consultorio@ejemplo.com', 'secreta');
-    await screen.findByRole('heading', { level: 1, name: 'Inicio' });
+    await screen.findByRole('heading', { level: 1, name: 'Agenda' });
 
     expect(escribir).not.toHaveBeenCalled();
     expect(localStorage.length).toBe(0);

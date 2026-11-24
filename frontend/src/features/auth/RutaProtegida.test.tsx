@@ -1,5 +1,6 @@
 import { screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
+import { simularApiAgenda } from '../../test/agenda';
 import { renderConRutas } from '../../test/renderConRutas';
 import { iniciarSesion, reiniciarSesion } from './sesion';
 
@@ -10,7 +11,7 @@ describe('web-sesion · Rutas protegidas', () => {
     expect(await screen.findByRole('heading', { level: 1, name: 'Ingresá a tu agenda' })).toBeInTheDocument();
     expect(router.state.location.pathname).toBe('/login');
     expect(router.state.location.state).toEqual({ desde: '/' });
-    expect(screen.queryByRole('heading', { name: 'Inicio' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: 'Agenda' })).not.toBeInTheDocument();
   });
 
   it('Ruta inexistente sin sesión: muestra la página de inicio de sesión', async () => {
@@ -34,7 +35,8 @@ describe('web-sesion · Rutas protegidas', () => {
   });
 
   it('con sesión iniciada muestra la ruta pedida', () => {
+    simularApiAgenda();
     renderConRutas('/', { conSesion: true });
-    expect(screen.getByRole('heading', { level: 1, name: 'Inicio' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 1, name: 'Agenda' })).toBeInTheDocument();
   });
 });
