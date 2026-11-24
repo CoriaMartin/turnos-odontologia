@@ -1,6 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import { ApiError } from './ApiError';
-import { MENSAJE_GENERICO, MENSAJES_POR_CODIGO, mensajeDeError } from './mensajes';
+import {
+  MENSAJE_GENERICO,
+  MENSAJES_POR_CODIGO,
+  mensajeDeError,
+  textoTurnoSolapado,
+} from './mensajes';
 
 describe('web-api-client · Mensaje para el usuario sin códigos técnicos', () => {
   it('Sin conexión: explica que no se pudo conectar y sugiere revisar la conexión y probar de nuevo', () => {
@@ -59,5 +64,43 @@ describe('web-api-client · Mensaje para el usuario sin códigos técnicos', () 
       'No pudimos dar de baja a este paciente porque tiene un turno programado. Cancelá o reprogramá ese turno y probá de nuevo.',
     );
     expect(mensaje).not.toContain('PACIENTE_CON_TURNOS_FUTUROS');
+  });
+});
+
+describe('web-gestion-turnos · Textos de los rechazos de la API (C-17)', () => {
+  it.each([
+    ['TURNO_EN_PASADO', 'No se pueden dar turnos en el pasado.'],
+    ['PACIENTE_INACTIVO', 'Ese paciente está dado de baja. Elegí otro paciente.'],
+    ['PRESTACION_INACTIVA', 'Esa prestación no está disponible. Elegí otra prestación.'],
+    [
+      'TRANSICION_INVALIDA',
+      'Este turno ya no se puede modificar porque cambió de estado. Actualizamos la agenda.',
+    ],
+    [
+      'TURNO_MODIFICADO',
+      'Este turno cambió mientras lo editabas. Actualizamos la agenda: revisalo y probá de nuevo.',
+    ],
+  ])('%s tiene el texto de la spec', (codigo, texto) => {
+    expect(mensajeDeError(new ApiError({ status: 409, codigo }))).toBe(texto);
+  });
+
+  it('TURNO_SOLAPADO arma el texto con el horario en conflicto, sin código ni 409', () => {
+    const error = new ApiError({
+      status: 409,
+      codigo: 'TURNO_SOLAPADO',
+      propiedades: { turnoEnConflicto: { id: 7, inicio: 'i', fin: 'f' } },
+    });
+
+    const texto = textoTurnoSolapado(error, () => '10:00 a 10:30');
+
+    expect(texto).toBe('Se superpone con el turno de 10:00 a 10:30. Elegí otro horario.');
+    expect(texto).not.toMatch(/TURNO_SOLAPADO|409/);
+  });
+
+  it('TURNO_SOLAPADO sin turno en conflicto usa el texto general', () => {
+    const error = new ApiError({ status: 409, codigo: 'TURNO_SOLAPADO' });
+    expect(textoTurnoSolapado(error, () => '')).toBe(
+      'Ese horario se superpone con otro turno. Elegí otro horario.',
+    );
   });
 });

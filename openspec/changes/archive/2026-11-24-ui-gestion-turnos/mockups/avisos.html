@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Avisos de la agenda · Agenda de Odontología</title>
+<link rel="stylesheet" href="../../../../design-system/tokens.css">
+<link rel="stylesheet" href="gestion.css">
+</head>
+<body>
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+
+<header class="topbar">
+  <a class="marca" href="../ui-agenda/mockups/agenda.html" aria-label="Ir al inicio">
+    <img src="../../../../design-system/assets/logo.svg" alt="Agenda de Odontología">
+    <strong data-brand-name>Agenda de Odontología</strong>
+  </a>
+  <nav class="nav-menu" aria-label="Navegación principal">
+    <a class="nav-link" href="../ui-agenda/mockups/agenda.html" aria-current="page">Agenda</a>
+    <a class="nav-link" href="../ui-prestaciones-pacientes/mockups/prestaciones.html">Prestaciones</a>
+    <a class="nav-link" href="../ui-prestaciones-pacientes/mockups/pacientes.html">Pacientes</a>
+  </nav>
+  <span class="spacer"></span>
+  <button class="user-badge" type="button" aria-label="Perfil del usuario">Dra. Ejemplo</button>
+</header>
+
+<main id="contenido" tabindex="-1">
+  <div class="page-header">
+    <div class="info">
+      <h1>Agenda</h1>
+      <p>Jueves 3 de diciembre de 2026 · 9 turnos agendados</p>
+    </div>
+    <button class="btn btn-primary" type="button">+ Turno</button>
+  </div>
+
+  <div class="alert alert-success" role="status" aria-live="polite">
+    <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm-1 11.4L5.6 10l1.3-1.3L9 10.8l4.1-4.1 1.3 1.3L9 13.4z"/></svg>
+    <div><b>Turno creado</b>Jueves 03/12 a las 10:00.</div>
+  </div>
+
+  <div class="agenda-card">
+    <div class="agenda-toolbar">
+      <div class="date-nav">
+        <button class="btn btn-secondary btn-icon" type="button" aria-label="Día anterior">‹</button>
+        <span class="fecha tnum">03/12/2026</span>
+        <button class="btn btn-secondary btn-icon" type="button" aria-label="Día siguiente">›</button>
+        <button class="btn btn-secondary" type="button">Hoy</button>
+      </div>
+      <div class="seg" role="group" aria-label="Vista de la agenda">
+        <button type="button" aria-pressed="true">Día</button>
+        <button type="button" aria-pressed="false">Semana</button>
+      </div>
+    </div>
+    <div class="legend" aria-label="Referencia de estados">
+      <span class="badge estado-programado">Programado</span>
+      <span class="badge estado-atendido">Atendido</span>
+      <span class="badge estado-ausente">Ausente</span>
+      <span class="badge estado-cancelado">Cancelado</span>
+      <span class="badge estado-tardio">Cancelación tardía</span>
+    </div>
+    <div class="timeline">
+      <div class="hours" aria-hidden="true"><span>09:00</span><span></span><span>10:00</span><span></span><span>11:00</span><span></span><span>12:00</span><span></span></div>
+      <div class="lane">
+        <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+        <a class="appt atendido" href="#" style="top:0;height:calc(var(--agenda-slot-height) * 1 - var(--space-1))" aria-label="Ver turno de Ficticio Uno, Control, de 09:00 a 09:30, Atendido"><div><div class="t tnum">09:00 – 09:30</div><div class="p">Ficticio Uno · Control</div></div><span class="badge estado-atendido">Atendido</span></a>
+        <a class="appt ausente" href="#" style="top:calc(var(--agenda-slot-height) * 1);height:calc(var(--agenda-slot-height) * 1 - var(--space-1))" aria-label="Ver turno de Ficticio Dos, Control, de 09:30 a 10:00, Ausente"><div><div class="t tnum">09:30 – 10:00</div><div class="p">Ficticio Dos · Control</div></div><span class="badge estado-ausente">Ausente</span></a>
+        <a class="appt programado" href="#" style="top:calc(var(--agenda-slot-height) * 2);height:calc(var(--agenda-slot-height) * 1.5 - var(--space-1))" aria-label="Ver turno de Ficticio Tres, Limpieza, de 10:00 a 10:45, Programado"><div><div class="t tnum">10:00 – 10:45</div><div class="p">Ficticio Tres · Limpieza</div></div><span class="badge estado-programado">Programado</span></a>
+        <button class="appt libre" type="button" style="top:calc(var(--agenda-slot-height) * 5);height:calc(var(--agenda-slot-height) * 1 - var(--space-1))" aria-label="Crear un turno el jueves 3 de diciembre de 11:30 a 12:00">+ Turno · 11:30 – 12:00</button>
+      </div>
+      <div class="lane-cancelados">
+        <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+        <a class="appt cancelado" href="#" style="top:calc(var(--agenda-slot-height) * 3.5);height:calc(var(--agenda-slot-height) * 1.5 - var(--space-1))" aria-label="Ver turno de Ficticio Cuatro, Obturación, de 10:45 a 11:30, Cancelación tardía"><div><div class="t tnum">10:45 – 11:30</div><div class="p">Ficticio Cuatro · Obturación</div></div><span class="badge estado-tardio">Tardía</span></a>
+      </div>
+    </div>
+  </div>
+
+  <section class="galeria" aria-labelledby="galeria-titulo">
+    <h2 id="galeria-titulo" class="demo-title">Mensajes de la agenda</h2>
+    <div class="galeria-grid">
+
+      <div class="alert alert-success" role="status">
+        <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm-1 11.4L5.6 10l1.3-1.3L9 10.8l4.1-4.1 1.3 1.3L9 13.4z"/></svg>
+        <div><b>Turno reprogramado</b>Jueves 03/12 a las 12:00.</div>
+      </div>
+
+      <div class="alert alert-success" role="status">
+        <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm-1 11.4L5.6 10l1.3-1.3L9 10.8l4.1-4.1 1.3 1.3L9 13.4z"/></svg>
+        <div><b>Turno cancelado</b>El horario quedó libre.</div>
+      </div>
+
+      <div class="alert alert-success" role="status">
+        <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm-1 11.4L5.6 10l1.3-1.3L9 10.8l4.1-4.1 1.3 1.3L9 13.4z"/></svg>
+        <div><b>Turno cancelado con cancelación tardía</b>El horario quedó libre.</div>
+      </div>
+
+      <div class="alert alert-success" role="status">
+        <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm-1 11.4L5.6 10l1.3-1.3L9 10.8l4.1-4.1 1.3 1.3L9 13.4z"/></svg>
+        <div><b>Turno marcado como atendido</b>La agenda ya muestra el nuevo estado.</div>
+      </div>
+
+      <div class="alert alert-success" role="status">
+        <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm-1 11.4L5.6 10l1.3-1.3L9 10.8l4.1-4.1 1.3 1.3L9 13.4z"/></svg>
+        <div><b>Turno marcado como ausente</b>La agenda ya muestra el nuevo estado.</div>
+      </div>
+
+      <div class="alert alert-danger" role="alert">
+        <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm-.9 4h1.8v5.2H9.1V6zm0 6.6h1.8v1.8H9.1v-1.8z"/></svg>
+        <div><b>Este turno ya no se puede modificar</b>Cambió de estado. Actualizamos la agenda.</div>
+      </div>
+
+      <div class="alert alert-danger" role="alert">
+        <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm-.9 4h1.8v5.2H9.1V6zm0 6.6h1.8v1.8H9.1v-1.8z"/></svg>
+        <div><b>Este turno cambió mientras lo editabas</b>Actualizamos la agenda: revisalo y probá de nuevo.</div>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<script src="../../../../design-system/brand.js"></script>
+</body>
+</html>

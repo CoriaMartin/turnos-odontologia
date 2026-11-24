@@ -7,6 +7,8 @@ export interface TurnoAgenda {
   inicio: string;
   fin: string;
   estado: EstadoTurno;
+  /** Lo usa C-17 para precargar la reprogramación. */
+  duracionMinutos: number;
   version: number;
   paciente: { id: number; nombre: string; apellido: string };
   prestacion: { id: number; nombre: string };

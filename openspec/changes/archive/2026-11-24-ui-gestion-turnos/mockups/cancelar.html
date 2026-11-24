@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cancelar turno · Agenda de Odontología</title>
+<link rel="stylesheet" href="../../../../design-system/tokens.css">
+<link rel="stylesheet" href="gestion.css">
+</head>
+<body>
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+
+<header class="topbar">
+  <a class="marca" href="../ui-agenda/mockups/agenda.html" aria-label="Ir al inicio">
+    <img src="../../../../design-system/assets/logo.svg" alt="Agenda de Odontología">
+    <strong data-brand-name>Agenda de Odontología</strong>
+  </a>
+  <nav class="nav-menu" aria-label="Navegación principal">
+    <a class="nav-link" href="../ui-agenda/mockups/agenda.html" aria-current="page">Agenda</a>
+    <a class="nav-link" href="../ui-prestaciones-pacientes/mockups/prestaciones.html">Prestaciones</a>
+    <a class="nav-link" href="../ui-prestaciones-pacientes/mockups/pacientes.html">Pacientes</a>
+  </nav>
+  <span class="spacer"></span>
+  <button class="user-badge" type="button" aria-label="Perfil del usuario">Dra. Ejemplo</button>
+</header>
+
+<main id="contenido" tabindex="-1">
+  <div class="page-header">
+    <div class="info">
+      <h1>Agenda</h1>
+      <p>Martes 1 de diciembre de 2026 · 9 turnos agendados</p>
+    </div>
+    <button class="btn btn-primary" type="button">+ Turno</button>
+  </div>
+
+  <section class="stage" aria-label="Agenda con el diálogo Cancelar turno abierto">
+    <div class="agenda-fondo" aria-hidden="true">
+      <div class="agenda-card">
+        <div class="agenda-toolbar">
+          <div class="date-nav">
+            <span class="btn btn-secondary btn-icon">‹</span>
+            <span class="fecha tnum">01/12/2026</span>
+            <span class="btn btn-secondary btn-icon">›</span>
+            <span class="btn btn-secondary">Hoy</span>
+          </div>
+          <div class="seg"><span aria-pressed="true">Día</span><span aria-pressed="false">Semana</span></div>
+        </div>
+        <div class="legend">
+          <span class="badge estado-programado">Programado</span>
+          <span class="badge estado-atendido">Atendido</span>
+          <span class="badge estado-ausente">Ausente</span>
+          <span class="badge estado-cancelado">Cancelado</span>
+          <span class="badge estado-tardio">Cancelación tardía</span>
+        </div>
+        <div class="timeline">
+          <div class="hours"><span>09:00</span><span></span><span>10:00</span><span></span><span>11:00</span><span></span><span>12:00</span><span></span></div>
+          <div class="lane">
+            <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+            <div class="appt atendido" style="top:0;height:calc(var(--agenda-slot-height) * 1 - var(--space-1))"><div><div class="t tnum">09:00 – 09:30</div><div class="p">Ficticio Uno · Control</div></div><span class="badge estado-atendido">Atendido</span></div>
+            <div class="appt ausente" style="top:calc(var(--agenda-slot-height) * 1);height:calc(var(--agenda-slot-height) * 1 - var(--space-1))"><div><div class="t tnum">09:30 – 10:00</div><div class="p">Ficticio Dos · Control</div></div><span class="badge estado-ausente">Ausente</span></div>
+            <div class="appt programado" style="top:calc(var(--agenda-slot-height) * 2);height:calc(var(--agenda-slot-height) * 1.5 - var(--space-1))"><div><div class="t tnum">10:00 – 10:45</div><div class="p">Ficticio Tres · Limpieza</div></div><span class="badge estado-programado">Programado</span></div>
+            <div class="appt libre" style="top:calc(var(--agenda-slot-height) * 5);height:calc(var(--agenda-slot-height) * 1 - var(--space-1))">Horario libre · 11:30 – 12:00</div>
+          </div>
+          <div class="lane-cancelados">
+            <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+            <div class="appt cancelado" style="top:calc(var(--agenda-slot-height) * 3.5);height:calc(var(--agenda-slot-height) * 1.5 - var(--space-1))"><div><div class="t tnum">10:45 – 11:30</div><div class="p">Ficticio Cuatro · Obturación</div></div><span class="badge estado-tardio">Tardía</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="scrim" aria-hidden="true"></div>
+
+    <dialog open class="dlg" aria-labelledby="ct-titulo" aria-describedby="ct-bajada">
+      <header>
+        <div class="dlg-titulo">
+          <h2 id="ct-titulo">Cancelar turno</h2>
+          <button class="btn btn-ghost btn-icon" type="button" aria-label="Cerrar">×</button>
+        </div>
+        <p id="ct-bajada">Martes 1 de diciembre de 2026 · 15:00 – 15:45</p>
+      </header>
+      <div class="body">
+        <div class="turno-resumen">
+          <span class="hora tnum">15:00 – 15:45</span>
+          <span class="quien"><strong>Ficticio Tres, Paciente</strong><span>Limpieza · DNI 00.000.003</span></span>
+          <span class="badge estado-programado">Programado</span>
+        </div>
+        <div class="alert alert-info" role="alert">
+          <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm.9 12H9.1V8.8h1.8V14zm0-6.6H9.1V5.6h1.8v1.8z"/></svg>
+          <div><b>Cancelación tardía</b>Faltan menos de 24 h para el turno. Se registrará como cancelación tardía y el horario quedará libre.</div>
+        </div>
+        <div class="field">
+          <label for="ct-motivo">Motivo (opcional)</label>
+          <textarea id="ct-motivo" rows="3" aria-describedby="ct-motivo-h"></textarea>
+          <span class="hint" id="ct-motivo-h">Podés contarnos por qué se cancela. Hasta 255 caracteres.</span>
+        </div>
+      </div>
+      <footer>
+        <button class="btn btn-secondary" type="button">Volver</button>
+        <button class="btn btn-danger" type="button">Cancelar turno</button>
+      </footer>
+    </dialog>
+  </section>
+
+  <section class="galeria" aria-labelledby="galeria-titulo">
+    <h2 id="galeria-titulo" class="demo-title">Estados de la confirmación</h2>
+    <div class="galeria-grid">
+
+      <div class="mini-wrap">
+        <h3>Justo en el límite · sin aviso</h3>
+        <dialog open class="dlg mini" aria-labelledby="ct-limite-titulo">
+          <header>
+            <div class="dlg-titulo"><h2 id="ct-limite-titulo">Cancelar turno</h2><button class="btn btn-ghost btn-icon" type="button" aria-label="Cerrar">×</button></div>
+            <p>Miércoles 2 de diciembre de 2026 · 09:00 – 09:45</p>
+          </header>
+          <div class="body">
+            <div class="turno-resumen">
+              <span class="hora tnum">09:00 – 09:45</span>
+              <span class="quien"><strong>Ficticio Uno, Paciente</strong><span>Control · DNI 00.000.001</span></span>
+              <span class="badge estado-programado">Programado</span>
+            </div>
+            <p class="hint">Faltan 24 h o más: la cancelación no se registra como tardía.</p>
+            <div class="field">
+              <label for="ct-limite-motivo">Motivo (opcional)</label>
+              <textarea id="ct-limite-motivo" rows="3" aria-describedby="ct-limite-motivo-h"></textarea>
+              <span class="hint" id="ct-limite-motivo-h">Hasta 255 caracteres.</span>
+            </div>
+          </div>
+          <footer>
+            <button class="btn btn-secondary" type="button">Volver</button>
+            <button class="btn btn-danger" type="button">Cancelar turno</button>
+          </footer>
+        </dialog>
+      </div>
+
+      <div class="mini-wrap">
+        <h3>Configuración no disponible</h3>
+        <dialog open class="dlg mini" aria-labelledby="ct-sinconfig-titulo">
+          <header>
+            <div class="dlg-titulo"><h2 id="ct-sinconfig-titulo">Cancelar turno</h2><button class="btn btn-ghost btn-icon" type="button" aria-label="Cerrar">×</button></div>
+            <p>Martes 1 de diciembre de 2026 · 15:00 – 15:45</p>
+          </header>
+          <div class="body">
+            <div class="alert alert-info" role="alert">
+              <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm.9 12H9.1V8.8h1.8V14zm0-6.6H9.1V5.6h1.8v1.8z"/></svg>
+              <div><b>Aviso</b>Si faltan pocas horas para el turno, puede quedar registrada como cancelación tardía.</div>
+            </div>
+            <div class="field">
+              <label for="ct-sinconfig-motivo">Motivo (opcional)</label>
+              <textarea id="ct-sinconfig-motivo" rows="3"></textarea>
+              <span class="hint">Hasta 255 caracteres.</span>
+            </div>
+          </div>
+          <footer>
+            <button class="btn btn-secondary" type="button">Volver</button>
+            <button class="btn btn-danger" type="button">Cancelar turno</button>
+          </footer>
+        </dialog>
+      </div>
+
+      <div class="mini-wrap">
+        <h3>Motivo demasiado largo</h3>
+        <dialog open class="dlg mini" aria-labelledby="ct-largo-titulo">
+          <header>
+            <div class="dlg-titulo"><h2 id="ct-largo-titulo">Cancelar turno</h2><button class="btn btn-ghost btn-icon" type="button" aria-label="Cerrar">×</button></div>
+            <p>Martes 1 de diciembre de 2026 · 15:00 – 15:45</p>
+          </header>
+          <div class="body">
+            <div class="field invalid">
+              <label for="ct-largo-motivo">Motivo (opcional)</label>
+              <textarea id="ct-largo-motivo" rows="3" aria-invalid="true" aria-describedby="ct-largo-motivo-h">La paciente avisó que no puede venir porque se superpone con otro estudio y necesita reprogramar para la semana que viene, preferentemente por la mañana, y pidió que le confirmemos el nuevo horario por teléfono.</textarea>
+              <span class="contador tnum">256/255</span>
+              <span class="hint" id="ct-largo-motivo-h">El motivo puede tener hasta 255 caracteres.</span>
+            </div>
+          </div>
+          <footer>
+            <button class="btn btn-secondary" type="button">Volver</button>
+            <button class="btn btn-danger" type="button">Cancelar turno</button>
+          </footer>
+        </dialog>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<script src="../../../../design-system/brand.js"></script>
+</body>
+</html>

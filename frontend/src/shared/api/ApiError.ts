@@ -14,6 +14,7 @@ interface DatosApiError {
   titulo?: string | undefined;
   detalle?: string | undefined;
   errores?: ErrorDeCampo[] | undefined;
+  propiedades?: Readonly<Record<string, unknown>> | undefined;
 }
 
 /**
@@ -26,8 +27,10 @@ export class ApiError extends Error {
   readonly titulo: string | undefined;
   readonly detalle: string | undefined;
   readonly errores: ErrorDeCampo[];
+  /** Cuerpo completo del Problem Details, para propiedades propias de un código (p. ej. `turnoEnConflicto`). */
+  readonly propiedades: Readonly<Record<string, unknown>>;
 
-  constructor({ status, codigo, titulo, detalle, errores = [] }: DatosApiError) {
+  constructor({ status, codigo, titulo, detalle, errores = [], propiedades = {} }: DatosApiError) {
     super(`${codigo} (${status})`);
     this.name = 'ApiError';
     this.status = status;
@@ -35,5 +38,6 @@ export class ApiError extends Error {
     this.titulo = titulo;
     this.detalle = detalle;
     this.errores = errores;
+    this.propiedades = propiedades;
   }
 }

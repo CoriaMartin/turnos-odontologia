@@ -1,0 +1,530 @@
+/* Gestión de turnos (C-17), según la maqueta aprobada openspec/changes/archive/2026-11-24-ui-gestion-turnos/mockups/gestion.css.
+   Solo variables: tokens de design-system/tokens.css y medidas locales de .pagina (Agenda.module.css) y del
+   layout (--borde-fino). Los colores de .alert-* se arman con tokens (design.md D8). */
+
+/* Encabezado con "+ Turno" */
+.cabecera {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+/* Botones */
+.boton {
+  font: inherit;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  min-height: var(--hit-target);
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-md);
+  border: var(--borde-fino) solid var(--color-ink-300);
+  background: var(--color-surface);
+  color: var(--color-ink-900);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  white-space: nowrap;
+  transition:
+    background var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+
+.boton:hover:not(:disabled) {
+  background: var(--color-sunken);
+}
+
+.boton:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.boton:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.boton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.botonPrimario {
+  background: var(--color-brand-600);
+  border-color: var(--color-brand-600);
+  color: var(--color-surface);
+}
+
+.botonPrimario:hover:not(:disabled) {
+  background: var(--color-brand-700);
+}
+
+.botonGhost {
+  background: transparent;
+  border-color: transparent;
+  color: var(--color-brand-700);
+}
+
+.botonGhost:hover:not(:disabled) {
+  background: var(--color-brand-50);
+}
+
+.botonPeligro {
+  color: var(--color-danger-700);
+  border-color: color-mix(in srgb, var(--color-danger-700) 30%, var(--color-surface));
+}
+
+.botonPeligro:hover:not(:disabled) {
+  background: var(--color-danger-100);
+}
+
+.botonIcono {
+  width: var(--hit-target);
+  min-width: var(--hit-target);
+  padding: 0;
+  font-size: var(--text-xl);
+  line-height: 1;
+}
+
+.enlace {
+  font: inherit;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-brand-700);
+  font-weight: var(--weight-medium);
+  cursor: pointer;
+}
+
+.enlace:hover,
+.enlace:focus-visible {
+  text-decoration: underline;
+}
+
+.enlace:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  border-radius: var(--radius-sm);
+}
+
+.spinner {
+  width: var(--space-4);
+  height: var(--space-4);
+  border: var(--borde-spinner) solid var(--color-brand-100);
+  border-top-color: var(--color-surface);
+  border-radius: 50%;
+  animation: girar 0.8s linear infinite;
+}
+
+@keyframes girar {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Diálogo modal (D7) */
+.fondo {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: var(--space-6) var(--space-3);
+  overflow-y: auto;
+  background: color-mix(in srgb, var(--color-ink-900) 38%, transparent);
+}
+
+.dialogo {
+  width: min(var(--dialogo-max), 100%);
+  background: var(--color-surface);
+  color: var(--color-ink-900);
+  border: var(--borde-fino) solid var(--color-line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-3);
+}
+
+.dialogo:focus {
+  outline: none;
+}
+
+.dialogoCabecera {
+  padding: var(--space-5) var(--space-5) 0;
+}
+
+.dialogoTitulo {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.dialogoTitulo h2 {
+  margin: 0;
+  font-size: var(--text-xl);
+  line-height: var(--leading-tight);
+}
+
+.dialogoBajada {
+  margin: var(--space-1) 0 0;
+  color: var(--color-ink-500);
+  font-size: var(--text-sm);
+}
+
+.dialogoCuerpo {
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-5);
+}
+
+.dialogoPie {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  border-top: var(--borde-fino) solid var(--color-line);
+  background: var(--color-canvas);
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+}
+
+/* Campos */
+.formGrid {
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
+.ancho {
+  grid-column: 1 / -1;
+}
+
+.campo {
+  display: grid;
+  gap: var(--space-1);
+  min-width: 0;
+  /* Sin estirar el control cuando el campo vecino de la fila tiene más líneas (ayuda, error). */
+  align-content: start;
+}
+
+.campo label {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-ink-700);
+}
+
+.campo input,
+.campo select,
+.campo textarea {
+  font: inherit;
+  width: 100%;
+  min-height: var(--hit-target);
+  padding: 0 var(--space-3);
+  border: var(--borde-fino) solid var(--color-ink-300);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-ink-900);
+  font-variant-numeric: tabular-nums;
+}
+
+.campo textarea {
+  min-height: var(--motivo-alto);
+  padding: var(--space-2) var(--space-3);
+  resize: vertical;
+  line-height: var(--leading-normal);
+}
+
+.campo input:focus-visible,
+.campo select:focus-visible,
+.campo textarea:focus-visible {
+  outline: none;
+  border-color: var(--color-brand-500);
+  box-shadow: 0 0 0 var(--borde-spinner) var(--color-brand-100);
+}
+
+.campo input[readonly] {
+  background: var(--color-canvas);
+  color: var(--color-ink-700);
+}
+
+.campo [aria-invalid='true'] {
+  border-color: var(--color-danger-700);
+}
+
+.ayuda {
+  font-size: var(--text-xs);
+  color: var(--color-ink-500);
+  font-variant-numeric: tabular-nums;
+}
+
+.error {
+  font-size: var(--text-xs);
+  color: var(--color-danger-700);
+}
+
+.contador {
+  justify-self: end;
+  font-size: var(--text-xs);
+  color: var(--color-ink-500);
+  font-variant-numeric: tabular-nums;
+}
+
+.contadorExcedido {
+  color: var(--color-danger-700);
+}
+
+/* Combobox de pacientes (D6) */
+.combo {
+  position: relative;
+}
+
+.listbox {
+  list-style: none;
+  margin: var(--space-1) 0 0;
+  padding: var(--space-1);
+  display: grid;
+  gap: var(--relleno-mini);
+  max-height: calc(var(--agenda-slot-height) * 5);
+  overflow-y: auto;
+  background: var(--color-surface);
+  border: var(--borde-fino) solid var(--color-line);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-2);
+}
+
+.listbox[hidden] {
+  display: none;
+}
+
+.opcion {
+  display: grid;
+  gap: var(--relleno-mini);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-sm);
+  cursor: pointer;
+}
+
+.opcion[aria-selected='true'],
+.opcion:hover {
+  background: var(--color-brand-50);
+}
+
+.opcionMeta {
+  font-size: var(--text-xs);
+  color: var(--color-ink-500);
+  font-variant-numeric: tabular-nums;
+}
+
+.sinResultados {
+  margin: var(--space-1) 0 0;
+  font-size: var(--text-sm);
+  color: var(--color-ink-500);
+}
+
+/* Avisos (tokens, sin colores sueltos) */
+.alerta {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  border: var(--borde-fino) solid;
+  font-size: var(--text-sm);
+}
+
+.alerta b {
+  display: block;
+  margin-bottom: var(--relleno-mini);
+}
+
+.alerta svg {
+  width: var(--icono-aviso);
+  height: var(--icono-aviso);
+  margin-top: var(--borde-fino);
+}
+
+.alertaError {
+  background: var(--color-danger-100);
+  border-color: color-mix(in srgb, var(--color-danger-700) 30%, var(--color-danger-100));
+  color: var(--color-danger-700);
+}
+
+.alertaExito {
+  background: var(--color-success-100);
+  border-color: color-mix(in srgb, var(--color-success-700) 30%, var(--color-success-100));
+  color: var(--color-success-700);
+}
+
+.alertaInfo {
+  background: var(--color-info-100);
+  border-color: color-mix(in srgb, var(--color-info-700) 30%, var(--color-info-100));
+  color: var(--color-info-700);
+}
+
+.avisos:empty {
+  display: none;
+}
+
+/* Resumen y datos del turno */
+.resumen {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--color-brand-50);
+  border-left: var(--borde-turno) solid var(--color-brand-600);
+}
+
+.resumenFinal {
+  background: var(--color-sunken);
+  border-left-color: var(--color-ink-300);
+}
+
+.resumenHora {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+  font-variant-numeric: tabular-nums;
+}
+
+.resumenQuien {
+  display: grid;
+  gap: var(--borde-fino);
+  min-width: 0;
+}
+
+.resumenQuien strong {
+  font-size: var(--text-sm);
+}
+
+.resumenQuien span {
+  font-size: var(--text-xs);
+  color: var(--color-ink-500);
+}
+
+.datos {
+  margin: 0;
+  display: grid;
+  gap: var(--space-3);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
+.datos div {
+  display: grid;
+  gap: var(--relleno-mini);
+}
+
+.datos dt {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-ink-500);
+  font-weight: var(--weight-semibold);
+}
+
+.datos dd {
+  margin: 0;
+  font-size: var(--text-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Puntos de entrada en la agenda */
+.abrir {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  padding: 0;
+  border: 0;
+  border-radius: inherit;
+  background: transparent;
+  cursor: pointer;
+}
+
+.abrir:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.franjaLibre {
+  position: absolute;
+  left: var(--space-2);
+  right: var(--space-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--space-3);
+  font: inherit;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-brand-700);
+  background: transparent;
+  border: var(--borde-fino) dashed transparent;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  opacity: 0;
+  transition:
+    opacity var(--duration-fast) var(--ease-out),
+    background var(--duration-fast) var(--ease-out);
+}
+
+.franjaLibre:hover,
+.franjaLibre:focus-visible {
+  opacity: 1;
+  background: var(--color-brand-50);
+  border-color: var(--color-brand-500);
+}
+
+.franjaLibre:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .boton,
+  .franjaLibre {
+    transition: none;
+  }
+
+  .spinner {
+    animation: none;
+  }
+}
+
+@media (max-width: 599px) {
+  .formGrid,
+  .datos {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 899px) {
+  .cabecera > .boton {
+    width: 100%;
+  }
+
+  .fondo {
+    padding: var(--space-4) var(--space-2);
+  }
+
+  .dialogoCabecera,
+  .dialogoCuerpo {
+    padding-left: var(--space-4);
+    padding-right: var(--space-4);
+  }
+
+  .dialogoPie {
+    flex-direction: column;
+    align-items: stretch;
+    padding: var(--space-3) var(--space-4);
+  }
+}
+
+/* Texto suelto del cuerpo del diálogo (estado del turno, límite de cancelación): tamaño de lectura, no de ayuda. */
+.nota {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--color-ink-700);
+}

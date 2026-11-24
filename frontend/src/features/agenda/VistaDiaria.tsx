@@ -1,5 +1,7 @@
 import { useId } from 'react';
-import { formatoHora, type FechaCivil, type MomentoConsultorio } from './fechas';
+import { useAccionesAgenda } from './accionesAgenda';
+import { formatoHora, textoDia, type FechaCivil, type MomentoConsultorio } from './fechas';
+import { franjasLibres } from './gestion';
 import {
   cantidadDeFranjas,
   esCancelado,
@@ -9,10 +11,41 @@ import {
   rangoVisible,
   tramosDelDia,
   type Rango,
+  type Tramo,
 } from './lineaDeTiempo';
 import type { TurnoAgenda } from './tipos';
-import { CanceladoEnCarril, LineaAhora, TurnoTarjeta } from './Turnos';
+import { CanceladoEnCarril, estiloPosicion, LineaAhora, TurnoTarjeta } from './Turnos';
 import estilos from './Agenda.module.css';
+import estilosGestion from './Gestion.module.css';
+
+/**
+ * Franjas libres futuras que abren "Nuevo turno" con día y hora (C-17). Se muestran al pasar el puntero o
+ * al llegar con el teclado, para no llenar la línea de tiempo de recuadros.
+ */
+function FranjasLibres({ fecha, rango, ocupadas }: { fecha: FechaCivil; rango: Rango; ocupadas: readonly Tramo[] }) {
+  const acciones = useAccionesAgenda();
+  if (!acciones) return null;
+  const dia = textoDia(fecha).replace(/ de \d{4}$/, '');
+  return (
+    <>
+      {franjasLibres(fecha, rango, ocupadas, acciones.ahora).map((inicio) => {
+        const fin = inicio + MINUTOS_POR_FRANJA;
+        return (
+          <button
+            key={inicio}
+            type="button"
+            className={estilosGestion.franjaLibre}
+            style={estiloPosicion(posicion({ inicio, fin }, rango))}
+            aria-label={`Crear un turno el ${dia.toLowerCase()} de ${formatoHora(inicio)} a ${formatoHora(fin)}`}
+            onClick={() => acciones.nuevoTurnoEn(fecha, inicio)}
+          >
+            + Turno · {formatoHora(inicio)} – {formatoHora(fin)}
+          </button>
+        );
+      })}
+    </>
+  );
+}
 
 /** Columna de horas: etiqueta en cada hora en punto, franja vacía en las medias. */
 export function ColumnaHoras({ rango }: { rango: Rango }) {
@@ -73,6 +106,7 @@ export function VistaDiaria({ fecha, turnos, ahora, pantallaAncha }: Props) {
         <ColumnaHoras rango={rango} />
         <div className={estilos.carril} role="group" aria-label="Turnos activos">
           <Franjas rango={rango} />
+          <FranjasLibres fecha={fecha} rango={rango} ocupadas={activos} />
           {activos.map((tramo) => (
             <TurnoTarjeta key={tramo.turno.id} turno={tramo.turno} posicion={posicion(tramo, rango)} />
           ))}

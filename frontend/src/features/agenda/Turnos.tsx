@@ -1,8 +1,27 @@
 import type { CSSProperties } from 'react';
+import { useAccionesAgenda } from './accionesAgenda';
 import { encabezadoDia, enConsultorio, formatoHora } from './fechas';
 import type { Posicion } from './lineaDeTiempo';
 import { ETIQUETA_ESTADO, type EstadoTurno, type TurnoAgenda } from './tipos';
 import estilos from './Agenda.module.css';
+import estilosGestion from './Gestion.module.css';
+
+/**
+ * Botón que cubre la tarjeta y abre el detalle (C-17). La tarjeta sigue siendo un `article` con su nombre
+ * accesible; el botón solo aparece cuando la agenda ofrece acciones.
+ */
+function BotonAbrir({ turno }: { turno: TurnoAgenda }) {
+  const acciones = useAccionesAgenda();
+  if (!acciones) return null;
+  return (
+    <button
+      type="button"
+      className={estilosGestion.abrir}
+      aria-label={`Ver turno: ${nombreAccesible(turno)}`}
+      onClick={() => acciones.abrirTurno(turno)}
+    />
+  );
+}
 
 /** Piezas visuales de un turno, según la maqueta aprobada (mockups/agenda.html) y design.md D6, D9, D10. */
 
@@ -79,6 +98,7 @@ export function TurnoTarjeta({ turno, posicion }: PropsTurno) {
         </span>
       </span>
       <Badge estado={turno.estado} />
+      <BotonAbrir turno={turno} />
     </article>
   );
 }
@@ -101,6 +121,7 @@ export function TurnoMini({ turno, posicion }: Required<PropsTurno>) {
       <span className={estilos.turnoHora}>{inicio}</span>
       <span className={estilos.turnoPaciente}>{turno.paciente.apellido}</span>
       <span className={estilos.turnoEstadoMini}>{ETIQUETA_ESTADO[turno.estado]}</span>
+      <BotonAbrir turno={turno} />
     </article>
   );
 }
@@ -123,6 +144,7 @@ export function CanceladoEnCarril({
       </span>
       <span className={clases(estilos.tachado, estilos.canceladoPaciente)}>{nombrePaciente(turno)}</span>
       <Badge estado={turno.estado} corto={corto} />
+      <BotonAbrir turno={turno} />
     </article>
   );
 }
@@ -141,6 +163,7 @@ export function CanceladoChip({ turno }: { turno: TurnoAgenda }) {
       </span>
       <span className={estilos.tachado}>{nombrePaciente(turno)}</span>
       <Badge estado={turno.estado} />
+      <BotonAbrir turno={turno} />
     </article>
   );
 }
