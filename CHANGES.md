@@ -374,7 +374,7 @@ C-14 (ui-login) corre en paralelo y debe estar listo antes de C-16. C-13 → C-1
   - `knowledge-base/06_funcionalidades.md` §US-032
 
 ### [C-11] `registrar-asistencia`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (2026-11-24, change archivado `openspec/changes/archive/2026-11-24-registrar-asistencia`)
 - **Responsable**: Ludmi · tanda 6
 - **Scope**:
   - `POST /api/turnos/{id}/asistencia` con `ATENDIDO` o `AUSENTE`.
