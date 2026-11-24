@@ -43,8 +43,8 @@
 
 ## 7. Cierre
 
-- [ ] 7.1 Registrar evidencia de pruebas.
-- [ ] 7.2 Revisar cambios y actualizar desde main.
-- [ ] 7.3 Validar y archivar OpenSpec.
-- [ ] 7.4 Actualizar CHANGES.md.
+- [x] 7.1 Registrar evidencia de pruebas.
+- [x] 7.2 Revisar cambios y actualizar desde main.
+- [x] 7.3 Validar y archivar OpenSpec.
+- [x] 7.4 Actualizar CHANGES.md.
 - [ ] 7.5 Commit, push y PR para revision del lider.
