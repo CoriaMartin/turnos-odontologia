@@ -1,4 +1,4 @@
-﻿# Discovery — Turnos Odontología
+# Discovery — Turnos Odontología
 
 **Fecha**: 2026-11-21
 **Variante**: entrevista (checklist de 11 puntos), apoyada en la investigación competitiva existente.
@@ -87,5 +87,3 @@ La comparación completa (16 productos, matriz ponderada y guion de demo) está 
 - ¿El recordatorio por email requiere consentimiento explícito del paciente según la Ley 25.326?
 - Puntos "No evidenciado" del informe: integración ARCA, API de Meta y sus costos, exportación con adjuntos y concurrencia real en los competidores.
 - Ubicación de los entregables: la consigna pide `docs/discovery/informe-discovery.md`, su PDF y una sección de "Verificación de fuentes"; los artefactos originales se conservan en `discovery/` y los entregables finales se encuentran en `docs/discovery/`.
-
-

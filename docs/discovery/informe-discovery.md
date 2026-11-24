@@ -1,4 +1,4 @@
-﻿# Informe de Discovery
+# Informe de Discovery
 
 ## Turnos Odontología
 
@@ -457,7 +457,3 @@ Se revisaron siete fuentes oficiales y se contrastaron afirmaciones concretas de
 Las cifras y los precios corresponden a la fecha de consulta y pueden variar. Se mantienen las limitaciones y los datos históricos de la investigación original.
 
 El análisis respalda la relevancia de la gestión de turnos, pacientes, agenda y recordatorios como funcionalidades del mercado. El alcance definitivo del MVP se mantiene conforme a las decisiones del equipo documentadas en la sección D.5.
-
-
-
-
