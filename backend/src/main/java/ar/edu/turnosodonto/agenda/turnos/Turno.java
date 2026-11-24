@@ -1,5 +1,6 @@
 package ar.edu.turnosodonto.agenda.turnos;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.util.Objects;
 
@@ -18,13 +19,14 @@ import jakarta.persistence.Version;
 
 import ar.edu.turnosodonto.agenda.dominio.EstadoTurno;
 import ar.edu.turnosodonto.agenda.dominio.Intervalo;
+import ar.edu.turnosodonto.agenda.dominio.ReglasAgenda;
 import ar.edu.turnosodonto.agenda.recursos.Profesional;
 import ar.edu.turnosodonto.agenda.recursos.Sillon;
 import ar.edu.turnosodonto.pacientes.Paciente;
 import ar.edu.turnosodonto.prestaciones.Prestacion;
 import ar.edu.turnosodonto.shared.persistence.EntidadAuditada;
 
-/** Turno de la agenda. Nace en PROGRAMADO (RN-ES-01); las transiciones llegan en C-09..C-11. */
+/** Turno de la agenda. Nace en PROGRAMADO (RN-ES-01); se reprograma (C-10) o se cancela (C-09). */
 @Entity
 @Table(name = "turno")
 public class Turno extends EntidadAuditada {
@@ -114,6 +116,40 @@ public class Turno extends EntidadAuditada {
         if (!inicio.isAfter(ahora)) {
             throw new TransicionInvalidaException("El turno ya empezó: no se puede reprogramar.");
         }
+    }
+
+    /**
+     * RN-ES-02 y RN-CA: solo un turno PROGRAMADO cuyo inicio todavía no llegó se cancela. Queda CANCELADO_TARDIO
+     * si falta menos que {@code limiteTardio} para el inicio; si no, CANCELADO. Conserva el intervalo: el horario
+     * se libera porque los estados cancelados no cuentan para las EXCLUDE (RN-AG-10).
+     */
+    public void cancelar(String motivo, Instant ahora, Duration limiteTardio) {
+        if (estado != EstadoTurno.PROGRAMADO) {
+            throw new TransicionInvalidaException("Solo se pueden cancelar turnos programados.");
+        }
+        if (!inicio.isAfter(ahora)) {
+            throw new TransicionInvalidaException("El turno ya empezó: no se puede cancelar.");
+        }
+        this.estado = ReglasAgenda.esCancelacionTardia(inicio, ahora, limiteTardio)
+                ? EstadoTurno.CANCELADO_TARDIO
+                : EstadoTurno.CANCELADO;
+        this.canceladoEn = ahora;
+        this.motivoCancelacion = normalizarMotivo(motivo);
+    }
+
+    private static String normalizarMotivo(String motivo) {
+        if (motivo == null || motivo.isBlank()) {
+            return null;
+        }
+        return motivo.strip();
+    }
+
+    public String getMotivoCancelacion() {
+        return motivoCancelacion;
+    }
+
+    public Instant getCanceladoEn() {
+        return canceladoEn;
     }
 
     public int getVersion() {

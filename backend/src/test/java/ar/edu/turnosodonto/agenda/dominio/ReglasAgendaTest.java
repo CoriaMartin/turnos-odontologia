@@ -48,6 +48,15 @@ class ReglasAgendaTest {
         assertThat(ReglasAgenda.primerConflicto(adyacente, List.of(existente), Function.identity())).isEmpty();
     }
 
+    /** RN-CA-01/04: es tardía solo si faltan MENOS horas que el límite; exactamente en el límite no lo es. */
+    @ParameterizedTest(name = "faltan {0} min con límite de {1} h → tardía {2}")
+    @CsvSource({"1500, 24, false", "1440, 24, false", "1439, 24, true", "660, 24, true", "1500, 48, true", "1, 0, false"})
+    void cancelacionTardia(int minutosHastaElInicio, int horasLimite, boolean tardia) {
+        Instant inicio = AHORA.plus(Duration.ofMinutes(minutosHastaElInicio));
+
+        assertThat(ReglasAgenda.esCancelacionTardia(inicio, AHORA, Duration.ofHours(horasLimite))).isEqualTo(tardia);
+    }
+
     @Test
     void soloLosEstadosActivosOcupanHorario() {
         assertThat(EstadoTurno.queOcupanHorario())

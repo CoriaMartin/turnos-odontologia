@@ -11,6 +11,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
+import org.junit.jupiter.params.provider.NullSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import ar.edu.turnosodonto.agenda.dominio.EstadoTurno;
 import ar.edu.turnosodonto.agenda.dominio.Intervalo;
@@ -23,7 +25,7 @@ import ar.edu.turnosodonto.pacientes.Paciente;
 import ar.edu.turnosodonto.prestaciones.DatosPrestacion;
 import ar.edu.turnosodonto.prestaciones.Prestacion;
 
-/** Transición de reprogramación en la entidad (RN-ES-03), sin Spring ni base. */
+/** Transiciones de reprogramación (RN-ES-03) y cancelación (RN-CA) en la entidad, sin Spring ni base. */
 class TurnoTest {
 
     private static final Instant AHORA = Instant.parse("2026-11-30T12:00:00Z");
@@ -76,5 +78,72 @@ class TurnoTest {
         assertThatThrownBy(() -> turno.validarReprogramable(duranteElTurno))
                 .isInstanceOf(TransicionInvalidaException.class)
                 .extracting("codigo").isEqualTo("TRANSICION_INVALIDA");
+    }
+
+    // --- Cancelación (C-09, RN-CA, RN-ES-02). MANIANA está 25 h después de AHORA. ---
+
+    private static final Duration LIMITE_24_H = Duration.ofHours(24);
+
+    @Test
+    void cancelacionAnticipadaQuedaCanceladoYRegistraHoraYMotivo() {
+        turno.cancelar("  Viaje imprevisto  ", AHORA, LIMITE_24_H);
+
+        assertThat(turno.getEstado()).isEqualTo(EstadoTurno.CANCELADO);
+        assertThat(turno.getCanceladoEn()).isEqualTo(AHORA);
+        assertThat(turno.getMotivoCancelacion()).isEqualTo("Viaje imprevisto");
+        assertThat(turno.intervalo()).isEqualTo(Intervalo.de(MANIANA, Duration.ofMinutes(45)));
+    }
+
+    @Test
+    void cancelacionConMenosHorasQueElLimiteEsTardia() {
+        Instant onceHorasAntes = MANIANA.minus(Duration.ofHours(11));
+
+        turno.cancelar(null, onceHorasAntes, LIMITE_24_H);
+
+        assertThat(turno.getEstado()).isEqualTo(EstadoTurno.CANCELADO_TARDIO);
+    }
+
+    @Test
+    void cancelacionExactamenteEnElLimiteNoEsTardia() {
+        turno.cancelar(null, MANIANA.minus(LIMITE_24_H), LIMITE_24_H);
+
+        assertThat(turno.getEstado()).isEqualTo(EstadoTurno.CANCELADO);
+    }
+
+    @Test
+    void conLimiteCeroNuncaEsTardia() {
+        turno.cancelar(null, MANIANA.minusSeconds(1), Duration.ZERO);
+
+        assertThat(turno.getEstado()).isEqualTo(EstadoTurno.CANCELADO);
+    }
+
+    @ParameterizedTest
+    @NullSource
+    @ValueSource(strings = {"", "   "})
+    void motivoVacioQuedaNulo(String motivo) {
+        turno.cancelar(motivo, AHORA, LIMITE_24_H);
+
+        assertThat(turno.getMotivoCancelacion()).isNull();
+    }
+
+    @ParameterizedTest
+    @EnumSource(value = EstadoTurno.class, names = {"CANCELADO", "CANCELADO_TARDIO", "ATENDIDO", "AUSENTE"})
+    void unTurnoQueNoEstaProgramadoNoSeCancela(EstadoTurno estado) throws Exception {
+        forzarEstado(estado);
+
+        assertThatThrownBy(() -> turno.cancelar("Otro motivo", AHORA, LIMITE_24_H))
+                .isInstanceOf(TransicionInvalidaException.class);
+        assertThat(turno.getEstado()).isEqualTo(estado);
+        assertThat(turno.getMotivoCancelacion()).isNull();
+        assertThat(turno.getCanceladoEn()).isNull();
+    }
+
+    @Test
+    void unTurnoQueEmpiezaJustoAhoraNoSeCancela() {
+        assertThatThrownBy(() -> turno.cancelar(null, MANIANA, LIMITE_24_H))
+                .isInstanceOf(TransicionInvalidaException.class)
+                .extracting("codigo").isEqualTo("TRANSICION_INVALIDA");
+        assertThat(turno.getEstado()).isEqualTo(EstadoTurno.PROGRAMADO);
+        assertThat(turno.getCanceladoEn()).isNull();
     }
 }

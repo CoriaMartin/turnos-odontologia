@@ -20,7 +20,9 @@ public record TurnoResponse(
         Long profesionalId,
         Long sillonId,
         String observaciones,
-        int version) {
+        int version,
+        String motivoCancelacion,
+        OffsetDateTime canceladoEn) {
 
     public record PacienteResumen(Long id, String nombre, String apellido) {
     }
@@ -42,6 +44,8 @@ public record TurnoResponse(
                 t.getProfesional().getId(),
                 t.getSillon().getId(),
                 t.getObservaciones(),
-                t.getVersion());
+                t.getVersion(),
+                t.getMotivoCancelacion(),
+                t.getCanceladoEn() == null ? null : t.getCanceladoEn().atZone(ZONA).toOffsetDateTime());
     }
 }

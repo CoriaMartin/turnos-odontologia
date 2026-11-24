@@ -20,13 +20,14 @@ import ar.edu.turnosodonto.agenda.dominio.EstadoTurno;
 import ar.edu.turnosodonto.agenda.dominio.Intervalo;
 import ar.edu.turnosodonto.agenda.dominio.ReglasAgenda;
 import ar.edu.turnosodonto.agenda.recursos.RecursosConsultorio;
+import ar.edu.turnosodonto.configuracion.ConfiguracionService;
 import ar.edu.turnosodonto.pacientes.Paciente;
 import ar.edu.turnosodonto.pacientes.PacienteService;
 import ar.edu.turnosodonto.prestaciones.Prestacion;
 import ar.edu.turnosodonto.prestaciones.PrestacionService;
 
 /**
- * Alta, reprogramación y consulta de turnos (spec turnos). El no solapamiento se valida acá y además lo
+ * Alta, reprogramación, cancelación y consulta de turnos (spec turnos). El no solapamiento se valida acá y además lo
  * garantiza la base con las restricciones EXCLUDE (RN-AG-09): si dos solicitudes compiten, la base rechaza
  * la segunda y se responde el mismo error.
  */
@@ -54,11 +55,12 @@ public class TurnoService {
     private final ConsultaConflictos conflictos;
     private final BloqueoAgenda bloqueo;
     private final ApplicationEventPublisher eventos;
+    private final ConfiguracionService configuracion;
     private final Clock reloj;
 
     public TurnoService(TurnoRepository turnos, PacienteService pacientes, PrestacionService prestaciones,
             RecursosConsultorio recursosConsultorio, ConsultaConflictos conflictos, BloqueoAgenda bloqueo,
-            ApplicationEventPublisher eventos, Clock reloj) {
+            ApplicationEventPublisher eventos, ConfiguracionService configuracion, Clock reloj) {
         this.turnos = turnos;
         this.pacientes = pacientes;
         this.prestaciones = prestaciones;
@@ -66,6 +68,7 @@ public class TurnoService {
         this.conflictos = conflictos;
         this.bloqueo = bloqueo;
         this.eventos = eventos;
+        this.configuracion = configuracion;
         this.reloj = reloj;
     }
 
@@ -126,6 +129,25 @@ public class TurnoService {
         eventos.publishEvent(new TurnoReprogramado(turno.getId(), inicioAnterior, nuevo.inicio()));
         log.info("Turno reprogramado id={}", turno.getId());
         return turno;
+    }
+
+    /**
+     * RN-ES-02 y RN-CA: cancela un turno programado y futuro. CANCELADO_TARDIO si falta menos que las horas de
+     * cancelación tardía de la configuración. El motivo nunca se loguea: es texto libre (RN-DS).
+     */
+    @Transactional
+    public Turno cancelar(Long id, String motivo) {
+        Turno turno = turnos.buscarParaActualizar(id).orElseThrow(TurnoNoEncontradoException::new);
+        Duration limiteTardio = Duration.ofHours(configuracion.obtener().getHorasCancelacionTardia());
+        turno.cancelar(motivo, reloj.instant(), limiteTardio);
+        try {
+            turnos.saveAndFlush(turno);
+        } catch (ObjectOptimisticLockingFailureException e) {
+            throw new TurnoModificadoException();
+        }
+        log.info("Turno cancelado id={} estado={}", turno.getId(), turno.getEstado());
+        // Mismo contexto de persistencia: inicializa paciente y prestación para la respuesta (open-in-view apagado).
+        return turnos.buscarConDetalle(id).orElseThrow(TurnoNoEncontradoException::new);
     }
 
     @Transactional(readOnly = true)

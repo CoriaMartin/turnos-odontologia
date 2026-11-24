@@ -27,7 +27,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
 
 /**
- * Spec turnos, escenario "Dos creaciones concurrentes en el mismo horario": dos POST reales simultáneos,
+ * Spec turnos, escenarios de concurrencia con POST reales simultáneos.
+ *
+ * <p>"Dos creaciones concurrentes en el mismo horario": dos POST reales simultáneos,
  * cada uno en su propia transacción. Exactamente uno se crea; el otro recibe TURNO_SOLAPADO, ya sea porque
  * el servicio vio el turno ya confirmado o porque la restricción EXCLUDE rechazó el INSERT (23P01).
  */
@@ -97,6 +99,58 @@ class TurnoConcurrenciaIT {
             assertThat(estados).containsExactlyInAnyOrder(HttpStatus.CREATED, HttpStatus.CONFLICT);
             assertThat(cuerpos).anySatisfy(c -> assertThat(c).contains("TURNO_SOLAPADO"));
             assertThat(jdbc.queryForObject("select count(*) from turno", Integer.class)).isEqualTo(1);
+        } finally {
+            hilos.shutdownNow();
+        }
+    }
+
+    /**
+     * Spec turnos (C-09), escenario "Dos cancelaciones concurrentes": el SELECT ... FOR UPDATE serializa las dos;
+     * la segunda ve el turno ya cancelado y responde TRANSICION_INVALIDA. Queda el motivo de la que respondió 200.
+     */
+    @RepeatedTest(5)
+    void dosCancelacionesConcurrentesDelMismoTurno() throws Exception {
+        HttpHeaders encabezados = new HttpHeaders();
+        encabezados.setContentType(MediaType.APPLICATION_JSON);
+        encabezados.setBearerAuth(token);
+        String alta = "{\"pacienteId\":" + pacienteId + ",\"prestacionId\":" + limpiezaId
+                + ",\"inicio\":\"2027-02-01T10:00:00-03:00\"}";
+        @SuppressWarnings("unchecked")
+        Map<String, Object> turno = http.postForObject("/api/turnos", new HttpEntity<>(alta, encabezados), Map.class);
+        String url = "/api/turnos/" + turno.get("id") + "/cancelacion";
+        List<String> motivos = List.of("Motivo A", "Motivo B");
+
+        CountDownLatch largada = new CountDownLatch(1);
+        ExecutorService hilos = Executors.newFixedThreadPool(2);
+        try {
+            List<Future<ResponseEntity<String>>> respuestas = new ArrayList<>();
+            for (String motivo : motivos) {
+                HttpEntity<String> pedido = new HttpEntity<>("{\"motivo\":\"" + motivo + "\"}", encabezados);
+                respuestas.add(hilos.submit(() -> {
+                    largada.await();
+                    return http.postForEntity(url, pedido, String.class);
+                }));
+            }
+            largada.countDown();
+
+            List<HttpStatus> estados = new ArrayList<>();
+            String motivoGanador = null;
+            String cuerpoRechazado = null;
+            for (int i = 0; i < respuestas.size(); i++) {
+                ResponseEntity<String> respuesta = respuestas.get(i).get(30, TimeUnit.SECONDS);
+                HttpStatus estado = HttpStatus.valueOf(respuesta.getStatusCode().value());
+                estados.add(estado);
+                if (estado == HttpStatus.OK) {
+                    motivoGanador = motivos.get(i);
+                } else {
+                    cuerpoRechazado = respuesta.getBody();
+                }
+            }
+
+            assertThat(estados).containsExactlyInAnyOrder(HttpStatus.OK, HttpStatus.CONFLICT);
+            assertThat(cuerpoRechazado).contains("TRANSICION_INVALIDA");
+            assertThat(jdbc.queryForObject("select motivo_cancelacion from turno where id = ?", String.class,
+                    ((Number) turno.get("id")).longValue())).isEqualTo(motivoGanador);
         } finally {
             hilos.shutdownNow();
         }
