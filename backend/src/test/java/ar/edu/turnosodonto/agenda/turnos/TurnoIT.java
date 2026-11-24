@@ -257,7 +257,8 @@ class TurnoIT {
                 .andExpect(jsonPath("$.fin").value("2026-12-01T10:45:00-03:00"))
                 .andExpect(jsonPath("$.estado").value("PROGRAMADO"))
                 .andExpect(jsonPath("$.paciente.apellido").value("Ficticio Turnos"))
-                .andExpect(jsonPath("$.prestacion.nombre").value("Limpieza"));
+                .andExpect(jsonPath("$.prestacion.nombre").value("Limpieza"))
+                .andExpect(jsonPath("$.version").value(0));
     }
 
     @Test

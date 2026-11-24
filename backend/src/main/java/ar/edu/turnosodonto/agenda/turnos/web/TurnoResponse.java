@@ -19,7 +19,8 @@ public record TurnoResponse(
         PrestacionResumen prestacion,
         Long profesionalId,
         Long sillonId,
-        String observaciones) {
+        String observaciones,
+        int version) {
 
     public record PacienteResumen(Long id, String nombre, String apellido) {
     }
@@ -40,6 +41,7 @@ public record TurnoResponse(
                 new PrestacionResumen(t.getPrestacion().getId(), t.getPrestacion().getNombre()),
                 t.getProfesional().getId(),
                 t.getSillon().getId(),
-                t.getObservaciones());
+                t.getObservaciones(),
+                t.getVersion());
     }
 }

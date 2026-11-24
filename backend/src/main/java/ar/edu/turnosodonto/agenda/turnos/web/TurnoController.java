@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,5 +35,10 @@ public class TurnoController {
     @GetMapping("/{id}")
     public TurnoResponse obtener(@PathVariable Long id) {
         return TurnoResponse.de(servicio.obtener(id));
+    }
+
+    @PutMapping("/{id}/reprogramacion")
+    public TurnoResponse reprogramar(@PathVariable Long id, @Valid @RequestBody ReprogramarTurnoRequest solicitud) {
+        return TurnoResponse.de(servicio.reprogramar(id, solicitud.aNuevoHorario()));
     }
 }

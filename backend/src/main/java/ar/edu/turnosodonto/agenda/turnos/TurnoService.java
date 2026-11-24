@@ -7,7 +7,9 @@ import java.time.Instant;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,9 +22,9 @@ import ar.edu.turnosodonto.prestaciones.Prestacion;
 import ar.edu.turnosodonto.prestaciones.PrestacionService;
 
 /**
- * Creación y consulta de turnos (spec turnos). El no solapamiento se valida acá y además lo garantiza
- * la base con las restricciones EXCLUDE (RN-AG-09): si dos solicitudes compiten, la base rechaza la
- * segunda y se responde el mismo error.
+ * Alta, reprogramación y consulta de turnos (spec turnos). El no solapamiento se valida acá y además lo
+ * garantiza la base con las restricciones EXCLUDE (RN-AG-09): si dos solicitudes compiten, la base rechaza
+ * la segunda y se responde el mismo error.
  */
 @Service
 public class TurnoService {
@@ -37,31 +39,35 @@ public class TurnoService {
             String observaciones) {
     }
 
+    /** Nuevo horario. {@code duracionMinutos} nulo = la duración actual del turno; {@code version} la que leyó el cliente. */
+    public record NuevoHorario(Instant inicio, Integer duracionMinutos, int version) {
+    }
+
     private final TurnoRepository turnos;
     private final PacienteService pacientes;
     private final PrestacionService prestaciones;
     private final RecursosConsultorio recursosConsultorio;
     private final ConsultaConflictos conflictos;
     private final BloqueoAgenda bloqueo;
+    private final ApplicationEventPublisher eventos;
     private final Clock reloj;
 
     public TurnoService(TurnoRepository turnos, PacienteService pacientes, PrestacionService prestaciones,
             RecursosConsultorio recursosConsultorio, ConsultaConflictos conflictos, BloqueoAgenda bloqueo,
-            Clock reloj) {
+            ApplicationEventPublisher eventos, Clock reloj) {
         this.turnos = turnos;
         this.pacientes = pacientes;
         this.prestaciones = prestaciones;
         this.recursosConsultorio = recursosConsultorio;
         this.conflictos = conflictos;
         this.bloqueo = bloqueo;
+        this.eventos = eventos;
         this.reloj = reloj;
     }
 
     @Transactional
     public Turno crear(NuevoTurno nuevo) {
-        if (ReglasAgenda.esPasado(nuevo.inicio(), reloj.instant())) {
-            throw new TurnoEnPasadoException();
-        }
+        validarNoPasado(nuevo.inicio());
         Paciente paciente = pacientes.obtener(nuevo.pacienteId());
         if (!paciente.isActivo()) {
             throw new PacienteInactivoParaTurnoException();
@@ -71,10 +77,7 @@ public class TurnoService {
             throw new PrestacionInactivaException();
         }
         int minutos = nuevo.duracionMinutos() != null ? nuevo.duracionMinutos() : prestacion.getDuracionMinutos();
-        if (!ReglasAgenda.duracionValida(minutos)) {
-            throw new IllegalArgumentException("Duración fuera de rango: la valida la API (5 a 480 minutos).");
-        }
-        Intervalo intervalo = Intervalo.de(nuevo.inicio(), Duration.ofMinutes(minutos));
+        Intervalo intervalo = intervalo(nuevo.inicio(), minutos);
 
         RecursosConsultorio.Recursos recursos = recursosConsultorio.recursos();
         Long profesionalId = recursos.profesional().getId();
@@ -82,29 +85,82 @@ public class TurnoService {
 
         // Serializa altas simultáneas sobre los mismos recursos (evita el deadlock entre las dos EXCLUDE).
         bloqueo.bloquear(profesionalId, sillonId);
-        conflictos.buscar(profesionalId, sillonId, intervalo).ifPresent(conflicto -> {
-            throw new TurnoSolapadoException(conflicto);
-        });
+        verificarSinConflicto(profesionalId, sillonId, intervalo, ConsultaConflictos.NINGUNO);
 
         Turno turno = Turno.programar(paciente, recursos.profesional(), recursos.sillon(), prestacion,
                 intervalo, nuevo.observaciones());
-        try {
-            turnos.saveAndFlush(turno);
-        } catch (DataIntegrityViolationException e) {
-            if (esViolacionDeExclusion(e)) {
-                // Otra transacción ocupó el horario entre la verificación y el INSERT.
-                throw new TurnoSolapadoException(
-                        conflictos.buscarEnTransaccionNueva(profesionalId, sillonId, intervalo).orElse(null));
-            }
-            throw e;
-        }
+        guardar(turno, profesionalId, sillonId, intervalo, ConsultaConflictos.NINGUNO);
         log.info("Turno creado id={}", turno.getId());
+        return turno;
+    }
+
+    /** RN-ES-03: mueve un turno programado y futuro a otro horario, conservando el turno. */
+    @Transactional
+    public Turno reprogramar(Long id, NuevoHorario horario) {
+        validarNoPasado(horario.inicio());
+        Turno turno = turnos.buscarConDetalle(id).orElseThrow(TurnoNoEncontradoException::new);
+        if (turno.getVersion() != horario.version()) {
+            throw new TurnoModificadoException();
+        }
+        int minutos = horario.duracionMinutos() != null
+                ? horario.duracionMinutos()
+                : (int) turno.intervalo().duracion().toMinutes();
+        Intervalo nuevo = intervalo(horario.inicio(), minutos);
+
+        Long profesionalId = turno.getProfesional().getId();
+        Long sillonId = turno.getSillon().getId();
+        bloqueo.bloquear(profesionalId, sillonId);
+
+        Instant ahora = reloj.instant();
+        Instant inicioAnterior = turno.getInicio();
+        // Validar y buscar conflictos ANTES de modificar: la consulta haría flush del turno ya cambiado.
+        turno.validarReprogramable(ahora);
+        verificarSinConflicto(profesionalId, sillonId, nuevo, turno.getId());
+        turno.reprogramar(nuevo, ahora);
+        guardar(turno, profesionalId, sillonId, nuevo, turno.getId());
+
+        eventos.publishEvent(new TurnoReprogramado(turno.getId(), inicioAnterior, nuevo.inicio()));
+        log.info("Turno reprogramado id={}", turno.getId());
         return turno;
     }
 
     @Transactional(readOnly = true)
     public Turno obtener(Long id) {
         return turnos.buscarConDetalle(id).orElseThrow(TurnoNoEncontradoException::new);
+    }
+
+    private void validarNoPasado(Instant inicio) {
+        if (ReglasAgenda.esPasado(inicio, reloj.instant())) {
+            throw new TurnoEnPasadoException();
+        }
+    }
+
+    private static Intervalo intervalo(Instant inicio, int minutos) {
+        if (!ReglasAgenda.duracionValida(minutos)) {
+            throw new IllegalArgumentException("Duración fuera de rango: la valida la API (5 a 480 minutos).");
+        }
+        return Intervalo.de(inicio, Duration.ofMinutes(minutos));
+    }
+
+    private void verificarSinConflicto(Long profesionalId, Long sillonId, Intervalo intervalo, long excluirId) {
+        conflictos.buscar(profesionalId, sillonId, intervalo, excluirId).ifPresent(conflicto -> {
+            throw new TurnoSolapadoException(conflicto);
+        });
+    }
+
+    private void guardar(Turno turno, Long profesionalId, Long sillonId, Intervalo intervalo, long excluirId) {
+        try {
+            turnos.saveAndFlush(turno);
+        } catch (ObjectOptimisticLockingFailureException e) {
+            throw new TurnoModificadoException();
+        } catch (DataIntegrityViolationException e) {
+            if (esViolacionDeExclusion(e)) {
+                // Otra transacción ocupó el horario entre la verificación y la escritura.
+                throw new TurnoSolapadoException(
+                        conflictos.buscarEnTransaccionNueva(profesionalId, sillonId, intervalo, excluirId).orElse(null));
+            }
+            throw e;
+        }
     }
 
     private static boolean esViolacionDeExclusion(Throwable error) {

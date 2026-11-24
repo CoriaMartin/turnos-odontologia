@@ -93,6 +93,33 @@ public class Turno extends EntidadAuditada {
         return new Intervalo(inicio, fin);
     }
 
+    /**
+     * RN-ES-03: solo un turno PROGRAMADO cuyo inicio todavía no llegó cambia de horario.
+     * El no solapamiento lo valida el servicio (y la base).
+     */
+    public void reprogramar(Intervalo nuevo, Instant ahora) {
+        validarReprogramable(ahora);
+        this.inicio = nuevo.inicio();
+        this.fin = nuevo.fin();
+    }
+
+    /**
+     * Valida la transición sin modificar el turno. El servicio la llama antes de buscar conflictos: si el
+     * turno ya estuviera modificado, la consulta haría flush del cambio y la EXCLUDE saltaría dentro de ella.
+     */
+    public void validarReprogramable(Instant ahora) {
+        if (estado != EstadoTurno.PROGRAMADO) {
+            throw new TransicionInvalidaException("Solo se pueden reprogramar turnos programados.");
+        }
+        if (!inicio.isAfter(ahora)) {
+            throw new TransicionInvalidaException("El turno ya empezó: no se puede reprogramar.");
+        }
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
     public Long getId() {
         return id;
     }
