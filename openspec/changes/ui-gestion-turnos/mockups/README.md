@@ -1,7 +1,7 @@
 # Maquetas · Gestión de Turnos (C-17)
 
 - **Design system revision:** 2
-- **Approval:** approved (2026-11-23, by user)
+- **Approval:** approved (2026-11-23, by Ludmi)
 - **Preview:** rendered (capturadas con Playwright en resoluciones desktop 1440x900 y mobile 390x844)
 - **Fecha:** 2026-11-23
 
