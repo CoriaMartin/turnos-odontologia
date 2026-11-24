@@ -59,13 +59,37 @@ CSS Modules con `var(--…)`. Los fondos de atendido y ausente toman `--estado-a
 ### D9 — Accesibilidad
 Cada turno es un `article` (o `li` dentro de una lista por día) con `aria-label` "10:00 a 10:45, Paciente Ficticio Tres, Limpieza, Programado". La región de la agenda lleva `aria-busy` mientras carga; el error usa `role="alert"`; el selector Día/Semana usa botones con `aria-pressed`, como en `components.html`. La línea de hora actual es decorativa para el layout pero lleva `role="img"` con su nombre ("Hora actual: 10:18").
 
+### D10 — Ajustes a la maqueta aprobada (apply, 2026-11-24, decisión de Agus)
+Al implementar se tomó la maqueta de Ludmi como referencia visual y se ajustó la spec donde la maqueta definía algo distinto o donde chocaba con una regla del proyecto:
+- **Se sigue la maqueta (y se actualizó la spec)**: navegación con flechas `‹`/`›` de nombre accesible "Día anterior"/"Día siguiente" o "Semana anterior"/"Semana siguiente" y campo "Fecha"; el período con el año y la cantidad de turnos activos ("· 2 turnos"); encabezados de día con dos dígitos ("Mié 02/12"); leyenda de estados; en la cuadrícula semanal los turnos compactos.
+- **Se aparta de la maqueta**:
+  - Los turnos compactos de la semana muestran además el estado en texto: la maqueta solo mostraba hora y apellido, y el estado dependía solo del color (va contra `brand.md`, "los estados se leen sin depender del color").
+  - Colores sueltos de la maqueta (`#ffffff` en el botón primario, `#f1b7b1` y `#7a1a12` en el aviso de error) y medidas en `px` se reemplazan por tokens o por variables locales documentadas, como en C-14.
+  - El rango horario de la línea de tiempo es el de la spec (08:00–20:00, extendido); la maqueta mostraba 09:00–16:30 como ejemplo.
+  - El badge del carril angosto de cancelados en móvil dice "Tardía" (como la maqueta), pero su nombre accesible sigue diciendo "Cancelación tardía".
+- **Queda para C-17**: botón "+ Nuevo turno", franjas "Horario libre", turnos como enlaces al detalle (chevron). En C-16 los turnos no son interactivos.
+- **Queda fuera del change**: menú "Agenda / Prestaciones / Pacientes" y el nombre del usuario en la barra superior (son de `AppLayout`; las pantallas de C-15 todavía no existen).
+
+### D11 — Estados sin captura en la maqueta (apply, 2026-11-24, decisión de Agus)
+La maqueta no trae captura de estos estados; se resolvieron con el sistema de diseño y el estilo del resto de la maqueta:
+- **Cargando**: el encabezado, la navegación y la leyenda quedan visibles; en lugar de los turnos, un bloque con fondo `--color-sunken`, borde `--color-line`, un indicador giratorio en `--color-brand-600` (se detiene con `prefers-reduced-motion`) y el texto "Cargando turnos…". La región lleva `aria-busy="true"`.
+- **Semanal en móvil**: la maqueta ocultaba la semana y el selector en pantallas angostas; se mantiene el selector y la semana se muestra como lista por día (encabezado "Lun 30/11" y los turnos completos, igual que en la vista diaria pero sin posición), con "Hoy" destacado como en la cuadrícula y los cancelados de la semana al final. Los días sin turnos muestran "Sin turnos".
+- **Día sin turnos**: el bloque punteado de la maqueta ("No hay turnos para este día" + "Cuando agendes uno, va a aparecer en esta línea de tiempo.") sin el botón "+ Nuevo turno" (C-17), arriba de la línea de tiempo vacía. Semana sin turnos: "No hay turnos esta semana" + "Cuando agendes uno, va a aparecer en esta semana."
+- **Error al cargar**: el aviso de la maqueta con tokens (`--color-danger-100`/`--color-danger-700`), título "No pudimos cargar la agenda", "Tus turnos siguen guardados." más el mensaje del cliente de la API para ese error, y "Reintentar" como botón secundario debajo.
+- La vista (diaria/semanal y cuadrícula/lista) se decide en JS con `matchMedia('(min-width: 900px)')` y no con CSS, para no duplicar los turnos en el DOM.
+
 ### UI Mockups
 - Design system revision: 2
 - Decision: yes (2026-11-24)
 - Mockups: [mockups/](mockups/) — hecha por Ludmi: agenda semanal (escritorio) y diaria (móvil y escritorio), con cancelados en carril angosto (D6), vista por defecto según ancho (D2), hora actual y horario libre. Fuentes: `design-system/components.html` §Agenda diaria y §Estados del turno, `discovery/informe-competitivo.md` §D.3 y la spec `web-agenda`.
 - Approval: approved (2026-11-23, by Ludmi; en el equipo cada integrante aprueba su propia parte)
 - Preview: rendered (2026-11-23, Playwright, por Ludmi: `mockups/*-1440x900.png`, `mockups/*-390x844.png`)
-- Visual verify: —
+- Visual verify: passed (2026-11-24, Playwright contra `npm run dev` con la API simulada y el reloj fijo en el martes 01/12 a las 11:22, los mismos datos ficticios de la maqueta: `mockups/verify/`, 10 capturas a 390x844 y 1440x900). Ver [evidencia.md](evidencia.md).
+  - Diaria móvil, diaria escritorio y semanal escritorio coinciden con las capturas de la maqueta, salvo lo decidido en D10 (rango 08:00–20:00, sin "+ Nuevo turno" ni menú, estado en texto en la semana).
+  - Mayor, corregida: en móvil la navegación se partía en tres filas y el badge de los turnos de 30 min quedaba cortado. Ahora `‹ Fecha › Hoy` va en una fila y el badge arriba a la derecha, como en la maqueta.
+  - Menor, corregida: faltaba el rótulo "Ahora" de la línea de hora actual en escritorio; el turno de 20 min de la semana pisaba sus tres líneas (ahora va en una, con elipsis).
+  - Menor, sin cambios: en la lista semanal móvil, el chip de un cancelado con nombre largo parte la fecha en dos líneas.
+  - Estados sin maqueta (D11) revisados: semanal móvil, día vacío, cargando y error, en los dos tamaños. Consola: sin errores de la app (solo las fallas de red forzadas en el caso de error).
 
 ## Risks / Trade-offs
 

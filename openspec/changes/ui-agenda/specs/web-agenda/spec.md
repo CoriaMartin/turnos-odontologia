@@ -7,12 +7,16 @@ Define la pantalla de agenda de la web app: cómo el odontólogo ve sus turnos p
 ## ADDED Requirements
 
 ### Requirement: Agenda en la ruta de inicio
-Con sesión iniciada, la ruta `/` SHALL mostrar la agenda con un título de nivel 1 "Agenda" y el período visible escrito en palabras (por ejemplo "Miércoles 2 de diciembre" o "Semana del 30 de noviembre al 6 de diciembre"). Sin `fecha` en la URL SHALL mostrar el día o la semana de hoy en la zona `America/Argentina/Buenos_Aires`.
+Con sesión iniciada, la ruta `/` SHALL mostrar la agenda con un título de nivel 1 "Agenda" y el período visible escrito en palabras (por ejemplo "Miércoles 2 de diciembre de 2026" o "Semana del 30 de noviembre al 6 de diciembre de 2026"), seguido de la cantidad de turnos activos cuando la hay. Sin `fecha` en la URL SHALL mostrar el día o la semana de hoy en la zona `America/Argentina/Buenos_Aires`.
 
 #### Scenario: Abrir la agenda sin parámetros
 - **WHEN** el usuario con sesión iniciada abre `/` el 2026-12-02 a las 10:00 (hora de Buenos Aires) en una pantalla angosta
 - **THEN** ve el título de nivel 1 "Agenda"
-- **AND** ve el período "Miércoles 2 de diciembre"
+- **AND** ve el período "Miércoles 2 de diciembre de 2026"
+
+#### Scenario: Cantidad de turnos del período
+- **WHEN** la vista diaria recibe dos turnos `PROGRAMADO` y uno `CANCELADO`
+- **THEN** junto al período se lee "2 turnos"
 
 #### Scenario: Hoy según la zona del consultorio
 - **WHEN** el usuario abre `/` el 2026-12-03 a las 01:30 UTC (22:30 del 2 de diciembre en Buenos Aires) en una pantalla angosta
@@ -47,19 +51,23 @@ La agenda SHALL reflejar la fecha y la vista en la URL como `fecha=AAAA-MM-DD` y
 - **AND** no ve ningún mensaje de error
 
 #### Scenario: Volver atrás después de navegar
-- **WHEN** el usuario está en el 2026-12-02, activa "Siguiente" y después usa Atrás del navegador
+- **WHEN** el usuario está en el 2026-12-02, activa "Día siguiente" y después usa Atrás del navegador
 - **THEN** la agenda vuelve a mostrar el miércoles 2 de diciembre
 
 ### Requirement: Navegación entre fechas
-La agenda SHALL ofrecer los controles "Anterior", "Hoy" y "Siguiente". En la vista diaria mueven un día; en la semanal, una semana. "Hoy" SHALL llevar al día o la semana actual sin cambiar la vista.
+La agenda SHALL ofrecer controles para ir al período anterior y al siguiente (con nombre accesible "Día anterior"/"Día siguiente" en la vista diaria y "Semana anterior"/"Semana siguiente" en la semanal), un botón "Hoy" y un campo "Fecha" para elegir un día. "Hoy" SHALL llevar al día o la semana actual sin cambiar la vista.
 
 #### Scenario: Día siguiente
-- **WHEN** el usuario está en la vista diaria del 2026-12-02 y activa "Siguiente"
+- **WHEN** el usuario está en la vista diaria del 2026-12-02 y activa "Día siguiente"
 - **THEN** ve el jueves 3 de diciembre
 
 #### Scenario: Semana anterior
-- **WHEN** el usuario está en la vista semanal del 30 de noviembre y activa "Anterior"
+- **WHEN** el usuario está en la vista semanal del 30 de noviembre y activa "Semana anterior"
 - **THEN** ve la semana del lunes 23 al domingo 29 de noviembre
+
+#### Scenario: Elegir una fecha
+- **WHEN** el usuario está en la vista diaria del 2026-12-02 y completa "Fecha" con 2026-12-15
+- **THEN** ve el martes 15 de diciembre
 
 #### Scenario: Volver a hoy
 - **WHEN** el 2026-12-02 el usuario está en la vista diaria del 2026-12-20 y activa "Hoy"
@@ -90,22 +98,35 @@ La vista diaria SHALL mostrar una línea de tiempo en franjas de 30 minutos de 0
 - **THEN** la línea de tiempo empieza a las 07:00 y el turno se ve completo
 
 ### Requirement: Vista semanal
-La vista semanal SHALL mostrar los siete días de lunes a domingo, cada uno con su encabezado (por ejemplo "Lun 30/11") y sus turnos ordenados por horario, y SHALL destacar el día de hoy si pertenece a la semana.
+La vista semanal SHALL mostrar los siete días de lunes a domingo, cada uno con su encabezado (por ejemplo "Lun 30/11") y sus turnos activos ordenados por horario; los cancelados de la semana SHALL listarse después, aparte. SHALL destacar el día de hoy si pertenece a la semana. En pantallas anchas los días son columnas sobre una línea de tiempo; en pantallas angostas, una lista por día.
 
 #### Scenario: Turnos en distintos días
 - **WHEN** la semana del 30 de noviembre tiene un turno el lunes a las 09:00 y otro el miércoles a las 11:00
-- **THEN** el turno de las 09:00 aparece bajo "Lun 30/11" y el de las 11:00 bajo "Mié 2/12"
+- **THEN** el turno de las 09:00 aparece bajo "Lun 30/11" y el de las 11:00 bajo "Mié 02/12"
+
+#### Scenario: Semana en una pantalla angosta
+- **WHEN** en una pantalla de 390 px el usuario ve la semana del 30 de noviembre con un turno el miércoles a las 11:00
+- **THEN** ve una lista con un encabezado por día y el turno completo bajo "Mié 02/12"
+
+#### Scenario: Cancelados de la semana aparte
+- **WHEN** la semana tiene un turno `CANCELADO` el martes a las 11:30
+- **THEN** el turno aparece bajo "Cancelados de la semana" y no en la columna del martes
 
 #### Scenario: Hoy destacado
 - **WHEN** el 2026-12-02 el usuario ve la semana del 30 de noviembre
-- **THEN** el día "Mié 2/12" está marcado como el día actual para tecnologías de asistencia (`aria-current="date"`)
+- **THEN** el día "Mié 02/12" está marcado como el día actual para tecnologías de asistencia (`aria-current="date"`)
 
 ### Requirement: Datos visibles de cada turno
-Cada turno SHALL mostrar su horario de inicio y fin en formato 24 h (`HH:MM – HH:MM`), el nombre y apellido del paciente, la prestación y un badge de estado. Su nombre accesible SHALL incluir esos cuatro datos.
+Cada turno SHALL mostrar su horario de inicio y fin en formato 24 h (`HH:MM – HH:MM`), el nombre y apellido del paciente, la prestación y un badge de estado. En la cuadrícula semanal de pantallas anchas, por falta de espacio, SHALL mostrar al menos la hora de inicio, el apellido y el estado en texto. En todos los casos su nombre accesible SHALL incluir los cuatro datos.
 
 #### Scenario: Turno programado
 - **WHEN** la agenda recibe un turno `PROGRAMADO` de 10:00 a 10:45 de "Paciente Ficticio Tres" con la prestación "Limpieza"
 - **THEN** se ve "10:00 – 10:45", "Paciente Ficticio Tres", "Limpieza" y el badge "Programado"
+
+#### Scenario: Turno en la cuadrícula semanal
+- **WHEN** en una pantalla de 1440 px la semana tiene ese mismo turno
+- **THEN** en la columna de su día se ve "10:00", "Ficticio Tres" y "Programado"
+- **AND** su nombre accesible incluye "10:00 a 10:45", "Paciente Ficticio Tres", "Limpieza" y "Programado"
 
 ### Requirement: Badge de cada estado
 El badge SHALL decir "Programado", "Atendido", "Ausente", "Cancelado" o "Cancelación tardía" según el estado `PROGRAMADO`, `ATENDIDO`, `AUSENTE`, `CANCELADO` o `CANCELADO_TARDIO`, con los colores de estado del sistema de diseño. La pantalla SHALL NOT mostrar los nombres técnicos de los estados.
@@ -128,7 +149,7 @@ Los turnos `CANCELADO` y `CANCELADO_TARDIO` SHALL verse con un tratamiento propi
 - **THEN** el turno muestra el badge "Cancelado" y su horario y paciente se ven tachados
 
 ### Requirement: Línea de hora actual
-Cuando el período visible incluye el momento actual dentro del horario de la línea de tiempo, la agenda SHALL mostrar una línea de hora actual a la altura que corresponde, con un nombre accesible que indique la hora, y SHALL actualizar su posición al menos una vez por minuto. En otro período SHALL NOT mostrarla.
+Cuando el período visible incluye el momento actual dentro del horario de la línea de tiempo (vista diaria o cuadrícula semanal), la agenda SHALL mostrar una línea de hora actual a la altura que corresponde, con un nombre accesible que indique la hora, y SHALL actualizar su posición al menos una vez por minuto. En otro período SHALL NOT mostrarla.
 
 #### Scenario: Hoy a media mañana
 - **WHEN** el 2026-12-02 a las 10:18 el usuario ve la vista diaria del 2026-12-02
@@ -149,10 +170,10 @@ Mientras la agenda del período no llegó, la web app SHALL mostrar el texto "Ca
 - **WHEN** el usuario abre la agenda y la API todavía no respondió
 - **THEN** ve "Cargando turnos…"
 - **AND** la región de la agenda tiene `aria-busy="true"`
-- **AND** los controles "Anterior", "Hoy" y "Siguiente" siguen visibles
+- **AND** los controles "Día anterior", "Hoy" y "Día siguiente" siguen visibles
 
 ### Requirement: Período sin turnos
-Si la API devuelve una lista vacía, la agenda SHALL mostrar "No hay turnos para este día" en la vista diaria o "No hay turnos esta semana" en la semanal. En la vista diaria la línea de tiempo SHALL seguir visible.
+Si la API devuelve una lista vacía, la agenda SHALL mostrar "No hay turnos para este día" en la vista diaria o "No hay turnos esta semana" en la semanal, con una frase que explique dónde van a aparecer. En la vista diaria la línea de tiempo SHALL seguir visible.
 
 #### Scenario: Día sin turnos
 - **WHEN** la API devuelve una lista vacía para la vista diaria del 2026-12-05

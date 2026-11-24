@@ -80,9 +80,44 @@ describe('web-sesion · Sesión vencida o rechazada por la API', () => {
   });
 });
 
+describe('web-agenda · Sesión vencida al consultar la agenda', () => {
+  it('Token rechazado al cargar la agenda: login con el aviso y, al ingresar, vuelve a la misma fecha y vista', async () => {
+    let loginHecho = false;
+    fetchSimulado.mockImplementation((entrada) => {
+      const url = String(entrada);
+      if (url.endsWith('/auth/login')) {
+        loginHecho = true;
+        return Promise.resolve(
+          new Response(JSON.stringify({ token: 'token-nuevo', tipo: 'Bearer', expiraEn: '2999-01-01T00:00:00Z' }), {
+            status: 200,
+            headers: { 'Content-Type': 'application/json' },
+          }),
+        );
+      }
+      return Promise.resolve(loginHecho ? new Response('[]', { status: 200 }) : noAutenticado());
+    });
+    const usuario = userEvent.setup();
+    const { router } = renderConRutas('/?fecha=2026-12-02&vista=dia', { conSesion: true });
+
+    expect(await screen.findByRole('heading', { level: 1, name: 'Ingresá a tu agenda' })).toBeInTheDocument();
+    expect(within(screen.getByRole('status')).getByText('Tu sesión venció')).toBeInTheDocument();
+    expect(screen.queryByText('No pudimos cargar la agenda')).not.toBeInTheDocument();
+    expect(router.state.location.state).toEqual({ desde: '/?fecha=2026-12-02&vista=dia' });
+
+    await usuario.type(screen.getByLabelText('Email'), 'consultorio@ejemplo.com');
+    await usuario.type(screen.getByLabelText('Contraseña'), 'secreta');
+    await usuario.click(screen.getByRole('button', { name: 'Ingresar' }));
+
+    expect(await screen.findByRole('heading', { level: 1, name: 'Agenda' })).toBeInTheDocument();
+    expect(router.state.location.search).toBe('?fecha=2026-12-02&vista=dia');
+    expect(screen.getByText('Miércoles 2 de diciembre de 2026')).toBeInTheDocument();
+  });
+});
+
 describe('web-sesion · Cierre de sesión', () => {
   it('Cerrar sesión: muestra el login sin aviso, descarta datos y no envía más el token', async () => {
-    fetchSimulado.mockResolvedValue(new Response('{}', { status: 200 }));
+    // Una respuesta nueva por solicitud: desde C-16, `/` ya pide la agenda antes del `apiFetch` del final.
+    fetchSimulado.mockImplementation(() => Promise.resolve(new Response('[]', { status: 200 })));
     const usuario = userEvent.setup();
     const { router, queryClient } = renderConRutas('/', { conSesion: true });
     queryClient.setQueryData(['pacientes'], DATOS_EN_CACHE);

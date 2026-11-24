@@ -1,6 +1,12 @@
 import { screen, within } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
+import { simularApiAgenda } from '../test/agenda';
 import { renderConRutas } from '../test/renderConRutas';
+
+// Con sesión, `/` es la agenda (C-16) y pide turnos: la API se simula para no salir a la red.
+beforeEach(() => {
+  simularApiAgenda();
+});
 
 describe('web-app-shell · Barra superior con la marca', () => {
   it('Página de inicio con la marca: logo, nombre y "Cerrar sesión", sin rótulo provisorio', () => {
