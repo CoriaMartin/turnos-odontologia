@@ -1,6 +1,6 @@
 # Maqueta C-16 · UI Agenda
 
-Approval: approved (2026-11-23, by usuario)
+Approval: approved (2026-11-23, by Ludmi)
 Design system revision: 2
 Preview: rendered (2026-11-23, Playwright, Chromium)
 

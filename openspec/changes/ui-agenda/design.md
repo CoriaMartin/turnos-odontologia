@@ -62,9 +62,9 @@ Cada turno es un `article` (o `li` dentro de una lista por día) con `aria-label
 ### UI Mockups
 - Design system revision: 2
 - Decision: yes (2026-11-24)
-- Mockups: **pendiente: a cargo de Ludmi** (plan del equipo en CHANGES.md: "maqueta C-16", tanda 2). Al 2026-11-24 no existe en el repo, en ninguna rama remota ni en el historial. Fuentes que tiene que usar: `design-system/components.html` §Agenda diaria y §Estados del turno, `discovery/informe-competitivo.md` §D.3 (Codental: vistas día/semana; CareStack: densidad), y la spec `web-agenda` de este change. Puntos a resolver en la maqueta: carril de cancelados (D6), vista semanal en móvil, vista por defecto en escritorio (D2).
-- Approval: pending (la aprueba el líder)
-- Preview: —
+- Mockups: [mockups/](mockups/) — hecha por Ludmi: agenda semanal (escritorio) y diaria (móvil y escritorio), con cancelados en carril angosto (D6), vista por defecto según ancho (D2), hora actual y horario libre. Fuentes: `design-system/components.html` §Agenda diaria y §Estados del turno, `discovery/informe-competitivo.md` §D.3 y la spec `web-agenda`.
+- Approval: approved (2026-11-23, by Ludmi; en el equipo cada integrante aprueba su propia parte)
+- Preview: rendered (2026-11-23, Playwright, por Ludmi: `mockups/*-1440x900.png`, `mockups/*-390x844.png`)
 - Visual verify: —
 
 ## Risks / Trade-offs
