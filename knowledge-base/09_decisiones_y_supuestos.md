@@ -64,6 +64,20 @@
 **Justificación**: la agenda planifica turnos futuros; la regla es simple, verificable y evita estados inconsistentes (un turno nuevo nacería en `PROGRAMADO` con inicio ya vencido).
 **Trade-offs aceptados**: no se puede registrar de forma retroactiva un turno atendido sin haberlo cargado antes. Si hiciera falta, se propone como change nuevo.
 
+### DD-13 — Sin proveedor de email real por ahora
+**Decisión**: el MVP no usa ningún proveedor de correo real. El envío queda apagado (`MAIL_ENABLED=false`) y C-13 se implementa y verifica con un doble de `EnviadorEmail`: los tests comprueban destinatario, contenido y momento del recordatorio sin mandar nada. El adaptador SMTP sigue existiendo y configurable por variables de entorno, para activarlo más adelante sin cambiar código.
+**Contexto**: pregunta abierta de prioridad Alta (proveedor y remitente) que bloqueaba C-13. Decidida por el equipo el 2026-11-24. Precisa [DD-05](#dd-05--email-por-smtp-real-detrás-de-una-interfaz): la interfaz y el adaptador se mantienen, pero no se elige proveedor.
+**Alternativas consideradas**: Gmail con contraseña de aplicación (cuenta del proyecto); Brevo (plan gratuito, 300/día); Mailpit local para la demo.
+**Justificación**: la consigna se cumple con la spec, los tests por escenario y el ciclo completo; un proveedor real agrega cuentas y credenciales sin aportar a la evaluación.
+**Trade-offs aceptados**: ningún paciente recibe emails reales mientras dure el MVP. Si para el video se quiere mostrar un recordatorio, se puede usar Mailpit local (ejecutable sin Docker, bandeja en `http://localhost:8025`) sin crear cuentas.
+
+### DD-14 — Consentimiento explícito para los recordatorios
+**Decisión**: solo se envía recordatorio a pacientes con email **y** `aceptaRecordatorios = true` ([RN-RE-02](05_reglas_de_negocio.md)). La casilla nace desmarcada (C-06) y el paciente la acepta al darse de alta o editarse.
+**Contexto**: pregunta abierta de prioridad Alta (antes SU-03). Decidida por el equipo el 2026-11-24.
+**Alternativas consideradas**: enviar a todo paciente con email (consentimiento implícito).
+**Justificación**: Ley 25.326 (datos de salud sensibles): usar el email con una finalidad nueva requiere consentimiento; es la opción más prudente y ya estaba implementada en el modelo.
+**Trade-offs aceptados**: menos recordatorios enviados que con consentimiento implícito.
+
 ## Supuestos inferidos
 
 ### SU-01 — No se dan turnos en el pasado
@@ -75,9 +89,7 @@
 **Cómo validar**: configurable; confirmar valor por defecto con usuarios.
 
 ### SU-03 — El paciente debe aceptar explícitamente los recordatorios
-**Origen**: Ley 25.326 e informe §C.4.
-**Riesgo si es falso**: se envían menos recordatorios de los posibles.
-**Cómo validar**: consulta con la cátedra o asesoría legal.
+**Estado**: resuelto, ahora es la decisión [DD-14](#dd-14--consentimiento-explícito-para-los-recordatorios) (2026-11-24).
 
 ### SU-04 — El email es un canal suficiente
 **Origen**: decisión del equipo.
