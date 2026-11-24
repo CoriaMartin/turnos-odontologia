@@ -6,7 +6,7 @@
 >
 > **Alcance**: cubre solo el MVP decidido en [discovery/discovery.md](discovery/discovery.md) y [knowledge-base/01](knowledge-base/01_vision_y_objetivos.md): un odontólogo, un sillón, turnos sin solapamiento, pacientes básicos, recordatorio por email.
 > **Alineación con el informe (§D.4)**: el informe proponía como *hipótesis* un MVP para clínicas (profesional + recurso, ficha clínica mínima, autogestión del paciente, exportación). El Discovery lo acotó a propósito ([DD-01, DD-07, DD-08](knowledge-base/09_decisiones_y_supuestos.md), [IN-02](knowledge-base/10_preguntas_abiertas.md)). Se conserva del §D.4: agenda por profesional **y** recurso físico con control de conflictos, estados, cancelación y recordatorio trazable. Queda fuera del roadmap todo lo que el §D.4 marcó como "postergar" y lo que el Discovery dejó para después (reserva online, ficha clínica, WhatsApp, Mercado Pago, ARCA, lista de espera, multi-profesional).
-> **Diseño visual**: el proyecto usa `system-and-mockups` ([design-system/README.md](design-system/README.md), revisión 1 aprobada). Los changes marcados **Maqueta: requerida** necesitan su maqueta HTML aprobada en `openspec/changes/<change>/mockups/` antes de `apply`.
+> **Diseño visual**: el proyecto usa `system-and-mockups` ([design-system/README.md](design-system/README.md), revisión 2 aprobada). Los changes marcados **Maqueta: requerida** necesitan su maqueta HTML aprobada en `openspec/changes/<change>/mockups/` antes de `apply`.
 
 ---
 
@@ -179,7 +179,7 @@ C-14 (ui-login) corre en paralelo y debe estar listo antes de C-16. C-13 → C-1
   - `knowledge-base/09_decisiones_y_supuestos.md` §DD-02, §DD-06
 
 ### [C-02] `frontend-scaffolding`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (2026-11-23, change archivado `openspec/changes/archive/2026-11-23-frontend-scaffolding`)
 - **Responsable**: Agus · tanda 1
 - **Scope**:
   - Proyecto `frontend/` con Vite + React 18 + TypeScript estricto, React Router, TanStack Query, Vitest + Testing Library.

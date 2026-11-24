@@ -2,8 +2,8 @@
 
 | Elemento | Valor | Fuente |
 |---|---|---|
-| Nombre del producto | **(TBD)** — provisorio "Agenda Odonto (TBD)" | Sin definir por el equipo |
-| Logo | **(TBD)** — placeholder en `assets/logo.svg`, rotulado "TBD" con borde punteado | Provisorio |
+| Nombre del producto | **Agenda de Odontología** | Definido por el equipo y aprobado por el líder (2026-11-23) |
+| Logo | `assets/logo.svg`: muela blanca centrada sobre fondo verde petróleo (`--color-brand-600`) | Aprobado por el líder (2026-11-23) |
 | Público | Odontólogo independiente argentino, único usuario | [KB 01](../knowledge-base/01_vision_y_objetivos.md), [KB 03](../knowledge-base/03_actores_y_roles.md) |
 | Idioma | Español rioplatense, trato de "vos" en la interfaz | Mercado argentino |
 

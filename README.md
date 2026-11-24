@@ -12,7 +12,8 @@ Agenda web para el odontólogo independiente argentino: turnos por prestación s
 |---|---|---|
 | JDK | 21 | `JAVA_HOME` debe apuntar al JDK 21 (el build falla con otra versión) |
 | PostgreSQL | 15 o superior | Instalación local, sin Docker |
-| Internet | — | Solo el primer build: el wrapper descarga Maven y las dependencias |
+| Node.js | 20 o superior | Solo para el frontend; trae npm |
+| Internet | — | Solo el primer build: el wrapper descarga Maven y las dependencias, y `npm install` las del frontend |
 
 No hace falta instalar Maven: el proyecto trae `backend/mvnw`.
 
@@ -96,11 +97,34 @@ cd backend
 
 Nunca cargues datos reales de pacientes en el repositorio, en los seeds ni en los tests.
 
+## 5. Frontend
+
+Con Node.js 20 o superior:
+
+```powershell
+cd frontend
+npm install
+Copy-Item .env.example .env
+npm run dev
+```
+
+La web app queda en <http://localhost:5173> (el mismo origen que `FRONTEND_ORIGIN` del backend). `frontend/.env` define `VITE_API_URL`, la URL de la API (por defecto `http://localhost:8080/api`); como el de la raíz, **nunca lo subas**.
+
+| Comando (dentro de `frontend/`) | Qué hace |
+|---|---|
+| `npm test` | Corre los tests (Vitest + Testing Library); no necesitan el backend |
+| `npm run typecheck` | Revisa los tipos de TypeScript |
+| `npm run build` | Genera la versión de producción en `frontend/dist/` |
+| `npm run verify` | Tipos + tests + build: tiene que quedar en verde antes de abrir un PR |
+
+Los estilos salen de [design-system/](design-system/README.md): el frontend importa `tokens.css` desde ahí, sin copiarlo.
+
 ## Estructura
 
 ```
 backend/        API Spring Boot (Java 21, Maven, Flyway, PostgreSQL)
 design-system/  Sistema de diseño aprobado (tokens, componentes)
+frontend/       Web app React + TypeScript (Vite, React Router, TanStack Query)
 discovery/      Investigación de mercado y checklist de Discovery
 knowledge-base/ Base de conocimiento del proyecto
 openspec/       Specs vigentes y changes (ciclo OPSX)
