@@ -69,4 +69,10 @@ public class TurnoController {
         String motivo = solicitud == null ? null : solicitud.motivo();
         return TurnoResponse.de(servicio.cancelar(id, motivo));
     }
+
+    @PostMapping("/{id}/asistencia")
+    public TurnoResponse registrarAsistencia(@PathVariable Long id,
+            @Valid @RequestBody RegistrarAsistenciaRequest solicitud) {
+        return TurnoResponse.de(servicio.registrarAsistencia(id, solicitud.estado()));
+    }
 }

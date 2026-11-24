@@ -17,6 +17,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import ar.edu.turnosodonto.agenda.dominio.EstadoTurno;
 import ar.edu.turnosodonto.agenda.dominio.Intervalo;
 import ar.edu.turnosodonto.agenda.recursos.Profesional;
+import ar.edu.turnosodonto.agenda.turnos.web.EstadoAsistencia;
 import ar.edu.turnosodonto.agenda.recursos.Sillon;
 import ar.edu.turnosodonto.auth.Rol;
 import ar.edu.turnosodonto.auth.Usuario;
@@ -145,5 +146,47 @@ class TurnoTest {
                 .extracting("codigo").isEqualTo("TRANSICION_INVALIDA");
         assertThat(turno.getEstado()).isEqualTo(EstadoTurno.PROGRAMADO);
         assertThat(turno.getCanceladoEn()).isNull();
+    }
+
+    @ParameterizedTest
+    @EnumSource(EstadoAsistencia.class)
+    void asistenciaEnElInicioSeRegistra(EstadoAsistencia asistencia) {
+        turno.registrarAsistencia(asistencia, MANIANA);
+
+        assertThat(turno.getEstado()).isEqualTo(asistencia.aEstadoTurno());
+        assertThat(turno.intervalo()).isEqualTo(Intervalo.de(MANIANA, Duration.ofMinutes(45)));
+    }
+
+    @ParameterizedTest
+    @EnumSource(EstadoAsistencia.class)
+    void asistenciaDespuesDelFinSeRegistra(EstadoAsistencia asistencia) {
+        turno.registrarAsistencia(asistencia, MANIANA.plus(Duration.ofMinutes(46)));
+
+        assertThat(turno.getEstado()).isEqualTo(asistencia.aEstadoTurno());
+        assertThat(turno.intervalo()).isEqualTo(Intervalo.de(MANIANA, Duration.ofMinutes(45)));
+    }
+
+    @ParameterizedTest
+    @EnumSource(EstadoAsistencia.class)
+    void unTurnoQueTodaviaNoEmpezoNoRegistraAsistencia(EstadoAsistencia asistencia) {
+        assertThatThrownBy(() -> turno.registrarAsistencia(asistencia, AHORA))
+                .isInstanceOf(TransicionInvalidaException.class)
+                .extracting("codigo").isEqualTo("TRANSICION_INVALIDA");
+        assertThat(turno.getEstado()).isEqualTo(EstadoTurno.PROGRAMADO);
+    }
+
+    @ParameterizedTest
+    @EnumSource(value = EstadoTurno.class, names = {"CANCELADO", "CANCELADO_TARDIO", "ATENDIDO", "AUSENTE"})
+    void unTurnoQueNoEstaProgramadoNoRegistraAsistencia(EstadoTurno estado) throws Exception {
+        forzarEstado(estado);
+        Intervalo original = turno.intervalo();
+
+        for (EstadoAsistencia asistencia : EstadoAsistencia.values()) {
+            assertThatThrownBy(() -> turno.registrarAsistencia(asistencia, MANIANA))
+                    .isInstanceOf(TransicionInvalidaException.class)
+                    .extracting("codigo").isEqualTo("TRANSICION_INVALIDA");
+            assertThat(turno.getEstado()).isEqualTo(estado);
+            assertThat(turno.intervalo()).isEqualTo(original);
+        }
     }
 }
