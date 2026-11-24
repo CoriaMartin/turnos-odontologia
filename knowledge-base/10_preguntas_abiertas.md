@@ -34,8 +34,8 @@
 | Prioridad | Pregunta | Bloquea | Decisor |
 |---|---|---|---|
 | ~~Alta~~ Resuelta | ~~¿Se permiten turnos en el pasado (carga retroactiva)?~~ **No** — decidido el 2026-11-23 ([DD-12](09_decisiones_y_supuestos.md)) | — | Equipo |
-| Alta | ¿Qué proveedor SMTP y remitente se usan (Gmail con clave de app o Brevo)? | Change de recordatorios | Equipo |
-| Alta | ¿El recordatorio requiere consentimiento explícito del paciente? ([SU-03](09_decisiones_y_supuestos.md)) | Change de recordatorios | Cátedra / asesoría |
+| ~~Alta~~ Resuelta | ~~¿Qué proveedor SMTP y remitente se usan?~~ **Ninguno real en el MVP**: envío apagado y doble en tests — decidido el 2026-11-24 ([DD-13](09_decisiones_y_supuestos.md)) | — | Equipo |
+| ~~Alta~~ Resuelta | ~~¿El recordatorio requiere consentimiento explícito del paciente?~~ **Sí** — decidido el 2026-11-24 ([DD-14](09_decisiones_y_supuestos.md)) | — | Equipo |
 | Media | ¿Datos mínimos del paciente: DNI obligatorio, email y teléfono opcionales? | Change de pacientes | Equipo |
 | Media | ¿El recordatorio sale 24 h antes por defecto? | Change de recordatorios | Equipo |
 | Media | ¿Hace falta horario de atención y bloqueos (vacaciones, feriados) en una versión cercana? | Roadmap post-MVP | Equipo |
