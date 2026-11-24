@@ -81,4 +81,20 @@ class ConfiguracionPersistenciaIT {
         assertThat(jdbc.queryForObject("select horas_cancelacion_tardia from configuracion", Integer.class))
                 .isZero();
     }
+
+    @Test
+    void actualizarConfiguracionGuardaLosNuevosValores() {
+        servicio.actualizar(12, 48);
+        repositorio.flush();
+
+        assertThat(jdbc.queryForObject(
+                "select horas_cancelacion_tardia from configuracion",
+                Integer.class))
+                .isEqualTo(12);
+
+        assertThat(jdbc.queryForObject(
+                "select horas_anticipacion_recordatorio from configuracion",
+                Integer.class))
+                .isEqualTo(48);
+    }
 }
