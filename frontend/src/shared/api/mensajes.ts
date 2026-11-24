@@ -25,7 +25,46 @@ export const MENSAJES_POR_CODIGO: Readonly<Record<string, string>> = {
   DNI_DUPLICADO: 'Ese DNI ya pertenece a otro paciente. Revisalo o buscá al paciente existente.',
   PACIENTE_CON_TURNOS_FUTUROS:
     'No pudimos dar de baja a este paciente porque tiene un turno programado. Cancelá o reprogramá ese turno y probá de nuevo.',
+  // C-17 · gestión de turnos (spec web-gestion-turnos).
+  TURNO_SOLAPADO: 'Ese horario se superpone con otro turno. Elegí otro horario.',
+  TURNO_EN_PASADO: 'No se pueden dar turnos en el pasado.',
+  PACIENTE_INACTIVO: 'Ese paciente está dado de baja. Elegí otro paciente.',
+  PRESTACION_INACTIVA: 'Esa prestación no está disponible. Elegí otra prestación.',
+  TRANSICION_INVALIDA:
+    'Este turno ya no se puede modificar porque cambió de estado. Actualizamos la agenda.',
+  TURNO_MODIFICADO:
+    'Este turno cambió mientras lo editabas. Actualizamos la agenda: revisalo y probá de nuevo.',
+  TURNO_NO_ENCONTRADO: 'No encontramos ese turno. Actualizá la agenda y probá de nuevo.',
 };
+
+/** Título del aviso de `TURNO_SOLAPADO` (spec "Horario ocupado"). */
+export const TITULO_TURNO_SOLAPADO = 'Ese horario ya está ocupado';
+
+interface IntervaloEnConflicto {
+  inicio: string;
+  fin: string;
+}
+
+function leerConflicto(error: ApiError): IntervaloEnConflicto | null {
+  const valor = error.propiedades['turnoEnConflicto'];
+  if (typeof valor !== 'object' || valor === null) return null;
+  const { inicio, fin } = valor as Record<string, unknown>;
+  return typeof inicio === 'string' && typeof fin === 'string' ? { inicio, fin } : null;
+}
+
+/**
+ * Texto de `TURNO_SOLAPADO` con el horario en conflicto (design.md D8 de C-17). La API no informa el
+ * paciente de ese turno, así que el texto no lo nombra. `formatear` convierte el intervalo a "10:00 a 10:30".
+ */
+export function textoTurnoSolapado(
+  error: ApiError,
+  formatear: (inicio: string, fin: string) => string,
+): string {
+  const conflicto = leerConflicto(error);
+  return conflicto
+    ? `Se superpone con el turno de ${formatear(conflicto.inicio, conflicto.fin)}. Elegí otro horario.`
+    : (MENSAJES_POR_CODIGO['TURNO_SOLAPADO'] as string);
+}
 
 /** Mensaje para mostrar al usuario ante cualquier error. */
 export function mensajeDeError(error: unknown): string {

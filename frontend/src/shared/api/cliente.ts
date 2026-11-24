@@ -98,6 +98,7 @@ async function convertirError(respuesta: Response): Promise<ApiError> {
     titulo: typeof cuerpo['title'] === 'string' ? cuerpo['title'] : undefined,
     detalle: typeof cuerpo['detail'] === 'string' ? cuerpo['detail'] : undefined,
     errores: leerErroresDeCampo(cuerpo['errores']),
+    propiedades: cuerpo,
   });
 }
 

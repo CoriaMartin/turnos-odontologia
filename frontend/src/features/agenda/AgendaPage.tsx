@@ -3,7 +3,9 @@ import { useSearchParams } from 'react-router-dom';
 import { ApiError } from '../../shared/api/ApiError';
 import { mensajeDeError } from '../../shared/api/mensajes';
 import { useTituloDePagina } from '../../shared/useTituloDePagina';
+import { AccionesAgendaContexto } from './accionesAgenda';
 import { useAgenda } from './api';
+import { useGestionTurnos } from './GestionTurnos';
 import {
   crearPeriodo,
   enConsultorio,
@@ -20,6 +22,7 @@ import { Badge } from './Turnos';
 import { VistaDiaria } from './VistaDiaria';
 import { VistaSemanal } from './VistaSemanal';
 import estilos from './Agenda.module.css';
+import estilosGestion from './Gestion.module.css';
 
 const ESTADOS: readonly EstadoTurno[] = ['PROGRAMADO', 'ATENDIDO', 'AUSENTE', 'CANCELADO', 'CANCELADO_TARDIO'];
 
@@ -33,7 +36,8 @@ function esVista(valor: string | null): valor is Vista {
  */
 export function AgendaPage() {
   useTituloDePagina('Agenda');
-  const ahora = enConsultorio(useAhora());
+  const instante = useAhora();
+  const ahora = enConsultorio(instante);
   const pantallaAncha = usePantallaAncha();
   const [parametros, setParametros] = useSearchParams();
 
@@ -54,17 +58,30 @@ export function AgendaPage() {
 
   const unidad = vista === 'dia' ? 'Día' : 'Semana';
   const titulo = textoPeriodo(periodo);
+  // C-17: tras crear o reprogramar, la agenda muestra el día del turno sin cambiar de vista.
+  const gestion = useGestionTurnos({ ahora: instante, irA: (nuevaFecha) => ir(nuevaFecha) });
 
   return (
     <div className={estilos.pagina}>
       {/* div y no header: un header acá se anunciaría como un segundo "banner" junto al de AppLayout. */}
-      <div className={estilos.encabezado}>
-        <h1 className={estilos.titulo}>Agenda</h1>
-        <p className={estilos.bajada}>
-          {titulo}
-          {consulta.data && activos > 0 && ` · ${activos} ${activos === 1 ? 'turno' : 'turnos'}`}
-        </p>
+      <div className={estilosGestion.cabecera}>
+        <div className={estilos.encabezado}>
+          <h1 className={estilos.titulo}>Agenda</h1>
+          <p className={estilos.bajada}>
+            {titulo}
+            {consulta.data && activos > 0 && ` · ${activos} ${activos === 1 ? 'turno' : 'turnos'}`}
+          </p>
+        </div>
+        <button
+          className={`${estilosGestion.boton} ${estilosGestion.botonPrimario}`}
+          type="button"
+          onClick={() => gestion.abrirNuevo(fecha)}
+        >
+          + Turno
+        </button>
       </div>
+
+      {gestion.avisos}
 
       <div className={estilos.tarjeta}>
         <div className={estilos.barra}>
@@ -145,13 +162,19 @@ export function AgendaPage() {
                 </button>
               </div>
             )
-          ) : vista === 'dia' ? (
-            <VistaDiaria fecha={fecha} turnos={turnos} ahora={ahora} pantallaAncha={pantallaAncha} />
           ) : (
-            <VistaSemanal dias={periodo.dias} turnos={turnos} ahora={ahora} pantallaAncha={pantallaAncha} />
+            <AccionesAgendaContexto.Provider value={gestion.acciones}>
+              {vista === 'dia' ? (
+                <VistaDiaria fecha={fecha} turnos={turnos} ahora={ahora} pantallaAncha={pantallaAncha} />
+              ) : (
+                <VistaSemanal dias={periodo.dias} turnos={turnos} ahora={ahora} pantallaAncha={pantallaAncha} />
+              )}
+            </AccionesAgendaContexto.Provider>
           )}
         </section>
       </div>
+
+      {gestion.dialogo}
     </div>
   );
 }

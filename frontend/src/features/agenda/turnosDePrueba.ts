@@ -12,6 +12,7 @@ interface DatosTurno {
   nombre?: string;
   apellido?: string;
   prestacion?: string;
+  version?: number;
 }
 
 let siguienteId = 1;
@@ -26,13 +27,17 @@ export function turno({
   nombre = 'Paciente',
   apellido = 'Ficticio Tres',
   prestacion = 'Limpieza',
+  version = 0,
 }: DatosTurno = {}): TurnoAgenda {
+  const inicioIso = `${fecha}T${inicio}:00-03:00`;
+  const finIso = `${finFecha}T${fin}:00-03:00`;
   return {
     id,
-    inicio: `${fecha}T${inicio}:00-03:00`,
-    fin: `${finFecha}T${fin}:00-03:00`,
+    inicio: inicioIso,
+    fin: finIso,
     estado,
-    version: 0,
+    duracionMinutos: (Date.parse(finIso) - Date.parse(inicioIso)) / 60_000,
+    version,
     paciente: { id: id + 100, nombre, apellido },
     prestacion: { id: 1, nombre: prestacion },
   };

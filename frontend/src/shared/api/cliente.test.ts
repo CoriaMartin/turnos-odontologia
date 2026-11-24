@@ -137,6 +137,17 @@ describe('web-api-client · Errores Problem Details tipados', () => {
       { campo: 'dni', mensaje: 'debe tener 7 u 8 dígitos' },
     ]);
   });
+
+  it('Propiedades propias del código: conserva turnoEnConflicto (C-17)', async () => {
+    const turnoEnConflicto = { id: 7, inicio: '2026-12-03T10:00:00-03:00', fin: '2026-12-03T10:30:00-03:00' };
+    fetchSimulado.mockResolvedValue(
+      respuestaJson(409, { status: 409, codigo: 'TURNO_SOLAPADO', turnoEnConflicto }, 'application/problem+json'),
+    );
+
+    const error = await capturarError(apiFetch('/turnos', { method: 'POST', body: {} }));
+
+    expect((error as ApiError).propiedades['turnoEnConflicto']).toEqual(turnoEnConflicto);
+  });
 });
 
 describe('web-api-client · Errores sin formato Problem Details', () => {

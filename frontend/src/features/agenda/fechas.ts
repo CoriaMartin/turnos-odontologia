@@ -162,6 +162,12 @@ export function textoPeriodo(periodo: Periodo): string {
   return periodo.vista === 'dia' ? textoDia(periodo.inicio) : textoSemana(periodo.inicio);
 }
 
+/** "Jueves 03/12" (avisos de C-17). */
+export function diaYFechaCorta(fecha: FechaCivil): string {
+  const { mes, dia } = partes(fecha);
+  return `${DIAS_LARGOS[diaDeLaSemana(fecha)] ?? ''} ${dosDigitos(dia)}/${dosDigitos(mes)}`;
+}
+
 /** "Mié 02/12" para el encabezado de cada día de la semana. */
 export function encabezadoDia(fecha: FechaCivil): { dia: string; numero: string } {
   const { mes, dia } = partes(fecha);

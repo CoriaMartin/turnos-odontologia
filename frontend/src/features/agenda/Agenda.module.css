@@ -24,6 +24,9 @@
   --spinner: 16px;
   --borde-spinner: 2px;
   --icono-aviso: 18px;
+  /* C-17 · gestión de turnos (maqueta gestion.css): ancho de los diálogos y alto del motivo. */
+  --dialogo-max: 560px;
+  --motivo-alto: 88px;
 
   display: grid;
   gap: var(--space-6);
@@ -308,7 +311,8 @@
 }
 
 .turnoEnLista {
-  position: static;
+  /* relative y no static: contiene el botón que abre el detalle (C-17). */
+  position: relative;
   min-height: var(--agenda-slot-height);
 }
 
@@ -581,6 +585,7 @@
 }
 
 .chip {
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
