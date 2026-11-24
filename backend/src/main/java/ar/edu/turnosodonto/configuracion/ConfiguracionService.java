@@ -5,7 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.turnosodonto.agenda.recursos.ConsultorioNoConfiguradoException;
 
-/** Lectura de la configuración única del consultorio. Los endpoints llegan en C-12. */
+/** Consulta y actualización de la configuración única del consultorio. */
 @Service
 public class ConfiguracionService {
 
@@ -20,5 +20,12 @@ public class ConfiguracionService {
         return repositorio.findById(Configuracion.ID_UNICO)
                 .orElseThrow(() -> new ConsultorioNoConfiguradoException(
                         "Falta la configuración del consultorio."));
+    }
+
+    @Transactional
+    public Configuracion actualizar(int horasCancelacionTardia, int horasAnticipacionRecordatorio) {
+        Configuracion configuracion = obtener();
+        configuracion.actualizar(horasCancelacionTardia, horasAnticipacionRecordatorio);
+        return configuracion;
     }
 }
