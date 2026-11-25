@@ -25,6 +25,8 @@ cd backend;  ./mvnw verify;  cd ..   # 3. Tests del backend
 cd frontend; npm ci; npm run verify; cd ..   # 4. Tests del frontend
 ```
 
+> En PowerShell, si `npm` falla con "la ejecución de scripts está deshabilitada", usá `npm.cmd` en lugar de `npm` (por ejemplo `npm.cmd ci`), o habilitá los scripts para tu usuario una sola vez: `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`.
+
 ---
 
 ## Requisitos
@@ -32,7 +34,7 @@ cd frontend; npm ci; npm run verify; cd ..   # 4. Tests del frontend
 | Herramienta | Versión | Notas |
 |---|---|---|
 | JDK | 21 | `JAVA_HOME` debe apuntar al JDK 21: el build falla con otra versión |
-| PostgreSQL | 15 o superior | Instalación local, sin Docker. Se probó con la 17 |
+| PostgreSQL | 15 o superior | Instalación local, sin Docker. Se probó con la 17: Flyway muestra un aviso de versión no probada que no afecta el funcionamiento |
 | Node.js | 20 o superior | Trae `npm`; solo para el frontend |
 | Git | cualquiera reciente | |
 | Internet | — | Solo la primera vez: `./mvnw` descarga Maven y las dependencias, `npm ci` las del frontend |
@@ -48,13 +50,19 @@ node -v                                    # v20 o superior
 
 ## 1. Bases de datos
 
-Con el superusuario de PostgreSQL (te pide su contraseña). Elegí una clave para el usuario `turnos`:
+Con el superusuario de PostgreSQL (te pide su contraseña). **Antes de correrlo, reemplazá `CAMBIAR_ESTA_CLAVE` por una clave tuya, sin tildes, sin ñ y sin espacios** (los caracteres especiales pueden impedir que el backend se conecte):
 
 ```powershell
-& "C:\Program Files\PostgreSQL\17\bin\psql.exe" -U postgres -c "CREATE USER turnos WITH PASSWORD 'elegí-una-clave';" -c "CREATE DATABASE turnos OWNER turnos;" -c "CREATE DATABASE turnos_test OWNER turnos;"
+& "C:\Program Files\PostgreSQL\17\bin\psql.exe" -U postgres -c "CREATE USER turnos WITH PASSWORD 'CAMBIAR_ESTA_CLAVE';" -c "CREATE DATABASE turnos OWNER turnos;" -c "CREATE DATABASE turnos_test OWNER turnos;"
 ```
 
 En Linux/macOS: `psql -U postgres -c "..."` con los mismos comandos. Si tu PostgreSQL es otra versión, cambiá `17` en la ruta.
+
+Si ya creaste el usuario con otra clave y querés cambiarla:
+
+```powershell
+& "C:\Program Files\PostgreSQL\17\bin\psql.exe" -U postgres -c "ALTER USER turnos WITH PASSWORD 'CAMBIAR_ESTA_CLAVE';"
+```
 
 | Base | Para qué |
 |---|---|
@@ -73,6 +81,8 @@ Copy-Item .env.example .env
 
 El backend lee `.env` automáticamente (desde la raíz del repo o desde `backend/`). Las variables de entorno del sistema tienen prioridad sobre el archivo. **`.env` está en `.gitignore`: nunca lo subas.**
 
+> **Para levantar el backend tenés que completar estas cuatro**: `DB_PASSWORD` (la clave del paso 1), `JWT_SECRET`, `ADMIN_EMAIL` y `ADMIN_PASSWORD`. `DB_URL` y `DB_USER` ya traen el valor correcto. Los tests solo necesitan `DB_PASSWORD`: si te olvidás de las otras, los tests pasan pero el backend no arranca.
+
 | Variable | Obligatoria | Qué es |
 |---|---|---|
 | `DB_URL` | Sí | `jdbc:postgresql://localhost:5432/turnos` |
@@ -85,11 +95,13 @@ El backend lee `.env` automáticamente (desde la raíz del repo o desde `backend
 | `MAIL_HOST`, `MAIL_PORT`, `MAIL_USERNAME`, `MAIL_PASSWORD`, `MAIL_FROM` | No | Solo si algún día se activa un proveedor SMTP |
 | `FRONTEND_ORIGIN` | No | Único origen aceptado por CORS (por defecto `http://localhost:5173`) |
 
-Para generar un `JWT_SECRET` aleatorio en PowerShell:
+Para generar un `JWT_SECRET` aleatorio **y guardarlo directamente en tu `.env`** (desde la raíz del repo, en PowerShell):
 
 ```powershell
-$b = New-Object byte[] 48; [Security.Cryptography.RandomNumberGenerator]::Create().GetBytes($b); [Convert]::ToBase64String($b)
+$b = New-Object byte[] 48; [Security.Cryptography.RandomNumberGenerator]::Create().GetBytes($b); $s = [Convert]::ToBase64String($b); (Get-Content .env) -replace '^JWT_SECRET=.*', "JWT_SECRET=$s" | Set-Content .env
 ```
+
+Si preferís hacerlo a mano, generá la clave con cualquier generador y pegala en la línea `JWT_SECRET=` del `.env`.
 
 El frontend tiene su propio ejemplo, `frontend/.env.example`, con `VITE_API_URL` (por defecto `http://localhost:8080/api`). Es opcional: si no creás `frontend/.env`, usa ese valor.
 
@@ -133,6 +145,14 @@ cd backend
 ```
 
 Comprobá <http://localhost:8080/actuator/health> → `{"status":"UP"}`. En el primer arranque se crea el usuario de `ADMIN_EMAIL` con su profesional "Odontólogo Titular".
+
+Opcional, para probar la API sin el frontend (con el backend ya levantado): pedí un token reemplazando `tu-email` y `tu-clave` por los valores de `ADMIN_EMAIL` y `ADMIN_PASSWORD` de tu `.env`:
+
+```powershell
+Invoke-RestMethod -Method Post -Uri http://localhost:8080/api/auth/login -ContentType application/json -Body '{"email":"tu-email","password":"tu-clave"}'
+```
+
+Todas las rutas `/api/**`, salvo el login, exigen el encabezado `Authorization: Bearer <token>`.
 
 En otra terminal, el frontend:
 
@@ -197,6 +217,8 @@ Revisa solo lo versionado y sale con error si encuentra un problema (muestra arc
 | El frontend no puede llamar a la API (CORS) | El frontend no corre en `FRONTEND_ORIGIN`. Usá `npm run dev` (puerto 5173) o ajustá la variable |
 | Aviso de Flyway "PostgreSQL 17 is newer than this version" | Solo es una advertencia: funciona con PostgreSQL 17 |
 | PowerShell no deja correr el script de seguridad | Usá el comando completo con `-ExecutionPolicy Bypass` |
+| `npm` falla con "la ejecución de scripts está deshabilitada" | Usá `npm.cmd` (por ejemplo `npm.cmd run verify`) o `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` |
+| Los tests no conectan aunque la base existe | La clave de `turnos` tiene tildes, ñ o espacios, o no coincide con `DB_PASSWORD`. Cambiala con `ALTER USER` (paso 1) |
 
 ## Documentación de la entrega
 

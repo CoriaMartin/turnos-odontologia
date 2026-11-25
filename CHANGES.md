@@ -504,7 +504,7 @@ C-14 (ui-login) corre en paralelo y debe estar listo antes de C-16. C-13 → C-1
 ## FASE 6 — Entrega
 
 ### [C-20] `readme-y-demo`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (2026-11-25, change archivado `openspec/changes/archive/2026-11-25-readme-y-demo`)
 - **Responsable**: Líder · tanda 9
 - **Scope**:
   - `README.md` raíz: requisitos (Java 21, Node 20, PostgreSQL 15), creación de `turnos` y `turnos_test`, variables de entorno, cómo correr backend, frontend y **todos los tests** desde cero.

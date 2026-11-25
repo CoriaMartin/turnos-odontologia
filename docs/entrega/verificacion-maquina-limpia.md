@@ -54,3 +54,19 @@ Seguir el README **desde cero**, sin ayuda ni archivos previos, en una máquina 
 | Fecha | 2026-11-24/25 |
 | Quién | Agus |
 | Sistema operativo y versiones | Windows 11 (NT 10.0.22631), OpenJDK 21.0.13.1 (Temurin), Node 24.20.0, PostgreSQL 17.12 |
+
+## Correcciones al README a partir de la Parte 2
+
+Las seis observaciones de Agus se incorporaron al README el 2026-11-25:
+
+| Observación | Corrección en el README |
+|---|---|
+| Clave de ejemplo con tilde, fácil de copiar sin cambiar | Ahora es `CAMBIAR_ESTA_CLAVE`, con la aclaración de usar una clave sin tildes, ñ ni espacios, y el comando `ALTER USER` para corregirla |
+| Comando del token antes de levantar el backend y marcadores ambiguos | Movido a "4. Levantar la aplicación", como paso opcional con el backend ya levantado, y con `tu-email`/`tu-clave` explicados |
+| El `JWT_SECRET` generado no se guardaba en el `.env` | El comando ahora lo escribe directamente en la línea `JWT_SECRET=` del `.env` |
+| Variables obligatorias dispersas | Recuadro con las cuatro que hay que completar para levantar el backend (y aclaración de que los tests solo necesitan `DB_PASSWORD`) |
+| `npm` bloqueado por la política de ejecución de PowerShell | Nota tras el inicio rápido y fila en "Problemas frecuentes": `npm.cmd` o `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` |
+| Aviso de Flyway con PostgreSQL 17 | Aclarado en la tabla de requisitos (además de "Problemas frecuentes") |
+
+Re-verificación final tras integrar `main` (con C-18, C-19 y C-13 corregidos): `./mvnw verify` **302 tests** y `npm run verify` **321 tests**, en verde.
+

@@ -16,7 +16,7 @@
 ## 4. Verificación en máquina limpia
 
 - [x] 4.1 Clon nuevo en carpeta temporal: `npm ci` + `npm run verify`, `./mvnw test` y el script de seguridad; registrar resultados en `docs/entrega/verificacion-maquina-limpia.md`
-- [ ] 4.2 Un integrante sigue el README en su máquina hasta `./mvnw verify` completo y la demo; registrar su resultado en el mismo documento
+- [x] 4.2 Un integrante sigue el README en su máquina hasta `./mvnw verify` completo y la demo; registrar su resultado en el mismo documento
 
 ## 5. Cierre (requiere C-18 en `main`)
 
