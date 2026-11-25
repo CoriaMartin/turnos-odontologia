@@ -24,9 +24,11 @@ del alcance acordado por el equipo.
 
 1. Utilizar discovery/informe-competitivo.md como fuente base.
 2. Conservar la investigación original.
-3. Incorporar siete fuentes verificadas manualmente,
-   incluyendo sitios oficiales, precios, centros de ayuda
-   y normativa oficial.
+3. Incorporar seis fuentes verificadas personalmente,
+   incluyendo sitios oficiales, paginas de precios y
+   condiciones, documentacion tecnica y normativa oficial.
+   Bilog - Planes se identifica por nombre y URL
+   (https://bilog.com.ar/planes/) sin asignar un ID definitivo.
 4. Diferenciar las hipótesis iniciales del alcance definitivo
    mediante la sección D.5 y las decisiones DD-01, DD-07 y DD-08.
 5. Copiar el checklist de 11 puntos a docs/discovery/.

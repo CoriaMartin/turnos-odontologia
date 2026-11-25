@@ -8,7 +8,7 @@
 ## 2. Verificación y entrega
 
 - [x] 2.1 Verificar manualmente al menos cinco fuentes.
-- [x] 2.2 Documentar siete fuentes de distintos tipos.
+- [x] 2.2 Documentar seis fuentes verificadas personalmente de distintos tipos.
 - [x] 2.3 Registrar resultados, correcciones y limitaciones.
 - [x] 2.4 Incorporar el checklist de 11 puntos.
 - [x] 2.5 Exportar el informe a PDF.
@@ -18,9 +18,11 @@
 
 - Implementación documental inicial: PR #19.
 - Informe Markdown y PDF actualizado el 24/11/2026.
-- Siete fuentes verificadas: BI1, BI4, DS1, OD1, DL1,
-  CS-D1 y N1.
-- PDF de 19 páginas.
+- Seis fuentes verificadas personalmente: Bilog (BI1),
+  Bilog - Recordatorios por WhatsApp (BI4), Odonthia - Planes
+  (OD2), Bilog - Planes (https://bilog.com.ar/planes/),
+  CareStack (CS-D1) y Ley 26.529 (N1).
+- PDF de 21 páginas.
 - Checklist disponible en docs/discovery/discovery.md.
 
 ## Cierre documental

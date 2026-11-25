@@ -2,7 +2,7 @@
 
 **Fecha**: 2026-11-21
 **Variante**: entrevista (checklist de 11 puntos), apoyada en la investigación competitiva existente.
-**Fuentes investigadas**: 16 sistemas documentados en [informe-competitivo.md](informe-discovery.md) y fichas en [research/](../../discovery/research/). No se corrió `web-scraper` en esta fase: la investigación ya estaba hecha y se reutilizó sin rehacerla.
+**Fuentes investigadas**: 16 sistemas documentados en [informe-discovery.md](informe-discovery.md) y fichas en [research/](../../discovery/research/). No se corrió `web-scraper` en esta fase: la investigación ya estaba hecha y se reutilizó sin rehacerla.
 
 ## 1. Problema que resuelve
 
@@ -23,7 +23,7 @@ El odontólogo independiente en Argentina gestiona su agenda a mano (papel, What
 
 ## 4. Competidores / soluciones existentes
 
-La comparación completa (16 productos, matriz ponderada y guion de demo) está en [informe-competitivo.md](informe-discovery.md).
+La comparación completa (16 productos, matriz ponderada y guion de demo) está en [informe-discovery.md](informe-discovery.md).
 
 | Rol en este proyecto | Productos | Motivo |
 |---|---|---|
