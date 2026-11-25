@@ -19,6 +19,6 @@
 
 ## Workflow follow-up
 
-- [ ] Archivar el change (`openspec archive prestaciones-catalogo`) y sincronizar specs.
-- [ ] Marcar `[x]` en C-05 de `CHANGES.md` en el mismo PR.
-- [ ] Abrir PR `zaira/C-05-cierre-documentacion` → `main` para completar el cierre documental. El PR original de implementación de C-05 ya fue fusionado.
+- [x] Archivar el change (`openspec archive prestaciones-catalogo`) y sincronizar specs. Evidencia: commit `6ab061e` movió los artefactos a `openspec/changes/archive/2026-11-23-prestaciones-catalogo/` y creó `openspec/specs/prestaciones/spec.md`.
+- [x] Marcar `[x]` en C-05 de `CHANGES.md` en el mismo PR. Evidencia: el mismo commit `6ab061e` cambia el estado a `[x] completado`; incluido en el PR #11 (`b694542`).
+- [x] Abrir PR `zaira/C-05-cierre-documentacion` → `main` para completar el cierre documental. Evidencia: PR #11 mergeado en `b694542` (2026-11-23 23:00:19 -0300) desde esa rama. El PR original de implementación de C-05 ya fue fusionado.
