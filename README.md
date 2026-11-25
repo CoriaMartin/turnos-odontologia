@@ -179,7 +179,7 @@ powershell -ExecutionPolicy Bypass -File scripts/verificar-entrega.ps1
 Revisa solo lo versionado y sale con error si encuentra un problema (muestra archivo y línea, nunca el valor):
 
 1. No hay archivos `.env` versionados (solo los `.env.example`).
-2. No hay `MAIL_ENABLED=true` versionado.
+2. Ningún archivo de configuración o código tiene `MAIL_ENABLED=true` (la documentación puede mencionar la regla).
 3. Las claves sensibles de los `.env.example` están vacías.
 4. Ningún archivo de configuración tiene contraseñas, secretos o tokens con valor (los ficticios de los tests están documentados como excepción).
 5. `.gitignore` excluye `.env`, `backend/target/` y `frontend/node_modules/`.

@@ -29,7 +29,8 @@ Orden: qué es → requisitos → **inicio rápido** (los 6 comandos mínimos) �
 ### D3 — Checklist de seguridad como script PowerShell
 `scripts/verificar-entrega.ps1` sobre `git ls-files` (solo lo versionado):
 1. Ningún archivo `.env` versionado salvo `*.env.example`.
-2. Ninguna línea `MAIL_ENABLED=true` / `MAIL_ENABLED: true` versionada.
+2. Ninguna línea `MAIL_ENABLED=true` / `MAIL_ENABLED: true` en archivos de configuración o código (`yml`, `properties`, `json`, `xml`, `java`, `ts`, `js`, `.env.example`). *Ajuste de apply*: la primera versión revisaba todo y marcaba como falla la documentación que enuncia la regla (AGENTS.md, README, el propio change).
+- Los mensajes del script van en ASCII: Windows PowerShell 5.1 lee los `.ps1` sin BOM como ANSI y mostraba mal los acentos.
 3. En los `.env.example`, las claves sensibles (`DB_PASSWORD`, `JWT_SECRET`, `ADMIN_PASSWORD`, `MAIL_USERNAME`, `MAIL_PASSWORD`) sin valor.
 4. Sin patrones de credenciales con valor en código y configuración (`password=…`, `secret=…` fuera de los tests con valores ficticios documentados).
 5. `.gitignore` incluye `.env`, `backend/target/`, `frontend/node_modules/`.

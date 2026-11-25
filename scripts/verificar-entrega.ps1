@@ -47,13 +47,14 @@ $envVersionados = $versionados | Where-Object {
 }
 Resultado 'Sin archivos .env versionados (solo .env.example)' @($envVersionados)
 
-# 2. MAIL_ENABLED=true versionado
+# 2. MAIL_ENABLED=true versionado (solo configuracion y codigo: la documentacion menciona la regla)
 $mail = @()
 foreach ($a in $versionados) {
-    if ($a -match '\.(png|jpe?g|pdf|docx|ico|svg)$' -or $a -eq 'scripts/verificar-entrega.ps1') { continue }
+    $esConfigOCodigo = $a -match '\.(ya?ml|properties|json|xml|java|ts|tsx|js)$' -or $a -like '*.env.example'
+    if (-not $esConfigOCodigo -or $a -match 'package-lock\.json$') { continue }
     $mail += Lineas $a '(?i)MAIL_ENABLED\s*[:=]\s*"?true'
 }
-Resultado 'Sin MAIL_ENABLED=true versionado' $mail
+Resultado 'Sin MAIL_ENABLED=true en configuracion ni codigo' $mail
 
 # 3. Claves sensibles vacías en los .env.example
 $sensibles = '^(DB_PASSWORD|JWT_SECRET|ADMIN_PASSWORD|MAIL_USERNAME|MAIL_PASSWORD)\s*=\s*\S'
@@ -61,7 +62,7 @@ $ejemplos = @()
 foreach ($a in ($versionados | Where-Object { $_ -like '*.env.example' })) {
     $ejemplos += Lineas $a $sensibles
 }
-Resultado 'Claves sensibles vacías en los .env.example' $ejemplos
+Resultado 'Claves sensibles vacias en los .env.example' $ejemplos
 
 # 4. Credenciales con valor literal en archivos de configuración
 $excepciones = @('backend/src/test/resources/application-test.yml')
@@ -71,7 +72,7 @@ foreach ($a in ($versionados | Where-Object { $_ -match '\.(ya?ml|properties|jso
     if ($excepciones -contains $a) { continue }
     $config += Lineas $a $credencial
 }
-Resultado 'Sin credenciales con valor en archivos de configuración' $config
+Resultado 'Sin credenciales con valor en archivos de configuracion' $config
 
 # 5. .gitignore
 $requeridas = @('.env', 'backend/target/', 'frontend/node_modules/')
