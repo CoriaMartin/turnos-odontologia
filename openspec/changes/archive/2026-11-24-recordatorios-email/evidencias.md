@@ -27,8 +27,11 @@ Rama: zaira/C-13-recordatorios-email
 
 ## Pendientes de coordinacion
 
-- Confirmacion del contrato API por C-18.
-- Revision y aprobacion del lider mediante Pull Request.
+- Compatibilidad del contrato API con C-18 verificada por
+  revision de codigo y pruebas existentes, sin una nueva
+  ejecucion. Acuerdo formal entre integrantes no registrado.
+- Revision y aprobacion del lider mediante Pull Request:
+  no verificables; no se reconstruyen.
 
 ## Verificacion final
 
