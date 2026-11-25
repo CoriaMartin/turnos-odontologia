@@ -95,7 +95,10 @@ FALLIDA representa el agotamiento de tres intentos
 totales. Los fallos recuperables se muestran como
 PENDIENTE.
 
-La confirmacion del contrato con C-18 queda pendiente.
+Compatibilidad del contrato con C-18 verificada en codigo
+por revision de la implementacion y las pruebas existentes,
+sin una nueva ejecucion. La aprobacion formal del acuerdo
+no esta registrada.
 
 ## Risks / Trade-offs
 
@@ -105,3 +108,23 @@ La confirmacion del contrato con C-18 queda pendiente.
 - El listener debe evitar carreras con la reprogramacion.
 - No se deben almacenar errores SMTP sin sanitizar.
 - El scheduler debe permanecer controlado en los tests.
+
+Riesgos y mejoras potenciales para una futura habilitacion
+de SMTP (DD-13). No son defectos reproducidos:
+
+- `ProcesadorRecordatorio.java:49` captura solo `MailException`;
+  una excepcion no controlada, por ejemplo `DateTimeException`
+  de `ZoneId.of` en `:46`, podria interrumpir el lote.
+  Mejora potencial: manejar el fallo por turno.
+- `RecordatoriosScheduler.java:29` programa cron sin zona
+  explicita, y `:37,42` filtra y procesa el lote sin aislar
+  fallos individuales. Mejoras potenciales: fijar zona y
+  aislar el procesamiento por turno.
+- Riesgo potencial: si el envio SMTP dentro de la transaccion
+  tiene exito pero falla el commit o se produce un rollback,
+  puede enviarse un correo duplicado al reintentar. No es un
+  defecto reproducido; hoy el transporte real esta
+  deshabilitado (DD-13).
+- Un patron outbox puede evaluarse como alternativa
+  arquitectonica para mitigar la perdida entre commit y envio,
+  pero por si solo no garantiza una entrega exactly-once.
