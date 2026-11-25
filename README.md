@@ -238,6 +238,24 @@ Revisa solo lo versionado y sale con error si encuentra un problema (muestra arc
 | Estado de la fundación | [.active-orchestrator-state.json](.active-orchestrator-state.json) |
 | Verificación en máquina limpia | [docs/entrega/verificacion-maquina-limpia.md](docs/entrega/verificacion-maquina-limpia.md) |
 
+### Dónde está cada elemento de la consigna
+
+La consigna pide carpetas `src/` y `tests/` en la raíz. Este proyecto está separado en `backend/` y `frontend/`, y cada parte usa la convención de su herramienta (Maven y Vite), así que esas carpetas tienen otro nombre:
+
+| Elemento de la consigna | Dónde está en este repositorio |
+|---|---|
+| `AGENTS.md`, `CLAUDE.md`, `CHANGES.md` | Raíz del repositorio |
+| `.active-orchestrator-state.json`, `.atl/skill-registry.md` | Raíz del repositorio |
+| `docs/discovery/informe-discovery.md` y `.pdf` | [docs/discovery/](docs/discovery/) |
+| `knowledge-base/` (10 archivos canónicos) | [knowledge-base/](knowledge-base/), archivos `01` a `10` (el `11` es el anexo de cumplimiento) |
+| `openspec/specs/` | [openspec/specs/](openspec/specs/) |
+| `openspec/changes/archive/AAAA-MM-DD-crear-turno-sin-solapamientos/` | [2026-11-23-crear-turno-sin-solapamientos/](openspec/changes/archive/2026-11-23-crear-turno-sin-solapamientos/): `explore.md`, `proposal.md`, `design.md`, `tasks.md` y `specs/turnos/spec.md` |
+| `src/` (implementación) | Backend en [backend/src/main/](backend/src/main/) y frontend en [frontend/src/](frontend/src/) |
+| `src/` del change de la consigna | [agenda/turnos/](backend/src/main/java/ar/edu/turnosodonto/agenda/turnos/) (`TurnoService`, `ConsultaConflictos`, `BloqueoAgenda`), [agenda/dominio/](backend/src/main/java/ar/edu/turnosodonto/agenda/dominio/) (`Intervalo`, `ReglasAgenda`) y la migración [V5__turnos.sql](backend/src/main/resources/db/migration/V5__turnos.sql) con las restricciones `EXCLUDE` |
+| `tests/` | Backend en [backend/src/test/](backend/src/test/) y frontend en los `*.test.ts(x)` junto a cada componente de `frontend/src/` |
+| `tests/` del change de la consigna | En [agenda/](backend/src/test/java/ar/edu/turnosodonto/agenda/): `turnos/TurnoIT` (un test por escenario de la spec), `turnos/TurnoConcurrenciaIT` (dos turnos simultáneos), `turnos/TurnoRestriccionesIT` (restricciones de la base), `dominio/IntervaloTest` y `dominio/ReglasAgendaTest` |
+| `README.md` | Este archivo |
+
 ## Cómo trabajamos
 
 | Integrante | Rol |
