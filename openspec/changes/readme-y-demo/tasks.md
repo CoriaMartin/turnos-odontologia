@@ -6,7 +6,7 @@
 
 ## 2. Seguridad
 
-- [ ] 2.1 Escribir `scripts/verificar-entrega.ps1` (5 chequeos sobre `git ls-files`); verificar que sale en 0 sobre `main` y que falla si se agrega un `.env` o un `MAIL_ENABLED=true` de prueba (sin commitearlo)
+- [x] 2.1 Escribir `scripts/verificar-entrega.ps1` (5 chequeos sobre `git ls-files`); verificar que sale en 0 sobre `main` y que falla si se agrega un `.env` o un `MAIL_ENABLED=true` de prueba (sin commitearlo)
 - [x] 2.2 Agregar `.mailmap`; verificar con `git shortlog -sne` que aparecen cuatro integrantes
 
 ## 3. README
@@ -15,7 +15,7 @@
 
 ## 4. Verificación en máquina limpia
 
-- [ ] 4.1 Clon nuevo en carpeta temporal: `npm ci` + `npm run verify`, `./mvnw test` y el script de seguridad; registrar resultados en `docs/entrega/verificacion-maquina-limpia.md`
+- [x] 4.1 Clon nuevo en carpeta temporal: `npm ci` + `npm run verify`, `./mvnw test` y el script de seguridad; registrar resultados en `docs/entrega/verificacion-maquina-limpia.md`
 - [ ] 4.2 Un integrante sigue el README en su máquina hasta `./mvnw verify` completo y la demo; registrar su resultado en el mismo documento
 
 ## 5. Cierre (requiere C-18 en `main`)

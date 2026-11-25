@@ -16,7 +16,7 @@ Objetivo de la consigna: **el repositorio debe poder clonarse y correr los tests
 | 3. Tests del frontend | `npm ci` + `npm run verify` | ✅ tipos OK, **287 tests** (31 archivos) en verde, build OK |
 | 3. Tests unitarios del backend | `./mvnw test` | ✅ **84 tests** en verde (no usan base de datos) |
 | 3. Suite completa del backend | `./mvnw verify` en el repo de trabajo del líder | ✅ **302 tests** en verde (unitarios + integración contra `turnos_test`) |
-| 6. Checklist de seguridad | `powershell -ExecutionPolicy Bypass -File scripts/verificar-entrega.ps1` | ⏳ pendiente: lo corre el líder en su terminal |
+| 6. Checklist de seguridad | `powershell -ExecutionPolicy Bypass -File scripts/verificar-entrega.ps1` | ✅ 5/5 OK, corrido por el líder en su terminal (2026-11-24). La primera corrida marcó 6 falsos positivos en documentación que enuncia la regla; se ajustó el chequeo 2 a configuración y código (commit `8821b17`) |
 
 Observaciones:
 - `npm ci` muestra un aviso de npm sobre *install scripts* de dependencias; no afecta el build ni los tests.
