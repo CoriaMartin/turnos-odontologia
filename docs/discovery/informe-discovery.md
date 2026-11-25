@@ -2,11 +2,26 @@
 
 ## Turnos Odontología
 
-**Trabajo integrador académico**
+**Trabajo Global 2026**
 
 **Proyecto:** Sistema de gestión de turnos odontológicos.
 
-**Equipo:** 4 integrantes, autorizado por la cátedra.
+**Universidad:** Universidad Tecnológica Nacional - Facultad Regional Mendoza.
+
+**Carrera:** Ingeniería en Sistemas de Información.
+
+**Materia:** Desarrollo de Software.
+
+**Profesor:** Alberto Cortez.
+
+**Integrantes:**
+
+| Apellido y nombre | Legajo |
+|---|---:|
+| Chiara, Agustina | 50846 |
+| Coria, Martín | 47740 |
+| Pérez, Ludmila | 51040 |
+| Tarifa, Zaira | 51115 |
 
 **Fecha de investigación:** 21 de noviembre de 2026.
 
@@ -38,7 +53,7 @@ La autogestión de pacientes, la historia clínica, la exportación integral de 
 - **D:** documentación funcional; acredita un comportamiento descrito, no ejecutado. **C:** afirmación comercial. Una política o contrato acredita una declaración legal, no implementación ni cumplimiento. En la ficha internacional se rotulan C-legal; en las otras, D-legal: aquí ambas se consideran **evidencia legal declarativa**, no manual funcional.
 - **R:** evidencia externa atribuible. En las fichas regionales también identifica registros de tiendas; una descarga o calificación de app no equivale a una reseña narrativa verificada ni a un usuario activo.
 - **No evidenciado:** faltó respaldo suficiente en lo leído; no significa ausencia. Una ausencia explícita se identifica separadamente. No se usa marketing como función probada ni se contabilizan anuncios «próximamente» como disponibilidad actual.
-- Cada fila remite a su ficha y a identificadores de fuente. Los ID se resuelven en la bibliografía final o, para fuentes complementarias, en el registro completo de la ficha enlazada; todos tienen consulta 2026-11-21. Los límites forman parte de la comparación.
+- Cada fila remite a su ficha y a identificadores de fuente. Los ID se resuelven en la bibliografía final o, para fuentes complementarias, en el registro completo de la ficha enlazada; consulta original 2026-11-21 y verificaciones posteriores identificadas expresamente. Los límites forman parte de la comparación.
 - No hubo cuentas, contratación, demos, ejecución, auditorías ni contacto comercial. No se convierte moneda; cotización no es precio cero. Nube, HIPAA, LGPD o infraestructura AWS no acreditan cumplimiento argentino.
 
 ## A. Comparación de los 16 productos
@@ -49,7 +64,7 @@ Orden editorial: vínculo argentino explícito; recepción comercial regional o 
 
 | N.º | Producto / ficha completa | Empresa y país | Segmento y modalidad | Pertinencia y límite argentino / fuentes | URL oficial |
 |---:|---|---|---|---|---|
-| 1 | [Bilog](../../discovery/research/argentina.md#4-bilog) | Empresa orientada a Argentina; razón social No evidenciado | Consultorios, clínicas y gerenciadoras; web, mobile y escritorio mencionados, sin paridad acreditada | Obras sociales y soporte local declarados; ARCA No evidenciado. BI1–BI3, BI6 | <https://www.bilog.com.ar/> |
+| 1 | [Bilog](../../discovery/research/argentina.md#4-bilog) | Empresa orientada a Argentina; razón social No evidenciado | Consultorios, clínicas y gerenciadoras; web, mobile y escritorio mencionados, sin paridad acreditada | Obras sociales y soporte local declarados; ARCA No evidenciado. BI1–BI3, BI6 | <https://bilog.com.ar/> |
 | 2 | [DentalSoft](../../discovery/research/argentina.md#5-dentalsoft) | Equipo argentino, La Plata/Rosario; razón social No evidenciado | Consultorios y clínicas; SaaS navegador | Mercado Pago de pacientes y API Meta declarados; ARCA No evidenciado. DS1–DS6 | <https://dentalsoft.com.ar/> |
 | 3 | [Odonthia](../../discovery/research/argentina.md#6-odonthia) | Genera Impacto; responsable Manuel Sabio, Argentina | Consultorios/equipos; SaaS, gestión gratuita y extras pagos | Reglas operativas locales documentadas; no emite comprobantes fiscales. OD1–OD7 | <https://odonthia.com/> |
 | 4 | [OdontoSoft Millennium](../../discovery/research/argentina.md#3-odontosoft-millennium--gb-systems) | GB Systems fundada en Buenos Aires; también LLC en EE. UU. | Consultorios/clínicas; Windows local/red, compra o suscripción; web opcional | Obras sociales/prepagas expresas; soporte tecnológico actual y ARCA No evidenciado. OS1–OS4 | <https://gbsystems.com/os/producto.htm> |
@@ -72,7 +87,7 @@ Toda capacidad es documental o comercial según el ID, nunca una prueba ejecutad
 
 | Producto / ficha | Agenda y recursos | Reserva, automatización y paciente | Límite decisivo / fuentes |
 |---|---|---|---|
-| [Bilog](../../discovery/research/argentina.md#4-bilog) | Día/semana/profesional/sucursales, duración móvil y sobreturnos C | Reserva/cancelación online; WhatsApp masivo iniciado manualmente; respuestas actualizan agenda | API Meta, sillón limitado y lista de espera No evidenciado. BI1, BI3–BI4 |
+| [Bilog](../../discovery/research/argentina.md#4-bilog) | Día/semana/profesional/sucursales, duración móvil y sobreturnos C | Reserva/cancelación online; WhatsApp masivo y avisos automáticos; según FAQ del proveedor, las respuestas de confirmación o cancelación actualizan la agenda | API Meta, sillón limitado y lista de espera No evidenciado. BI1, BI3–BI4 |
 | [DentalSoft](../../discovery/research/argentina.md#5-dentalsoft) | Día/semana/mes, bloqueos y conflicto de profesional con excepción C | Pro reserva online, recordatorios Meta, link confirma/cancela; Gestión manual | Sillones y autorreprogramación No evidenciado; IA conversacional solo C. DS1–DS2, DS4 |
 | [Odonthia](../../discovery/research/argentina.md#6-odonthia) | Día/semana/mes; capacidad de sillones, bloques y excepción D | Link/QR; solicitud requiere aprobación y ocupa cupo; WhatsApp manual o Meta/créditos, emails | Horizonte 30 días; link no reprograma; víspera fija sin link ni cambio automático por respuesta. OD3–OD5 |
 | [OdontoSoft Millennium](../../discovery/research/argentina.md#3-odontosoft-millennium--gb-systems) | Día/dos días/semana por doctor; duración C | Email/SMS y campañas; reserva online y WhatsApp No evidenciado | Reglas de sillones, conflictos y autoservicio No evidenciado. OS2 |
@@ -118,7 +133,7 @@ Precios son instantáneas, no ofertas vinculantes; los detalles completos, promo
 |---|---|---|---|
 | [Bilog](../../discovery/research/argentina.md#4-bilog) | Sucursales/permisos/backup C; exportación integral No evidenciado; soporte local | Mensual por cotización, alta sin costo; +1.500 clínicas/consultorios C, no auditado | Enfoque argentino; contradicción cierre Free/Premium y precio de packs No evidenciado. BI1–BI2, BI4, BI6–BI7 |
 | [DentalSoft](../../discovery/research/argentina.md#5-dentalsoft) | Roles/logs, DB separada/TLS declarados; exportación pedible hasta 30 días posbaja, formato/costo No evidenciado | Gestión $30.000/mes, Pro $60.000/mes, selector 1 profesional; código ARS no explícito; prueba 3 meses/50 turnos mes; adopción independiente No evidenciado | Flujo MP concreto; importación no migra clínica/adjuntos; USD0,026/mensaje publicado no tarifa Meta universal. DS1, DS3–DS7 |
-| [Odonthia](../../discovery/research/argentina.md#6-odonthia) | Sedes/roles/auditoría D; Secretaría accede a clínica; ZIP sin fotos/RX; hosting Brasil declarado | Gratis permanente; IA ARS78.700/mes, Max ARS162.500/mes, IVA incluido; 4.639 cuentas de consultorios C, no activos/pagos | Reglas detalladas y acceso inicial; adjuntos individuales y Meta aparte/número compartido con créditos. OD1–OD2, OD5–OD9 |
+| [Odonthia](../../discovery/research/argentina.md#6-odonthia) | Sedes/roles/auditoría D; Secretaría accede a clínica; ZIP sin fotos/RX; hosting Brasil declarado | Gratis permanente; Pro ARS164.900/mes, IVA incluido; Enterprise por cotización (consulta 24/11/2026). Adopción actual no verificada; 4.639 cuentas declaradas en la consulta original | Reglas detalladas y acceso inicial; adjuntos individuales y Meta aparte/número compartido con créditos. OD1–OD2, OD5–OD9 |
 | [OdontoSoft Millennium](../../discovery/research/argentina.md#3-odontosoft-millennium--gb-systems) | Permisos e ingresos auditados C; red no prueba multisede; backup/exportación clínica integral No evidenciado | Español: compra USD390/799/1199; mensual USD35/65/99 según computadoras; inglés discrepante; adopción No evidenciado | Licencia perpetua y profundidad clínica; requisitos Windows antiguos y tarifas contradictorias. OS1–OS5 |
 | [Dentalink](../../discovery/research/argentina.md#1-dentalink) | Multicentro, soporte, entrega de datos prometida; cifrado/backup/ISO declarados, certificado no inspeccionado | Base cotización; USD50/mes es promoción Contact Center de 80 conversaciones/1 profesional, no PMS; +15.000 clínicas/clientes C | Cobertura amplia; adicionales e inconsistencias de IA, exportación completa No evidenciado. DL1–DL6 |
 | [Dentidesk](../../discovery/research/argentina.md#2-dentidesk) | Roles/multisede; Excel gratis activo; hasta 30 días posbaja con posible cargo | Importe No evidenciado; prueba 15 días; cargo por odontólogo y reactivación contractual; reseñas verificadas No evidenciado | Especialidades y términos expresos; costo de salida y WhatsApp manual. DD1–DD4 |
@@ -147,9 +162,9 @@ I=0 en referentes sin WhatsApp ni conectores argentinos evidenciados, aunque ten
 
 | Producto / ficha | T | C | I | A | P | S | F | Total /5 | Justificación y fuentes |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---|
-| [Bilog](../../discovery/research/argentina.md#4-bilog) | 3 | 3 | 2 | 3 | 2 | 2 | 1 | 2,55 | Amplitud C; WhatsApp manual, portabilidad y precio No evidenciado. BI1, BI3–BI7 |
+| [Bilog](../../discovery/research/argentina.md#4-bilog) | 3 | 3 | 2 | 3 | 2 | 2 | 1 | 2,55 | Amplitud C; confirmación y cancelación por WhatsApp declaradas; portabilidad integral y precio numérico No evidenciado. BI1, BI3–BI7 |
 | [DentalSoft](../../discovery/research/argentina.md#5-dentalsoft) | 3 | 3 | 3 | 3 | 3 | 3 | 2 | 2,95 | Reglas/MP detallados pero C; privacidad legal no prueba técnica, precio variable. DS1–DS6 |
-| [Odonthia](../../discovery/research/argentina.md#6-odonthia) | 4 | 4 | 4 | 4 | 4 | 4 | 3 | 3,95 | D de agenda, evolución, Meta, cobros y salida; reserva aprobada/adjuntos limitan. OD2–OD9 |
+| [Odonthia](../../discovery/research/argentina.md#6-odonthia) | 4 | 4 | 4 | 4 | 4 | 4 | 3 | 3,95 | D de agenda, evolución, Meta, cobros y salida; precios actualizados al 24/11/2026; reserva aprobada/adjuntos limitan. OD2–OD9 |
 | [OdontoSoft Millennium](../../discovery/research/argentina.md#3-odontosoft-millennium--gb-systems) | 2 | 3 | 1 | 3 | 1 | 2 | 2 | 2,10 | Clínica/obras sociales C amplias; automatización limitada, precios divergentes. OS1–OS5 |
 | [Dentalink](../../discovery/research/argentina.md#1-dentalink) | 3 | 3 | 2 | 3 | 3 | 2 | 1 | 2,65 | Mayoría C y ayuda parcial; integración argentina, salida y base económica inciertas. DL1–DL7 |
 | [Dentidesk](../../discovery/research/argentina.md#2-dentidesk) | 2 | 3 | 1 | 3 | 2 | 3 | 1 | 2,25 | Clínica amplia C, WhatsApp manual; términos precisan permisos/exportación y cargos. DD1–DD3 |
@@ -317,14 +332,81 @@ Limitaciones principales: dependencia de publicaciones de proveedores, checks de
 
 Próximos pasos sugeridos: validar problemas y población objetivo, contrastar las cinco demos con el mismo guion, obtener costos homogéneos y condiciones de datos/salida, y recién entonces discutir alcance. La eventual arquitectura, diseño visual y planificación requieren decisiones posteriores explícitas.
 
+## Verificación personal de fuentes
+
+**Fecha de verificación:** 24/11/2026.
+
+Se revisaron personalmente seis fuentes mediante la consulta directa de páginas web, capturas de pantalla y documentos PDF. Se contrastaron las afirmaciones de la investigación original con la información publicada. No se realizaron pruebas funcionales de los productos.
+
+### 1. Bilog (BI1)
+
+- Tipo: sitio oficial comercial.
+- URL: https://bilog.com.ar/
+- Afirmación original: gestión odontológica y más de 1.500 clínicas y consultorios.
+- Resultado: se observaron funcionalidades de agenda, pacientes, profesionales y administración. El proveedor declara más de 1.500 clínicas y consultorios, 5.000 usuarios activos y 150.000 turnos mensuales.
+- Corrección: se mantiene la información como declaración comercial del proveedor, no como cifra auditada independientemente.
+
+### 2. Bilog - Recordatorios por WhatsApp (BI4)
+
+- Tipo: página de funcionalidad y preguntas frecuentes.
+- URL: https://bilog.com.ar/reminders-whatsapp/
+- Afirmación original: envío masivo de recordatorios y actualización de agenda mediante respuestas.
+- Resultado: la página describe recordatorios y avisos automáticos. Las preguntas frecuentes indican que el paciente puede confirmar o cancelar y que su respuesta actualiza automáticamente la agenda.
+- Corrección: se confirma documentalmente la afirmación y se elimina la contradicción de la revisión anterior.
+- Limitación: no se ejecutaron envíos ni se verificó la integración mediante API oficial de WhatsApp.
+
+### 3. Odonthia - Planes (OD2)
+
+- Tipo: página comercial de planes y precios.
+- URL: https://odonthia.com/planes
+- Afirmación original: plan Gratis, plan IA por ARS 78.700 mensuales y plan Max por ARS 162.500 mensuales.
+- Resultado: se observó el plan Gratis permanente, el plan Pro por ARS 164.900 mensuales con IVA incluido y el plan Enterprise por cotización. Pro incluye 200 créditos de IA, WhatsApp automático y soporte prioritario. Los paquetes de 20 y 100 créditos se publican a ARS 25.900 y ARS 101.900 respectivamente.
+- Corrección: se actualizaron los nombres y precios de los planes en el informe. Los valores anteriores se conservan como antecedentes históricos.
+- Limitación: la cifra actual de consultorios registrados no se verificó en esta consulta.
+
+### 4. Bilog - Planes
+
+- Tipo: página comercial de contratación y condiciones.
+- URL: https://bilog.com.ar/planes/
+- Afirmación original: suscripción mensual por cotización y configuración inicial sin costo.
+- Resultado: el precio depende de la cantidad de usuarios y las necesidades del cliente. Se informa facturación mensual, ausencia de permanencia y configuración sin costo.
+- Corrección: se incorpora la página específica a la bibliografía y se mantiene el precio numérico como No evidenciado.
+
+### 5. CareStack (CS-D1)
+
+- Tipo: documentación técnica y centro de ayuda.
+- URL: https://carestack.zendesk.com/hc/en-us/articles/25996244132884-A-Detailed-Overview-of-the-Scheduler
+- Afirmación original: funcionalidades de agenda y gestión de recursos.
+- Resultado: se verificaron filtros por profesional y sillón, horarios, descansos, disponibilidad, cancelaciones y ausencias mediante la documentación oficial y su copia PDF.
+- Corrección: se mantiene la referencia como evidencia documental de organización de agenda.
+- Limitación: no demuestra prevención automática de solapamientos ni comportamiento ante operaciones concurrentes.
+
+### 6. Ley 26.529 (N1)
+
+- Tipo: normativa oficial argentina.
+- URL: https://www.argentina.gob.ar/normativa/nacional/ley-26529-160432/actualizacion
+- Afirmación original: necesidad de considerar la intimidad y confidencialidad de los datos del paciente.
+- Resultado: se consultó el texto oficial actualizado y su copia PDF. El artículo 2, incisos c y d, establece los derechos relativos a intimidad y confidencialidad.
+- Corrección: se mantiene la referencia normativa.
+- Aplicación al MVP: fundamenta la minimización de datos y la exclusión de información clínica de los recordatorios.
+- Limitación: no constituye una evaluación jurídica integral del sistema.
+
+### Conclusión de la verificación
+
+Las seis fuentes permiten contrastar afirmaciones comerciales, condiciones de contratación, documentación funcional y normativa oficial. Las correcciones principales corresponden a los precios de Odonthia y la confirmación documental de las respuestas de WhatsApp en Bilog.
+
+Los datos comerciales pueden variar y no constituyen pruebas de funcionamiento. Se mantienen los puntajes de la matriz por conservarse los criterios de cobertura documental y el alcance definitivo del MVP establecido en D.5.
+
+
 ## Bibliografía y trazabilidad
 
-**Todas las URL siguientes tienen fecha de consulta 2026-11-21**, salvo que se explicita intento bloqueado, con esa misma fecha. Los ID conservan el espacio de nombres de sus fichas: **OD1–OD9 = Odonthia; OD-C/OD-D = Open Dental; DE1–DE6 = Dentis365; DE-C/DE-D = Dentally**. Los registros completos, tipo de evidencia, fechas de actualización y fuentes secundarias están en las cuatro fichas enlazadas al inicio. Se incluyen aquí fuentes clave de los 16 productos, no solo enlaces a fichas.
+**Fecha de consulta original: 2026-11-21.** Las seis fuentes de la sección de verificación personal fueron revisadas nuevamente el 24/11/2026. Los ID conservan el espacio de nombres de sus fichas: **OD1–OD9 = Odonthia; OD-C/OD-D = Open Dental; DE1–DE6 = Dentis365; DE-C/DE-D = Dentally**. Los registros completos, tipo de evidencia, fechas de actualización y fuentes secundarias están en las cuatro fichas enlazadas al inicio. Se incluyen aquí fuentes clave de los 16 productos, no solo enlaces a fichas.
 
 | Producto / ID | URL clave | Alcance y condición |
 |---|---|---|
-| Bilog BI1 | https://www.bilog.com.ar/ | Oferta, modalidades, cifras y FAQ, C |
-| Bilog BI4 | https://bilog.com.ar/reminders-whatsapp | Inicio manual, packs y respuestas, C con detalle operativo |
+| Bilog BI1 | https://bilog.com.ar/ | Oferta, modalidades, cifras y FAQ, C |
+| Bilog BI4 | https://bilog.com.ar/reminders-whatsapp/ | Inicio manual, packs y respuestas, C con detalle operativo |
+| Bilog - Planes | https://bilog.com.ar/planes/ | Suscripción mensual por cotización, sin precio numérico publicado; consulta 24/11/2026, C |
 | Bilog BI5 / BI7 | https://bilog.com.ar/pacientes ; https://bilog.com.ar/seguridad | Clínica/firma electrónica y seguridad declarada |
 | DentalSoft DS1 | https://dentalsoft.com.ar/ | Oferta/precios/identidad, C |
 | DentalSoft DS2 / DS3 | https://www.dentalsoft.com.ar/funcionalidades/agenda-odontologica ; https://www.dentalsoft.com.ar/funcionalidades/cobros-mercadopago | Reglas y cobros, C detallada |
@@ -366,94 +448,4 @@ Próximos pasos sugeridos: validar problemas y población objetivo, contrastar l
 | EXT1 | https://www.capterra.com/p/122350/Open-Dental/reviews | Intento directo 2026-11-21: HTTP 403; no se valida reseña ni rating |
 | EXT2 | https://www.capterra.com/p/176206/CareStack/reviews | Intento directo 2026-11-21: HTTP 403; no se valida reseña ni rating |
 
-Las fuentes adicionales referidas por ID (por ejemplo BI2/BI3/BI6, CO8, CU-C8 o índices técnicos) conservan su URL y fecha en las fichas originales. No se modificaron esas fuentes ni el estado de Discovery para producir esta síntesis.
-
-
-
-
-## Verificación de fuentes
-
-**Fecha de verificación manual:** 24/11/2026.
-
-Se realizó una revisión manual de siete fuentes oficiales mediante el acceso a sus páginas web y la obtención de capturas de pantalla. Se contrastaron las afirmaciones del informe competitivo con la información publicada por los proveedores y el organismo oficial consultado.
-
-### 1. Bilog (BI1)
-
-- Tipo de fuente: sitio oficial comercial.
-- Afirmación original: oferta de gestión odontológica y más de 1.500 clínicas y consultorios.
-- Corrección: se mantiene la afirmación como declaración comercial no auditada.
-
-- URL: https://www.bilog.com.ar/
-- Resultado: se corroboró la oferta de gestión odontológica, pacientes, profesionales, agenda y administración.
-- El proveedor declara más de 20 años de experiencia, 1.500 clínicas y consultorios, 5.000 usuarios activos y 150.000 turnos mensuales.
-- Limitación: no se comprobaron las reglas internas de la agenda ni las cifras mediante fuentes independientes.
-
-### 2. Bilog - Recordatorios por WhatsApp (BI4)
-
-- Tipo de fuente: página de funcionalidad específica.
-- Afirmación original: envío masivo iniciado manualmente y actualización de agenda mediante respuestas.
-- Corrección: se confirma el inicio manual; la actualización automática de agenda queda sin confirmar en esta revisión.
-
-- URL: https://bilog.com.ar/reminders-whatsapp/
-- Resultado: se corroboró la selección de un día de la agenda y el envío masivo de recordatorios iniciado por el usuario. Se observaron plantillas de mensajes.
-- Limitación: no se comprobó la integración mediante API oficial de WhatsApp ni la actualización automática de la agenda.
-
-### 3. DentalSoft (DS1)
-
-- Tipo de fuente: sitio oficial comercial.
-- Afirmación original: software odontológico en la nube, agenda, reserva online y módulos administrativos.
-- Corrección: se mantiene la oferta funcional declarada. Mercado Pago y prevención de solapamientos no se validaron nuevamente.
-
-- URL: https://dentalsoft.com.ar/
-- Resultado: se corroboró la oferta de software odontológico en la nube, gestión de pacientes, agenda, historias clínicas y reserva web integrada con la agenda. Se observaron módulos de recordatorios, profesionales, caja y presupuestos.
-- Limitación: no se comprobó la integración con Mercado Pago ni las reglas de prevención de solapamientos.
-
-### 4. Odonthia (OD1)
-
-- Tipo de fuente: sitio oficial con información de planes y precios.
-- Afirmación original: plan gratuito permanente, planes pagos y 4.639 cuentas de consultorios declaradas.
-- Corrección: se registra una nueva cifra declarada de 4.875 consultorios. Los precios observados coinciden con los originales. Se conserva la cifra histórica con su fecha de consulta.
-
-- URL: https://odonthia.com/
-- Resultado: se corroboró el origen argentino declarado, la gestión gratuita sin límite de pacientes, la historia clínica, el odontograma y la oferta de WhatsApp automático en planes pagos.
-- Al momento de la consulta, el proveedor declaraba 4.875 consultorios registrados.
-- Precios publicados: plan Gratis, plan IA por ARS 78.700 mensuales y plan Max por ARS 162.500 mensuales.
-- Limitación: no se comprobaron los recordatorios por correo electrónico ni las reglas internas de disponibilidad.
-
-### 5. Dentalink (DL1)
-
-- Tipo de fuente: sitio oficial comercial.
-- Afirmación original: oferta para profesionales independientes y clínicas, con módulos administrativos y Argentina como opción comercial.
-- Corrección: se mantiene la afirmación sin inferir adaptación fiscal argentina ni implementación de ARCA.
-
-- URL: https://www.softwaredentalink.com/
-- Resultado: se corroboró la oferta de gestión odontológica, carga masiva de pacientes, control de caja y gastos, cálculo de pagos a profesionales, inventario, laboratorios y reportes en Excel.
-- Se observó Argentina como opción del formulario comercial y una oferta dirigida tanto a profesionales independientes como a redes dentales.
-- Limitación: no se comprobó la adaptación fiscal argentina, la integración con ARCA ni los recordatorios automáticos por correo electrónico.
-
-### 6. CareStack (CS-D1)
-
-- Tipo de fuente: centro de ayuda y documentación de usuario.
-- URL: https://carestack.zendesk.com/hc/en-us/articles/25996244132884-A-Detailed-Overview-of-the-Scheduler
-- Afirmación original: CareStack documenta funcionalidades de agenda y gestión de recursos.
-- Resultado: se corroboró que la guía oficial aborda filtros, fechas, turnos cancelados, ausencias, horarios de atención, sillones y disponibilidad de profesionales. Incluye material audiovisual y capturas de la interfaz.
-- Corrección: no se requieren cambios en la afirmación original.
-- Limitación: no se comprobaron las reglas internas de solapamiento ni el comportamiento ante operaciones concurrentes.
-
-### 7. Ley 26.529 (N1)
-
-- Tipo de fuente: normativa oficial argentina.
-- URL: https://www.argentina.gob.ar/normativa/nacional/ley-26529-160432/actualizacion
-- Afirmación original: el tratamiento de información clínica debe considerar los derechos del paciente y la confidencialidad.
-- Resultado: se verificó el texto actualizado de la ley, sancionada el 21/10/2009 y publicada el 20/11/2009. El artículo 2, incisos c y d, establece derechos relativos a la intimidad y confidencialidad, con referencia a la Ley 25.326.
-- Corrección: se mantiene la referencia normativa original.
-- Aplicación al MVP: respalda la decisión de minimizar los datos almacenados y excluir información clínica de los recordatorios.
-- Limitación: esta revisión no determina por sí sola los requisitos legales específicos del consentimiento para recordatorios por email.
-
-### Conclusión de la verificación
-
-Se revisaron siete fuentes oficiales y se contrastaron afirmaciones concretas del informe competitivo. Las funcionalidades observadas corresponden a declaraciones comerciales y documentación de los proveedores, y no constituyen pruebas funcionales de los productos. La fuente normativa aporta contexto legal, pero no acredita el cumplimiento integral del sistema.
-
-Las cifras y los precios corresponden a la fecha de consulta y pueden variar. Se mantienen las limitaciones y los datos históricos de la investigación original.
-
-El análisis respalda la relevancia de la gestión de turnos, pacientes, agenda y recordatorios como funcionalidades del mercado. El alcance definitivo del MVP se mantiene conforme a las decisiones del equipo documentadas en la sección D.5.
+Las fuentes adicionales referidas por ID (por ejemplo BI2/BI3/BI6, CO8, CU-C8 o índices técnicos) conservan su URL y fecha en las fichas originales. Las actualizaciones posteriores se identifican expresamente en el informe y en las fichas correspondientes.
