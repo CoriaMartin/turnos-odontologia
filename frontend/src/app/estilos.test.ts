@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import cssGestion from '../features/agenda/Gestion.module.css?raw';
+import cssConfiguracion from '../features/configuracion/ConfiguracionPage.module.css?raw';
 import cssPacientes from '../features/pacientes/Pacientes.module.css?raw';
 import cssPrestaciones from '../features/prestaciones/Prestaciones.module.css?raw';
 import './estilos';
@@ -44,6 +45,7 @@ describe('web-app-shell · Idioma y estilos del sistema de diseño', () => {
     ['prestaciones', cssPrestaciones],
     ['pacientes', cssPacientes],
     ['gestión de turnos (C-17)', cssGestion],
+    ['configuración de recordatorios (C-18)', cssConfiguracion],
   ])('%s usa sólo variables del sistema de diseño (D9)', (_nombre, css) => {
     const contenido = sinMedia(css);
     expect(contenido).not.toMatch(/#[0-9a-fA-F]{3,8}\b/);
