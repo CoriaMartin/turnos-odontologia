@@ -1,9 +1,16 @@
 import { useState } from 'react';
+import { ApiError } from '../../shared/api/ApiError';
 import { Alerta } from './Alerta';
 import { etiquetaPaciente } from './ComboPaciente';
 import { Dialogo } from './Dialogo';
 import { interpretarRechazo } from './errores';
 import { enConsultorio, formatoHora, textoDia } from './fechas';
+import {
+  DETALLE_NOTIFICACION,
+  ETIQUETA_NOTIFICACION,
+  useNotificacionDeTurno,
+  type EstadoNotificacion,
+} from './notificaciones';
 import { accionesDisponibles } from './gestion';
 import type { TurnoAgenda } from './tipos';
 import { Badge } from './Turnos';
@@ -37,6 +44,36 @@ const AYUDA = {
   empezado: 'El turno ya empezó: registrá la asistencia.',
   final: 'Este turno ya no se puede modificar.',
 } as const;
+
+const CLASE_NOTIFICACION: Readonly<Record<EstadoNotificacion, string | undefined>> = {
+  PENDIENTE: estilos.badgePendiente,
+  ENVIADA: estilos.badgeEnviado,
+  FALLIDA: estilos.badgeFallido,
+  NO_APLICA: estilos.badgeNoAplica,
+  NO_CONSENTIDO: estilos.badgeNoConsentido,
+};
+
+export function EstadoRecordatorio({ id }: { id: number }) {
+  const consulta = useNotificacionDeTurno(id);
+  if (consulta.isPending) {
+    return <span className={estilos.nota}>Consultando el estado del recordatorio...</span>;
+  }
+  if (consulta.isError) {
+    return consulta.error instanceof ApiError && consulta.error.status === 401 ? null : (
+      <span className={estilos.nota}>No pudimos consultar el estado del recordatorio.</span>
+    );
+  }
+  const estado = consulta.data?.estado;
+  if (!estado) return null;
+  return (
+    <>
+      <span className={`${estilos.badgeRecordatorio} ${CLASE_NOTIFICACION[estado] ?? ''}`}>
+        {ETIQUETA_NOTIFICACION[estado]}
+      </span>
+      <span className={estilos.nota}>{DETALLE_NOTIFICACION[estado]}</span>
+    </>
+  );
+}
 
 interface Props {
   turno: TurnoAgenda;
@@ -147,6 +184,12 @@ export function DialogoDetalle({
         <div>
           <dt>Horario</dt>
           <dd>{horarioDe(turno)}</dd>
+        </div>
+        <div className={estilos.datoRecordatorio}>
+          <dt>Recordatorio</dt>
+          <dd>
+            <EstadoRecordatorio id={turno.id} />
+          </dd>
         </div>
       </dl>
       <p className={estilos.nota}>{futuro ? AYUDA.futuro : empezado ? AYUDA.empezado : AYUDA.final}</p>

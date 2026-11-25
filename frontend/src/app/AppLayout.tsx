@@ -30,6 +30,9 @@ export function AppLayout() {
           <NavLink to="/pacientes" className={estilos.enlace!}>
             Pacientes
           </NavLink>
+          <NavLink to="/configuracion" className={estilos.enlace!}>
+            Configuración
+          </NavLink>
         </nav>
         {/* Al cerrar, RutaProtegida lleva a /login y el QueryClient descarta los datos (design.md D5). */}
         <button className={estilos.botonFantasma} type="button" onClick={() => cerrarSesion('manual')}>

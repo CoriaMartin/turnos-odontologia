@@ -18,19 +18,21 @@
 
 ## Decisions
 
-### D1 — Store de configuración en un módulo, expuesto con `useSyncExternalStore`
+### D1 — Estado de configuración con TanStack Query (reemplaza `store.ts`)
 
-`src/features/configuracion/store.ts` guarda `{ cancelacionTardia, recordatorio, zonaHoraria } | null` en una variable del módulo, más el motivo del último error (`'inválido' | 'guardando' | null`). Expone `cargarConfiguracion`, `guardarConfiguracion(motivo)`, `datosVálidos()` y el hook `useConfiguracion()`.
+`src/features/configuracion/api.ts` expone `CLAVE_CONFIGURACION`, `obtenerConfiguracion`, `guardarConfiguracion` y los hooks `useConfiguracion()` y `useGuardarConfiguracion()`. La caché de TanStack Query es la única fuente de verdad en memoria: `useGuardarConfiguracion` usa `setQueryData(CLAVE_CONFIGURACION, configuracion)` con la respuesta del `PUT`, sin un store de módulo. El proveedor de token de C-14 ya está conectado en `main.tsx` y en `renderConRutas`, así que `GET`/`PUT /api/configuracion` viajan con `Authorization: Bearer <token>`; sin sesión no se envía el header.
 
-- **Por qué**: el formulario y el detalle del turno leen el mismo estado. `main.tsx` llama una vez a `configurarProveedorToken` y a `cargarConfiguracion` al iniciar.
+- **Por qué**: la web app ya usa TanStack Query para agenda, prestaciones y pacientes; reutilizar su caché evita duplicar estados de carga/error y hereda el manejo de 401 de C-14.
+- **Alternativa descartada**: `store.ts` con `useSyncExternalStore` (D1 original). Requiere sincronizar a mano la caché, la sesión y los reintentos; fue reemplazado por `api.ts` + `validacion.ts` según la decisión final del change.
 - **Alternativa descartada**: un Context de React. Obliga a pasar el estado al formulario con un efecto y deja una ventana en la que el cliente no lo tiene.
-- **Alternativa descartada**: `localStorage`. La consigna usa persistencia en backend y el estado debe sincronizarse con la base; un store de módulo es más seguro y fácil de reiniciar en tests.
+- **Alternativa descartada**: `localStorage`. La consigna usa persistencia en backend y el estado debe sincronizarse con la base; el token tampoco se persiste (C-14).
 
-### D2 — Validación al guardar
+### D2 — Validación en `validacion.ts` y en el servidor
 
-`guardarConfiguracion()` compara los nuevos valores con los actuales y solo envía `PUT` si cambiaron. Si la validación falla (cancelación < 0 o recordatorio ≤ 0), muestra un mensaje con el patrón `.field.invalid` + `aria-invalid` + `aria-describedby`; el foco va al primer campo inválido.
+`src/features/configuracion/validacion.ts` define `CampoHoras`, `HorasFormulario`, `ErroresHoras`, `VALOR_POR_DEFECTO` (24/24), `aFormulario`, `validarHoras` y `aHorasConfiguracion`. `validarHoras` rechaza campos vacíos, no enteros, cancelación < 0 y recordatorio ≤ 0. `ConfiguracionPage` no llama al `PUT` cuando hay fallos: marca el campo con `aria-invalid`/`aria-describedby`, muestra el mensaje en español rioplatense y enfoca el primero. El backend vuelve a validar con `@Min`, y un `HORAS_INVALIDAS` inesperado se traduce con `MENSAJES_POR_CODIGO` sin exponer el código.
 
 - **Alternativa descartada**: permitir valores nulos y tratarlos como por defecto. La regla de negocio (RN-CA-01) obliga a mayores o iguales a 0 para cancelación y mayores a 0 para recordatorio.
+- **Alternativa descartada**: comparar con los valores actuales y omitir el `PUT` si no cambiaron. El formulario siempre confirma el guardado para que el usuario vea `GUARDAR_EXITOSO`; el servidor es la fuente de verdad.
 
 ### D3 — Rutas: `/configuracion` bajo `RutaProtegida`
 
@@ -38,14 +40,14 @@
 /                 → RutaProtegida → AppLayout → { index: InicioPage, *: NoEncontradaPage, configuracion: ConfiguracionPage }
 ```
 
-`RutaProtegida` usa `useSesion()`; sin sesión devuelve `<Navigate to="/login" replace state={{ desde }} />`. `ConfiguracionPage` con sesión redirige a `state.desdi ?? '/'`; tras el login exitoso navega a `state.desde ?? '/configuracion'` con `replace`. El aviso "Tu sesión venció" se muestra si el último motivo de cierre es `'vencida'` y se consume al ingresar.
+`RutaProtegida` usa `useSesion()`; sin sesión devuelve `<Navigate to="/login" replace state={{ desde }} />`. `ConfiguracionPage` ofrece el enlace "Volver a la agenda" hacia `state.desde ?? '/'` (no redirecciona automáticamente tras guardar, para que el aviso de éxito siga visible); tras el login exitoso navega a `state.desde ?? '/configuracion'` con `replace`. El aviso "Tu sesión venció" se muestra si el último motivo de cierre es `'vencida'` y se consume al ingresar.
 
 ### D4 — Formulario y mensajes
 
 - `<form noValidate>` con validación propia de campos vacíos (los globos nativos del navegador no respetan el tono de la marca). Errores con el patrón `.field.invalid` + `aria-invalid` + `aria-describedby`; el foco va al primer campo con error.
 - `useMutation` para el guardado; `isPending` deshabilita el botón y muestra el spinner con `aria-busy`. Los campos pasan a `readOnly` mientras carga.
 - Textos: `HORAS_INVALIDAS` y `GUARDAR_EXITOSO` se suman a `MENSAJES_POR_CODIGO` (convención de C-02). El título de cada aviso vive en `features/configuracion`. El `detail` del backend no se muestra: los textos los define la web app.
-- Horas inválidas: se vacía el campo y se enfoca ese campo. El aviso usa `role="alert"`.
+- Horas inválidas: se conserva lo escrito, se marca el campo y se enfoca el primero con error. El aviso usa `role="alert"`.
 
 ### D5 — Estilos solo con tokens
 
@@ -56,7 +58,7 @@
 - [Los valores se pierden si el backend reinicia] → Los valores quedan guardados en la base; la pantalla los vuelve a cargar al volver a entrar.
 - [Un script inyectado (XSS) puede leer la memoria de la configuración] → Los datos son de solo configuración horaria, no sensibles como datos de salud; React escapa el contenido por defecto. No se usa `dangerouslySetInnerHTML`.
 - [El usuario ingresa horas negativas por error] → La validación impede guardarlas y muestra el mensaje inmediato; el valor anterior se conserva.
-- [El store de módulo filtra estado entre tests] → Reinicio en `afterEach` del setup.
+- [La caché filtra estado entre tests] → `renderConRutas` crea un `QueryClient` nuevo por test y la caché se descarta al cerrar sesión (C-14).
 
 ## Migration Plan
 
@@ -66,10 +68,10 @@ Sin migraciones de datos. Rollback: revertir el PR; el backend no cambia.
 
 - Design system revision: 2
 - Decision: yes (2026-11-24). La maqueta la hace Ludmi, con el ok del equipo.
-- Mockups: [mockups/](mockups/) — pantalla vacía, formulario completo, error de horas inválidas, guardando, guardado exitoso, inicio con sesión y "Configuración" en la barra. Fuentes: `design-system/components.html` §Configuración y §Mensajes, `design-system/brand.md` §Tono de los textos.
-- Approval: pending (2026-11-24, por aprobar por el líder).
-- Preview: manual (paths pendientes, se capturará con Playwright después de la aprobación).
-- Visual verify: manual (checklist por pantalla después de la aprobación). Ver [evidencia.md](evidencia.md) cuando existan capturas.
+- Mockups: [mockups/](mockups/) — pantalla vacía, formulario completo, error de horas inválidas, guardando, guardado exitoso, inicio con sesión y "Configuración" en la barra, y detalle de turno con recordatorio. Las capturas aprobadas están directamente en `mockups/*.png`. Fuentes: `design-system/components.html` §Configuración y §Mensajes, `design-system/brand.md` §Tono de los textos.
+- Approval: approved (2026-11-24, by user).
+- Preview: rendered (2026-11-24, Playwright, Chromium; capturas aprobadas en `mockups/`).
+- Visual verify: manual (2026-11-24). Se capturaron los estados en `mockups/verify/` y se compararon por DOM, texto, ARIA y tokens; la revisión pixel a pixel de las imágenes queda como checklist manual. Ver [evidencia.md](evidencia.md).
 
 ## Migration Plan
 

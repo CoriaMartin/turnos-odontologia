@@ -9,6 +9,7 @@ import {
   respuestaJson,
   simularApi,
 } from '../test/catalogos';
+import { CONFIGURACION_DE_PRUEBA, simularApiConfiguracion } from '../test/configuracion';
 import { renderConRutas } from '../test/renderConRutas';
 
 // Con sesión, `/` es la agenda (C-16) y pide turnos: la API se simula para no salir a la red.
@@ -37,6 +38,19 @@ describe('web-app-shell · Barra superior con la marca', () => {
     expect(within(barra).getByRole('button', { name: 'Cerrar sesión' })).toBeInTheDocument();
   });
 
+  it('Barra presente en el configurador, con "Configuración" marcada', () => {
+    simularApiConfiguracion();
+    renderConRutas('/configuracion', { conSesion: true });
+
+    const barra = screen.getByRole('banner');
+    const navegacion = within(barra).getByRole('navigation', { name: 'Navegación principal' });
+    expect(within(navegacion).getByRole('link', { name: 'Configuración' })).toHaveAttribute(
+      'aria-current',
+      'page',
+    );
+    expect(within(barra).getByRole('button', { name: 'Cerrar sesión' })).toBeInTheDocument();
+  });
+
   it('Login sin barra superior ni "Cerrar sesión"', () => {
     renderConRutas('/login');
 
@@ -48,6 +62,7 @@ describe('web-app-shell · Barra superior con la marca', () => {
     simularApi((url) => {
       if (url.pathname.endsWith('/prestaciones')) return respuestaJson(PRESTACIONES_DE_PRUEBA);
       if (url.pathname.endsWith('/pacientes')) return respuestaJson(paginaDe(PACIENTES_DE_PRUEBA));
+      if (url.pathname.endsWith('/configuracion')) return respuestaJson(CONFIGURACION_DE_PRUEBA);
       return respuestaJson([]);
     });
     renderConRutas('/', { conSesion: true });
@@ -55,7 +70,7 @@ describe('web-app-shell · Barra superior con la marca', () => {
     const navegacion = within(screen.getByRole('banner')).getByRole('navigation', {
       name: 'Navegación principal',
     });
-    expect(within(navegacion).getAllByRole('link')).toHaveLength(3);
+    expect(within(navegacion).getAllByRole('link')).toHaveLength(4);
 
     await usuario.click(within(navegacion).getByRole('link', { name: 'Prestaciones' }));
     expect(await screen.findByRole('heading', { name: 'Catálogo de prestaciones' })).toBeInTheDocument();
@@ -66,6 +81,13 @@ describe('web-app-shell · Barra superior con la marca', () => {
 
     await usuario.click(within(navegacion).getByRole('link', { name: 'Pacientes' }));
     expect(await screen.findByRole('heading', { name: 'Pacientes' })).toBeInTheDocument();
+
+    await usuario.click(within(navegacion).getByRole('link', { name: 'Configuración' }));
+    expect(await screen.findByRole('heading', { name: 'Configuración de recordatorios' })).toBeInTheDocument();
+    expect(within(navegacion).getByRole('link', { name: 'Configuración' })).toHaveAttribute(
+      'aria-current',
+      'page',
+    );
 
     await usuario.click(within(navegacion).getByRole('link', { name: 'Agenda' }));
     expect(await screen.findByRole('heading', { name: 'Agenda' })).toBeInTheDocument();
@@ -79,6 +101,17 @@ describe('web-app-shell · Área de contenido principal', () => {
     const regiones = screen.getAllByRole('main');
     expect(regiones).toHaveLength(1);
     expect(within(regiones[0]!).getByRole('heading', { level: 1 })).toBeInTheDocument();
+  });
+
+  it('Región principal en el configurador: un solo main con un h1', () => {
+    simularApiConfiguracion();
+    renderConRutas('/configuracion', { conSesion: true });
+
+    const regiones = screen.getAllByRole('main');
+    expect(regiones).toHaveLength(1);
+    expect(
+      within(regiones[0]!).getByRole('heading', { level: 1, name: 'Configuración de recordatorios' }),
+    ).toBeInTheDocument();
   });
 
   it('Región principal en el login: un solo main con un h1', () => {

@@ -116,7 +116,7 @@ describe('web-agenda · Sesión vencida al consultar la agenda', () => {
 });
 
 describe('web-administracion · Sesión en las rutas nuevas', () => {
-  it.each(['/prestaciones', '/pacientes'])(
+  it.each(['/prestaciones', '/pacientes', '/configuracion'])(
     'Ruta protegida sin sesión: %s lleva al login y recuerda la ruta',
     async (ruta) => {
       const { router } = renderConRutas(ruta);

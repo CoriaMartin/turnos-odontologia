@@ -35,7 +35,13 @@ export const MENSAJES_POR_CODIGO: Readonly<Record<string, string>> = {
   TURNO_MODIFICADO:
     'Este turno cambió mientras lo editabas. Actualizamos la agenda: revisalo y probá de nuevo.',
   TURNO_NO_ENCONTRADO: 'No encontramos ese turno. Actualizá la agenda y probá de nuevo.',
+  HORAS_INVALIDAS:
+    'Las horas tienen que ser números enteros: 0 o más para cancelación tardía y mayor a 0 para recordatorio.',
+  GUARDAR_EXITOSO: 'La configuración se guardó correctamente.',
 };
+
+export const TITULO_HORAS_INVALIDAS = 'Revisá las horas cargadas';
+export const TITULO_GUARDAR_EXITOSO = 'Configuración guardada';
 
 /** Título del aviso de `TURNO_SOLAPADO` (spec "Horario ocupado"). */
 export const TITULO_TURNO_SOLAPADO = 'Ese horario ya está ocupado';

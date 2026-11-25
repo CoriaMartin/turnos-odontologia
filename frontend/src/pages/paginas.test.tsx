@@ -9,6 +9,7 @@ import {
   respuestaJson,
   simularApi,
 } from '../test/catalogos';
+import { simularApiConfiguracion } from '../test/configuracion';
 import { renderConRutas } from '../test/renderConRutas';
 
 beforeEach(() => {
@@ -51,6 +52,28 @@ describe('web-administracion · Rutas protegidas nuevas', () => {
     expect(screen.getByRole('heading', { level: 1, name: 'Pacientes' })).toBeInTheDocument();
     expect(screen.getByRole('banner')).toBeInTheDocument();
     await waitFor(() => expect(document.title).toBe('Pacientes · Agenda de Odontología'));
+  });
+});
+
+describe('web-configuracion-recordatorios · Ruta /configuracion', () => {
+  it('con sesión, /configuracion muestra la pantalla dentro del layout', async () => {
+    simularApiConfiguracion();
+    renderConRutas('/configuracion', { conSesion: true });
+
+    expect(
+      screen.getByRole('heading', { level: 1, name: 'Configuración de recordatorios' }),
+    ).toBeInTheDocument();
+    expect(screen.getByRole('banner')).toBeInTheDocument();
+    await waitFor(() => expect(document.title).toBe('Configuración · Agenda de Odontología'));
+  });
+
+  it('sin sesión, /configuracion lleva al login', async () => {
+    simularApiConfiguracion();
+    const { router } = renderConRutas('/configuracion');
+
+    expect(await screen.findByRole('heading', { level: 1, name: 'Ingresá a tu agenda' })).toBeInTheDocument();
+    expect(router.state.location.pathname).toBe('/login');
+    expect(router.state.location.state).toEqual({ desde: '/configuracion' });
   });
 });
 

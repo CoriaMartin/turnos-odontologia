@@ -1,5 +1,6 @@
 import { createBrowserRouter, type RouteObject } from 'react-router-dom';
 import { AgendaPage } from '../features/agenda/AgendaPage';
+import { ConfiguracionPage } from '../features/configuracion/ConfiguracionPage';
 import { LoginPage } from '../features/auth/LoginPage';
 import { RutaProtegida } from '../features/auth/RutaProtegida';
 import { PacientesPage } from '../features/pacientes/PacientesPage';
@@ -26,6 +27,7 @@ export const rutas: RouteObject[] = [
       { index: true, element: <AgendaPage /> },
       { path: 'prestaciones', element: <PrestacionesPage /> },
       { path: 'pacientes', element: <PacientesPage /> },
+      { path: 'configuracion', element: <ConfiguracionPage /> },
       { path: '*', element: <NoEncontradaPage /> },
     ],
   },

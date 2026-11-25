@@ -1,4 +1,5 @@
 import type { Configuracion } from '../features/configuracion/api';
+import type { NotificacionTurno } from '../features/agenda/notificaciones';
 import type { TurnoAgenda } from '../features/agenda/tipos';
 import type { Paciente } from '../features/pacientes/tipos';
 import type { Prestacion } from '../features/prestaciones/tipos';
@@ -35,6 +36,7 @@ export interface Backend {
   pacientes?: Paciente[];
   prestaciones?: Prestacion[];
   configuracion?: Configuracion | 'error';
+  notificaciones?: Record<number, NotificacionTurno | 'error'>;
   respuestas?: Partial<Record<Operacion, Respondedor>>;
 }
 
@@ -71,6 +73,15 @@ export function simularBackend(backend: Backend) {
     if (ruta === '/api/turnos' && metodo === 'POST') {
       const responder = backend.respuestas?.crear;
       return responder ? responder(cuerpoDe(init), 0) : errorApi(500, 'ERROR_INTERNO');
+    }
+    const notificacion = /^\/api\/turnos\/(\d+)\/notificaciones$/.exec(ruta);
+    if (notificacion) {
+      const respuesta = backend.notificaciones?.[Number(notificacion[1])];
+      return respuesta === 'error'
+        ? errorApi(500, 'ERROR_INTERNO')
+        : respuesta
+          ? respuestaJson(respuesta)
+          : errorApi(404, 'RECURSO_NO_ENCONTRADO');
     }
     const operacion = RUTA_OPERACION.exec(ruta);
     if (operacion) {
