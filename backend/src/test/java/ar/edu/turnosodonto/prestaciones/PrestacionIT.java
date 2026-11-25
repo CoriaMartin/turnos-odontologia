@@ -202,6 +202,16 @@ class PrestacionIT {
     }
 
     @Test
+    void altaConNombreDePrestacionDesactivada() throws Exception {
+        long id = crear("Limpieza Inactiva Ficticia", 45);
+        patchActiva(id, false).andExpect(status().isOk());
+
+        alta(json("Limpieza Inactiva Ficticia", 30))
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.codigo").value("NOMBRE_DUPLICADO"));
+    }
+
+    @Test
     void edicionConNombreDeOtraPrestacion() throws Exception {
         crear("Obturación Ficticia", 45);
         long segunda = crear("Extracción Ficticia", 45);
@@ -275,6 +285,20 @@ class PrestacionIT {
     }
 
     @Test
+    void edicionConNombreConEspacios() throws Exception {
+        long id = crear("Control Ficticio", 30);
+
+        ejecutar(put(URL + "/" + id).contentType(MediaType.APPLICATION_JSON)
+                .content(json("  Control Editado Ficticio  ", 30)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.nombre").value("Control Editado Ficticio"));
+
+        ejecutar(get(URL + "/" + id))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.nombre").value("Control Editado Ficticio"));
+    }
+
+    @Test
     void desactivarSinBorrar() throws Exception {
         long id = crear("Desactivar Ficticia", 30);
 
@@ -331,6 +355,15 @@ class PrestacionIT {
     @Test
     void sinTokenAlCambiarActiva() throws Exception {
         mvc.perform(patch(URL + "/1/activa").contentType(MediaType.APPLICATION_JSON).content("{\"activa\":false}"))
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.codigo").value("NO_AUTENTICADO"));
+    }
+
+    @Test
+    void sinTokenAlObtener() throws Exception {
+        long id = crear("Sin Token Ficticia", 30);
+
+        mvc.perform(get(URL + "/" + id))
                 .andExpect(status().isUnauthorized())
                 .andExpect(jsonPath("$.codigo").value("NO_AUTENTICADO"));
     }

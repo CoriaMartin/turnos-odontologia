@@ -69,6 +69,11 @@ No SHALL existir dos prestaciones con el mismo nombre sin distinguir mayúsculas
 - **WHEN** se cambia el nombre de la segunda a "obturación ficticia"
 - **THEN** la respuesta tiene estado 409 y `codigo` `NOMBRE_DUPLICADO`
 
+#### Scenario: Alta con nombre de prestación desactivada
+- **GIVEN** existe una prestación desactivada con nombre "Limpieza Inactiva Ficticia"
+- **WHEN** se da de alta otra con el mismo nombre exacto "Limpieza Inactiva Ficticia"
+- **THEN** la respuesta tiene estado 409 y `codigo` `NOMBRE_DUPLICADO`
+
 ### Requirement: Listado de prestaciones
 `GET /api/prestaciones` SHALL devolver todas las prestaciones, activas e inactivas, ordenadas por nombre, sin paginación, indicando el valor de `activa`.
 
@@ -103,6 +108,12 @@ No SHALL existir dos prestaciones con el mismo nombre sin distinguir mayúsculas
 - **WHEN** se cambia su duración
 - **THEN** la respuesta tiene estado 200
 - **AND** la prestación sigue desactivada
+
+#### Scenario: Edición con nombre con espacios
+- **GIVEN** existe una prestación con nombre "Control Ficticio"
+- **WHEN** se envía `PUT /api/prestaciones/{id}` con el nombre `"  Control Editado Ficticio  "` y duración 30
+- **THEN** la respuesta tiene estado 200 y `nombre` es `"Control Editado Ficticio"`
+- **AND** una consulta posterior por id devuelve el mismo nombre recortado
 
 ### Requirement: Activación y desactivación
 `PATCH /api/prestaciones/{id}/activa` SHALL recibir `{ "activa": true|false }`, SHALL ser idempotente y SHALL responder 200 con el DTO actualizado. SHALL NOT borrar la prestación: `GET /api/prestaciones/{id}` sigue devolviéndola.
@@ -140,4 +151,9 @@ Todas las operaciones de prestaciones SHALL exigir un JWT válido con rol `ODONT
 
 #### Scenario: Sin token al cambiar `activa`
 - **WHEN** se envía `PATCH /api/prestaciones/1/activa` sin token
+- **THEN** la respuesta tiene estado 401 y `codigo` `NO_AUTENTICADO`
+
+#### Scenario: Sin token al consultar por id
+- **GIVEN** existe una prestación creada por el test con id `{id}`
+- **WHEN** se pide `GET /api/prestaciones/{id}` sin token
 - **THEN** la respuesta tiene estado 401 y `codigo` `NO_AUTENTICADO`
