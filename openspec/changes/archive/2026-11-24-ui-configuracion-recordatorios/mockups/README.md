@@ -1,6 +1,6 @@
 # Maqueta C-18 · UI Configuración de Recordatorios
 
-Approval: pending
+Approval: approved (2026-11-24, by user)
 Design system revision: 2
 Preview: rendered (2026-11-24, Playwright, Chromium)
 

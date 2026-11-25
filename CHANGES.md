@@ -485,7 +485,7 @@ C-14 (ui-login) corre en paralelo y debe estar listo antes de C-16. C-13 → C-1
   - `design-system/components.html` §Formulario: nuevo turno, §Mensajes
 
 ### [C-18] `ui-configuracion-recordatorios`
-- **Estado**: `[ ]` pendiente
+- **Estado**: `[x]` completado (2026-11-24, change archivado `openspec/changes/archive/2026-11-24-ui-configuracion-recordatorios`)
 - **Responsable**: Ludmi · tanda 8
 - **Scope**:
   - Pantalla de configuración (horas de cancelación tardía y de recordatorio).
