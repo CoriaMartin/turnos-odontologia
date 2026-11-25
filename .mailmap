@@ -1,0 +1,12 @@
+# Unifica los nombres con los que cada integrante aparece en git (terminal y web de GitHub).
+# No reescribe el historial: git shortlog, git log y GitHub de escritorio lo usan al mostrar autores.
+# Formato: Nombre canónico <email canónico> Nombre alternativo <email alternativo>
+
+Martín Coria <coriamartin2020@gmail.com> Martin Coria <coriamartin2020@gmail.com>
+Martín Coria <coriamartin2020@gmail.com> Coria Martin Cesar Gabriel <106929029+CoriaMartin@users.noreply.github.com>
+Agustina Chiara <agustina.chiara@alumnos.frm.utn.edu.ar> AgustinaChiara <agustina.chiara@alumnos.frm.utn.edu.ar>
+Agustina Chiara <agustina.chiara@alumnos.frm.utn.edu.ar> Chiara Agustina Yamila <agustina.chiara@alumnos.frm.utn.edu.ar>
+Zaira Tarifa <zaira.tarifa@alumnos.frm.utn.edu.ar> Zaira <zaira.tarifa@alumnos.frm.utn.edu.ar>
+Zaira Tarifa <zaira.tarifa@alumnos.frm.utn.edu.ar> Tarifa Zaira Ailen <zaira.tarifa@alumnos.frm.utn.edu.ar>
+Ludmila Pérez <ludmila.perez@alumnos.frm.utn.edu.ar> ludmilaperez <ludmila.perez@alumnos.frm.utn.edu.ar>
+Ludmila Pérez <ludmila.perez@alumnos.frm.utn.edu.ar> Perez Ludmila Milagros <ludmila.perez@alumnos.frm.utn.edu.ar>
