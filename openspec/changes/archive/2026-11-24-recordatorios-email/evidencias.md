@@ -6,7 +6,7 @@ Rama: zaira/C-13-recordatorios-email
 ## Resultados
 
 - Maven verify completo: BUILD SUCCESS.
-- 83 pruebas unitarias aprobadas.
+- 83 pruebas unitarias aprobadas en la ejecucion inicial, antes de incorporar TransporteDeshabilitadoTest.
 - 217 pruebas de integracion aprobadas.
 - Prueba adicional TransporteDeshabilitadoTest: aprobada.
 - Total de pruebas propias de C-13: 23.
@@ -33,7 +33,7 @@ Rama: zaira/C-13-recordatorios-email
 ## Verificacion final
 
 - Maven verify: BUILD SUCCESS.
-- Pruebas unitarias: 96.
+- Pruebas unitarias: 84.
 - Pruebas de integracion: 217.
 - Sin fallos, errores ni pruebas omitidas de integracion.
 - Finalizacion: 24/11/2026 20:03:39.

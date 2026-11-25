@@ -23,7 +23,7 @@
 | OdontoSoft Millennium | GB Systems fundada en Buenos Aires; Argentina–EE. UU. | Windows local/red; licencia perpetua o suscripción | Español: USD 390 / 799 / 1199 compra; USD 35 / 65 / 99 mensuales; descuentos publicados | Tarifas oficiales en inglés y español divergen; requisitos publicados incluyen Windows antiguos |
 | Bilog | Empresa orientada a Argentina, historia oficial desde 2004; razón social No evidenciado | Web, mobile y escritorio mencionados | Mensual por cotización; configuración inicial sin costo | Packs WhatsApp con inicio manual; detalle comercial de planes presenta inconsistencias |
 | DentalSoft | Equipo argentino; La Plata y Rosario; razón social No evidenciado | SaaS, consultorios y clínicas | Gestión $30.000/mes y Pro $60.000/mes, selección visible de 1 profesional; contexto argentino | Símbolo $ sin código monetario explícito en tabla; automatizaciones y MP dependen de Pro |
-| Odonthia | Genera Impacto, Argentina; responsable Manuel Sabio con CUIT publicado | Web; consultorios y equipos | Gratis; IA ARS 78.700/mes; Max ARS 162.500/mes, IVA incluido | No emite comprobantes fiscales; reserva requiere aprobación; WhatsApp tiene costos externos |
+| Odonthia | Genera Impacto, Argentina; responsable Manuel Sabio con CUIT publicado | Web; consultorios y equipos | Gratis; Pro ARS 164.900/mes, IVA incluido; Enterprise por cotización (24/11/2026) | No emite comprobantes fiscales; reserva requiere aprobación; WhatsApp tiene costos externos |
 
 ---
 
@@ -434,3 +434,32 @@ Adopción: portada muestra **4.639 consultorios con cuenta** y **22 países regi
 - Freshdesk de Dentidesk, privacidad tentativa Bilog y reseñas Google DentalSoft no accesibles según registros respectivos. No hay reseñas independientes verificadas en este informe.
 - Lecturas de OdontoSoft mostraron errores de codificación en acentos; importes y contenidos se interpretaron desde tablas legibles, conservando discrepancias entre versiones lingüísticas.
 - Este archivo es el único entregable editado. **No se actualizó `discovery/discovery.md` ni estado del proyecto**; cualquier síntesis aprobable allí corresponde a la sesión principal y requiere aprobación del usuario.
+
+## Actualización documental - 24/11/2026
+
+Los precios y planes registrados en la investigación del 21/11/2026 se conservan como antecedentes históricos, no como tarifas vigentes.
+
+### Odonthia
+
+Fuente: https://odonthia.com/planes
+
+| Plan o paquete | Precio observado en Argentina |
+|---|---|
+| Gratis | Sin costo permanente |
+| Pro | ARS 164.900/mes, IVA incluido |
+| Enterprise | Por cotización |
+| 20 créditos | ARS 25.900 |
+| 100 créditos | ARS 101.900 |
+
+Pro incluye 200 créditos de IA, WhatsApp automático y soporte prioritario. No se verificó nuevamente el contador de consultorios ni los precios anuales anteriores.
+
+### Bilog
+
+Fuentes:
+- https://bilog.com.ar/
+- https://bilog.com.ar/reminders-whatsapp/
+- https://bilog.com.ar/planes/
+
+La FAQ declara que las respuestas de confirmación o cancelación actualizan automáticamente la agenda. Los planes se contratan mediante cotización mensual, sin precio numérico publicado, permanencia ni costo de configuración declarado.
+
+Estas observaciones corresponden a información comercial consultada personalmente, no a pruebas funcionales ni auditorías independientes.
