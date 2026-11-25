@@ -147,10 +147,10 @@ Abrí <http://localhost:5173> e ingresá con `ADMIN_EMAIL` y `ADMIN_PASSWORD`.
 | Pantalla | Qué permite |
 |---|---|
 | Login | Ingreso con email y contraseña; bloqueo de 15 minutos tras 5 intentos fallidos |
-| Agenda | Vista diaria y semanal; crear, reprogramar y cancelar turnos; registrar atendido o ausente |
+| Agenda | Vista diaria y semanal; crear, reprogramar y cancelar turnos; registrar atendido o ausente; en el detalle de cada turno, el estado de su recordatorio |
 | Pacientes | Alta, búsqueda sin tildes, edición y baja (no se puede dar de baja con turnos futuros) |
 | Prestaciones | Catálogo con duración; activar y desactivar |
-| Configuración | Horas de cancelación tardía y de anticipación del recordatorio (pantalla en curso, C-18; la API ya está) |
+| Configuración | Horas de cancelación tardía y de anticipación del recordatorio |
 
 ## 5. Demo con datos de ejemplo (perfil `dev`)
 

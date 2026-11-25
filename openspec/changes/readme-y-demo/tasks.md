@@ -20,7 +20,7 @@
 
 ## 5. Cierre (requiere C-18 en `main`)
 
-- [ ] 5.1 Actualizar README y demo con lo que aporte C-18, repetir `./mvnw verify`, `npm run verify` y el script de seguridad; verificar todo en verde
+- [x] 5.1 Actualizar README y demo con lo que aporte C-18, repetir `./mvnw verify`, `npm run verify` y el script de seguridad; verificar todo en verde
 
 ## Workflow follow-up
 

@@ -18,6 +18,19 @@ Objetivo de la consigna: **el repositorio debe poder clonarse y correr los tests
 | 3. Suite completa del backend | `./mvnw verify` en el repo de trabajo del líder | ✅ **302 tests** en verde (unitarios + integración contra `turnos_test`) |
 | 6. Checklist de seguridad | `powershell -ExecutionPolicy Bypass -File scripts/verificar-entrega.ps1` | ✅ 5/5 OK, corrido por el líder en su terminal (2026-11-24). La primera corrida marcó 6 falsos positivos en documentación que enuncia la regla; se ajustó el chequeo 2 a configuración y código (commit `8821b17`) |
 
+### Re-verificación con C-18 integrado (tarea 5.1)
+
+| Dato | Valor |
+|---|---|
+| Fecha | 2026-11-24 |
+| Base | `main` con C-18 (PR #26) integrado en la rama de C-20 (`ffda1df`) |
+
+| Comando | Resultado |
+|---|---|
+| `./mvnw verify` | ✅ **302 tests** en verde |
+| `npm ci` + `npm run verify` | ✅ tipos OK, **321 tests** (33 archivos) en verde, build OK |
+| Revisión de secretos en los archivos nuevos de C-18 | ✅ sin `.env` ni `MAIL_ENABLED=true`; solo un token ficticio de prueba en un test (`token-nuevo`) |
+
 Observaciones:
 - `npm ci` muestra un aviso de npm sobre *install scripts* de dependencias; no afecta el build ni los tests.
 - Lo que el agente no hizo, a propósito: crear bases ni `.env` en el clon, porque requieren las contraseñas de cada integrante.
