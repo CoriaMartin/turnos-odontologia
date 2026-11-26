@@ -237,6 +237,7 @@ Revisa solo lo versionado y sale con error si encuentra un problema (muestra arc
 | Registro de skills | [.atl/skill-registry.md](.atl/skill-registry.md) |
 | Estado de la fundación | [.active-orchestrator-state.json](.active-orchestrator-state.json) |
 | Verificación en máquina limpia | [docs/entrega/verificacion-maquina-limpia.md](docs/entrega/verificacion-maquina-limpia.md) |
+| Reflexión grupal | [docs/entrega/reflexion-grupal.pdf](docs/entrega/reflexion-grupal.pdf) |
 
 ### Dónde está cada elemento de la consigna
 
