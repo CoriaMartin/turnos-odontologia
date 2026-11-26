@@ -17,3 +17,14 @@ backend/.mvn/wrapper/maven-wrapper.jar
 
 # Snapshots y logs de Playwright MCP (capturas de maquetas)
 .playwright-mcp/
+
+# IDE y sistema operativo
+.idea/
+*.iml
+.vscode/
+.DS_Store
+Thumbs.db
+*.log
+
+# Configuración local del agente
+.claude/
